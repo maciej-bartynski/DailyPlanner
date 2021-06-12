@@ -4,7 +4,7 @@ import {View, Text, Button, useColorScheme, StyleSheet} from 'react-native';
 import {ModalsStackParamList} from 'lib/navigation/_types';
 import {RouteProp} from '@react-navigation/native';
 import navigationRef from 'lib/navigation/reference';
-import someElement from 'func';
+
 const Colors = {
   primary: '#1292B4',
   white: '#FFF',
@@ -29,7 +29,6 @@ const Modal2: React.FC<ViewProp> = ({route}) => {
   return (
     <PageLayout>
       <View style={styles.sectionContainer}>
-        {someElement}
         <Text
           style={[
             styles.sectionTitle,

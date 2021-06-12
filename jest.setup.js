@@ -13,3 +13,17 @@ jest.mock('react-native-reanimated', () => {
 // Silence the warning: Animated: `useNativeDriver` is not supported because the native animated module is missing
 // As of react-native@0.64.X file has moved
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
+
+jest.mock('@react-native-async-storage/async-storage', () => ({
+  storedItems: {},
+  getItem(key){
+    return this.storedItems[key];
+  },
+  setItem(key, value) {
+    this.storedItems[key] = value;
+  },
+  removeItem(key) {
+    this.storedItems[key] = undefined;
+  },
+  
+}));
