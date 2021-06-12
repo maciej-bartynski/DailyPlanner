@@ -3,8 +3,17 @@ import PageLayout from 'components/PageLayout';
 import {View, Text, Button, useColorScheme, StyleSheet} from 'react-native';
 import {ModalsStackParamList} from 'lib/navigation/_types';
 import {RouteProp} from '@react-navigation/native';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
 import navigationRef from 'lib/navigation/reference';
+import someElement from 'func';
+const Colors = {
+  primary: '#1292B4',
+  white: '#FFF',
+  lighter: '#F3F3F3',
+  light: '#DAE1E7',
+  dark: '#444',
+  darker: '#222',
+  black: '#000',
+};
 
 type ViewsScreensProps = RouteProp<ModalsStackParamList, 'Modal2'>;
 
@@ -20,6 +29,7 @@ const Modal2: React.FC<ViewProp> = ({route}) => {
   return (
     <PageLayout>
       <View style={styles.sectionContainer}>
+        {someElement}
         <Text
           style={[
             styles.sectionTitle,
