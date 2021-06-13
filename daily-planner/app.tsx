@@ -13,6 +13,7 @@ import Modal2 from 'views/Modal2';
 import Dashboard from 'views/Dashboard';
 import Task from 'views/Task';
 import Detail from 'views/Detail';
+import TaskContextProvider from './ctxes/tasks/tasks.provider';
 
 const MainStack = createStackNavigator<MainStackParamList>();
 const ViewsStack = createStackNavigator<ViewsStackParamList>();
@@ -65,20 +66,22 @@ const Views = () => {
 
 const App = () => {
   return (
-    <NavigationContainer ref={navigationRef}>
-      <MainStack.Navigator mode="modal">
-        <MainStack.Screen
-          name="Views"
-          component={Views}
-          options={{headerShown: false}}
-        />
-        <MainStack.Screen
-          name="Modals"
-          component={Modals}
-          options={{headerShown: false}}
-        />
-      </MainStack.Navigator>
-    </NavigationContainer>
+    <TaskContextProvider>
+      <NavigationContainer ref={navigationRef}>
+        <MainStack.Navigator mode="modal">
+          <MainStack.Screen
+            name="Views"
+            component={Views}
+            options={{headerShown: false}}
+          />
+          <MainStack.Screen
+            name="Modals"
+            component={Modals}
+            options={{headerShown: false}}
+          />
+        </MainStack.Navigator>
+      </NavigationContainer>
+    </TaskContextProvider>
   );
 };
 

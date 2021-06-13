@@ -16,7 +16,7 @@ jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 
 jest.mock('@react-native-async-storage/async-storage', () => ({
   storedItems: {},
-  getItem(key){
+  getItem(key) {
     return this.storedItems[key];
   },
   setItem(key, value) {
@@ -25,5 +25,4 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
   removeItem(key) {
     this.storedItems[key] = undefined;
   },
-  
 }));
