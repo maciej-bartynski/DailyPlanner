@@ -6,6 +6,14 @@ export default StyleSheet.create({
     backgroundColor: 'blue',
     padding: 10,
   },
+  box: {
+    height: 150,
+    width: 150,
+    backgroundColor: "blue",
+    borderRadius: 5,
+    alignItems: "flex-end",
+    justifyContent: "flex-end"
+  },
   title: {
     fontSize: 20,
     color: 'white',

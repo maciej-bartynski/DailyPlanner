@@ -38,7 +38,7 @@
     "baseUrl": "./daily-planner", /* Base directory to resolve non-absolute module names. */
     "paths": {
       "root": [
-        "*"
+        "./"
       ],
       "lib": [
         "./lib"

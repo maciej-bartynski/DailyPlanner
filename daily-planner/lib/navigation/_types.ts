@@ -4,13 +4,13 @@ export type MainStackParamList = {
 };
 
 export type ModalsStackParamList = {
-  Modal1: {title: string};
+  ModalCreateTask: undefined;
   Modal2: {title: string};
   Modal3: {title: string};
 };
 
 export type ViewsStackParamList = {
   Dashboard: {title: string};
-  Task: {title: string};
+  Tasks: undefined;
   Detail: {title: string};
 };

@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PageLayout from 'components/PageLayout';
 import {View, Text, Button, useColorScheme, StyleSheet} from 'react-native';
 import {ViewsStackParamList} from 'lib/navigation/_types';
 import {RouteProp} from '@react-navigation/native';
 import {navigation} from 'lib/navigation';
 import ButtonCreateTask from 'components/ButtonCreateTask';
-import DisplayTasks from 'components/DisplayTasks';
+
 import {ScrollView} from 'react-native-gesture-handler';
 
 const Colors = {
@@ -25,10 +25,16 @@ type ViewProp = {
 };
 
 const Dashboard: React.FC<ViewProp> = ({route}) => {
+
+  const [scrollEnabled, setScrollEnabled]= useState(true);
+
   return (
     <PageLayout>
-      <ScrollView style={styles.tasks}>
-        <DisplayTasks />
+      <ScrollView 
+        contentContainerStyle={styles.tasks}
+        scrollEnabled={scrollEnabled}
+      >
+        
       </ScrollView>
       <View style={styles.button}>
         <ButtonCreateTask />
@@ -43,7 +49,11 @@ const styles = StyleSheet.create({
     bottom: 10,
     right: 10,
   },
-  tasks: {},
+  tasks: {
+    //flex: 1,
+    borderWidth: 2,
+    borderColor: "red"
+  },
 });
 
 export default Dashboard;
