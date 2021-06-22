@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux"
-import { iTasksState } from "lib/storageRedux/storageRedux.types";
 import { RootState } from "lib/storageRedux/storageRedux.store";
 import Storage from "lib/storageLocal/storage";
 import { iTask } from "lib/models/task";
@@ -49,6 +48,11 @@ const useTasks = () => {
         }
     }
 
+    const getTask = (id: string): iTask | null => {
+        const entry = Object.entries(tasks.tasks).find(taskEntry => taskEntry[0] === id);
+        return entry ? entry[1] : null
+    }
+
     return useMemo(() => ({
         ...hookState,
         data: tasks,
@@ -56,6 +60,7 @@ const useTasks = () => {
             createTask,
             deleteTask,
             updateTask,
+            getTask
         },
     }), [
         dispatch,

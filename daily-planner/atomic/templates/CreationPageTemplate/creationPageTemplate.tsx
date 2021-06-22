@@ -28,7 +28,7 @@ const CreationPageTemplate: React.FC<{
     error?: string,
     data?: string,
     bgColor?: string,
-    onCreatePressHandler: (event?: GestureResponderEvent) => void
+    onCreatePressHandler: () => void
 }> = ({
     loading = "",
     error = "",
@@ -50,7 +50,7 @@ const CreationPageTemplate: React.FC<{
                         data={data}
                     />
                     <View style={styles.button}>
-                        <ButtonRounded onPressHandler={onCreatePressHandler} />
+                        <ButtonRounded onPressHandler={() => onCreatePressHandler()} />
                     </View>
                 </View>
             </SafeAreaView>

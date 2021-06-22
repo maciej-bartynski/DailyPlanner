@@ -60,6 +60,10 @@ const Task: React.FC<ViewProp> = ({ route }) => {
                     {task.duration}
                   </Text>
 
+                  <Button title="update" onPress={() => {
+                    navigation.openCreateTask(task.id)
+                  }} />
+
                   <Button title="remove" onPress={() => {
                     methods.deleteTask(task.id)
                   }} />
