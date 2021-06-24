@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, GestureResponderEvent, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { eColors } from "lib/styles/colors";
 
 const onPressDefaultHandler = () => null;
 
@@ -25,10 +26,12 @@ const styles = StyleSheet.create({
     button: {
         width: 70,
         height: 70,
-        backgroundColor: "green",
+        backgroundColor: eColors.secondaryDark,
         alignItems: "center",
         justifyContent: "center",
-        borderRadius: 40
+        borderRadius: 40,
+        borderColor: "white",
+        borderWidth: 1,
     },
     text: {
         color: "white"

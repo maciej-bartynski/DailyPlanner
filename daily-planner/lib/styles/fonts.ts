@@ -21,27 +21,29 @@ export enum eFontWeight {
     white = "normal"
 }
 
-export const fontMain = "sans-serif";
-
 export const mixins = StyleSheet.create({
     title: {
         fontSize: eFontSize.title,
-        fontFamily: fontMain,
         fontWeight: eFontWeight.bold,
     },
     subtitle: {
         fontSize: eFontSize.subtitle,
-        fontFamily: fontMain,
         fontWeight: eFontWeight.stress,
     },
     headline: {
         fontSize: eFontSize.headline,
-        fontFamily: fontMain,
         fontWeight: eFontWeight.normal,
     },
     paragraph: {
         fontSize: eFontSize.paragraph,
-        fontFamily: fontMain,
         fontWeight: eFontWeight.normal,
-    }
+    },
+    input: {
+        fontSize: eFontSize.smallText,
+        fontWeight: eFontWeight.normal,
+    },
+    label: {
+        fontSize: eFontSize.tinyText,
+        fontWeight: eFontWeight.bold,
+    },
 })

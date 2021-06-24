@@ -6,7 +6,6 @@ interface iArgs {
 
 const navigate = ({ path, params }: iArgs): string => {
   if (navigationRef.current) {
-    console.log("EVEN DEEPER", params)
     navigationRef.current.navigate(path, params);
     return '';
   } else {
@@ -26,7 +25,6 @@ export const navigation = {
   },
 
   openCreateTask(taskId?: string) {
-    console.log("t", taskId)
     navigate({ path: 'Modals', params: { screen: "ModalCreateTask", params: { taskId } } })
   },
 

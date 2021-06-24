@@ -1,1 +1,1 @@
-export { default } from "./templateMessage";
+export { TemplateMessage } from "./templateMessage";

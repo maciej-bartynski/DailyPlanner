@@ -7,5 +7,6 @@ export enum eColors {
     secondaryDark = "#b6c2b7",
     textOnPrimary = "#000000",
     textOnSecondary = "#000000",
-    primaryAccent =  "#cddc39"
+    primaryAccent =  "#cddc39",
+    warning = "#e53935"
 }

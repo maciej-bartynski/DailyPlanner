@@ -1,1 +1,1 @@
-export { default } from "./modalBasicTemplate";
+export { ModalBasicTemplate } from "./modalBasicTemplate";

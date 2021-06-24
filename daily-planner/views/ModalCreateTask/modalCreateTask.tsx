@@ -3,7 +3,7 @@ import PageLayout from 'components/PageLayout';
 import { View, Text, Button, useColorScheme, StyleSheet } from 'react-native';
 import { ModalsStackParamList } from 'lib/navigation/_types';
 import { RouteProp } from '@react-navigation/native';
-import ModalBasicTemplate from 'atomic/templates/ModalBasicTemplate';
+import { ModalBasicTemplate} from 'atomic/templates/ModalBasicTemplate';
 import useTasks from 'lib/storageAccess/tasks';
 import TaskForm from 'components/TaskForm';
 
@@ -18,7 +18,6 @@ const Modal1: React.FC<ViewProp> = ({ route }) => {
   const { total } = data;
   const { createTask } = methods;
 
-  console.log("TASK", route)
   return (
     <ModalBasicTemplate title="Create task">
       <TaskForm taskId={route.params?.taskId} />

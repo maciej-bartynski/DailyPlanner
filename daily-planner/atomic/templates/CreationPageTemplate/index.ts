@@ -1,1 +1,1 @@
-export { default } from "./creationPageTemplate"
+export { CreationPageTemplate } from "./creationPageTemplate"

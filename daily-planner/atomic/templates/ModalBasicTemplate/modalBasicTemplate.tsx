@@ -1,16 +1,15 @@
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { StatusBar, View, StyleSheet, GestureResponderEvent, Text } from "react-native";
+import { StatusBar, View, StyleSheet, GestureResponderEvent, Text, Button } from "react-native";
 import ButtonRounded from "atomic/atoms/ButtonRounded";
 import { eColors } from "lib/styles/colors";
-import TemplateMessageManager from "atomic/molecules/TemplateMessageManager";
 import navigationRef from "lib/navigation/reference";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { mixins } from "lib/styles/fonts";
 
 const styles = StyleSheet.create({
     root: {
-        flex: 1
+        flex: 1,
+        backgroundColor: eColors.primaryDark
     },
     background: {
         flex: 1,
@@ -19,56 +18,57 @@ const styles = StyleSheet.create({
     },
     header: {
         flexDirection: "row",
-        backgroundColor: eColors.secondary,
+        backgroundColor: "white",
         height: 70,
-        alignItems:"center",
+        alignItems: "center",
         paddingLeft: 20,
+        borderBottomColor: eColors.primaryDark,
+        borderBottomWidth:1,
     },
     title: {
         flex: 1,
         ...mixins.title,
         color: eColors.textOnPrimary
     },
-    button: {
-        width: 70,
-        height: 70,
-        backgroundColor: eColors.primaryAccent,
-        alignItems: "center",
-        justifyContent: "center"
-    },
+    wrapper: {
+        backgroundColor: "white",
+        flex: 1,
+        overflow: "hidden",
+        borderRadius: 20,
+        margin: 5,
+        paddingBottom: 50,
+    }
 })
 
-const ModalBasicTemplate: React.FC<{
+export const ModalBasicTemplate: React.FC<{
     bgColor?: string,
     title?: string
 }> = ({
     children,
-    bgColor = eColors.primary,
+    bgColor = "white",
     title = "",
 }) => (
             <SafeAreaView style={styles.root}>
-                <StatusBar />
-                <View style={styles.header}>
-                    <Text style={styles.title}>
-                        {title}
-                    </Text>
-                    <TouchableOpacity 
-                        style={styles.button}
-                        onPress={() => {
-                            navigationRef.current?.goBack();
-                        }}
-                    >
-                        <Text>+</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={[
-                    styles.background,
-                    { backgroundColor: bgColor }
-                ]}>
-                    {children}
+                <View style={styles.wrapper}>
+                    <StatusBar />
+                    <View style={styles.header}>
+                        <Text style={styles.title}>
+                            {title}
+                        </Text>
+                        <Button
+                            title="Close"
+                            onPress={() => {
+                                navigationRef.current?.goBack();
+                            }}
+                        />
+                    </View>
+                    <View style={[
+                        styles.background,
+                        { backgroundColor: bgColor }
+                    ]}>
+                        {children}
+                    </View>
                 </View>
             </SafeAreaView>
         )
 
-
-export default ModalBasicTemplate

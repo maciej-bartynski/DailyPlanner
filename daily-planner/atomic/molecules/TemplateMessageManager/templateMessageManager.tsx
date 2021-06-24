@@ -1,7 +1,7 @@
 import React from "react";
-import TemplateMessage from "atomic/atoms/TemplateMessage";
+import { TemplateMessage } from "atomic/atoms/TemplateMessage";
 
-const TemplateMessageManager: React.FC<{
+export const TemplateMessageManager: React.FC<{
     loading?: string,
     error?: string,
     data?: string
@@ -31,5 +31,3 @@ const TemplateMessageManager: React.FC<{
         )
         : null}
 </>)
-
-export default TemplateMessageManager;
