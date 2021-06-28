@@ -1,1 +1,1 @@
-export { TemplateMessageManager } from "./templateMessageManager";
+export {TemplateMessageManager} from './templateMessageManager';

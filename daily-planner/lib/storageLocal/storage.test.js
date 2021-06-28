@@ -32,7 +32,7 @@ describe('lib/storage/storage', () => {
   });
 
   it('[delItem] Deletes correctly', async () => {
-    const [err] = await testStorage.delItem(keyToGet);
+    await testStorage.delItem(keyToGet);
     const [err2, item] = await testStorage.getItem(keyToGet);
 
     expect(err2).toBe('Nothing found');

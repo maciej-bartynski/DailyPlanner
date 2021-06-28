@@ -1,5 +1,5 @@
 export {
-    reducerCreateTask,
-    reducerDeleteTask,
-    reducerUpdateTask
-} from "./reducer";
+  reducerCreateTask,
+  reducerDeleteTask,
+  reducerUpdateTask,
+} from './reducer';

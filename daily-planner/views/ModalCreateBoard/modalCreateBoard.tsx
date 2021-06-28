@@ -4,18 +4,18 @@ import {RouteProp} from '@react-navigation/native';
 import {ModalBasicTemplate} from 'atomic/templates/ModalBasicTemplate';
 import TaskForm from 'components/TaskForm';
 
-type ViewsScreensProps = RouteProp<ModalsStackParamList, 'ModalCreateTask'>;
+type ViewsScreensProps = RouteProp<ModalsStackParamList, 'ModalCreateBoard'>;
 
 type ViewProp = {
   route: ViewsScreensProps;
 };
 
-const Modal1: React.FC<ViewProp> = ({route}) => {
+const ModalCreateBoard: React.FC<ViewProp> = ({route}) => {
   return (
-    <ModalBasicTemplate title="Create task">
-      <TaskForm taskId={route.params?.taskId} />
+    <ModalBasicTemplate title="Create board">
+      <TaskForm taskId={route.params?.boardId} />
     </ModalBasicTemplate>
   );
 };
 
-export default Modal1;
+export default ModalCreateBoard;

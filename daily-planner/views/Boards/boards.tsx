@@ -14,18 +14,18 @@ type ViewProp = {
   route: ViewsScreensProps;
 };
 
-const Task: React.FC<ViewProp> = () => {
+const Boards: React.FC<ViewProp> = () => {
   const {loading, error, data} = useTasks();
 
   const {total, tasks} = data;
 
   return (
     <CreationPageTemplate
-      title="Your tasks"
+      title="Your boards"
       loading={loading ? 'Loading...' : ''}
-      error={error ? "Sorry, I couldn't display your tasks :C" : ''}
-      data={!total ? "No tasks! Why don't you create some, lazy?" : ''}
-      onCreatePressHandler={navigation.openCreateTask}>
+      error={error ? "Sorry, I couldn't display your boards :C" : ''}
+      data={!total ? "No boards! Why don't you create some, lazy?" : ''}
+      onCreatePressHandler={navigation.openCreateBoard}>
       {total ? (
         <ScrollView style={styles.scrollView}>
           {Object.values(tasks).map(task => {
@@ -56,4 +56,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Task;
+export default Boards;

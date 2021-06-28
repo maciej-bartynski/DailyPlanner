@@ -5,8 +5,7 @@ import useTasks from '../../ctxes/tasks/tasks.hook';
 
 const ButtonCreateTask = () => {
   const taskContext = useTasks();
-  const {state, addTask, removeTask} = taskContext;
-  const {tasks} = state;
+  const {addTask} = taskContext;
 
   return (
     <TouchableOpacity onPress={addTask} style={styles.root}>

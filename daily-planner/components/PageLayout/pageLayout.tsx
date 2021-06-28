@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  useColorScheme,
-  View,
-  Text,
-  StyleSheet,
-} from 'react-native';
+import {SafeAreaView, StatusBar, View, StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   root: {

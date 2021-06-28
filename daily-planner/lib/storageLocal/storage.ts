@@ -47,7 +47,7 @@ class Storage implements iTable {
   }
 
   async patchItem(key: string, fields: Record<string, unknown>) {
-    const [err, item, createdAt, id] = await this.getItem(key);
+    const [err, item, createdAt] = await this.getItem(key);
 
     if (!item) {
       return [`Item not found - ${err}`, null];

@@ -1,1 +1,1 @@
-export { Positioner } from "./positioner"
+export {Positioner} from './positioner';

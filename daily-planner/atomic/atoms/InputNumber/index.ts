@@ -1,1 +1,1 @@
-export { InputNumber } from "./inputNumber"
+export {InputNumber} from './inputNumber';

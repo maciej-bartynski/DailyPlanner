@@ -1,1 +1,1 @@
-export { TemplateMessage } from "./templateMessage";
+export {TemplateMessage} from './templateMessage';

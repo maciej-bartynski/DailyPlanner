@@ -1,1 +1,1 @@
-export { CreationPageTemplate } from "./creationPageTemplate"
+export {CreationPageTemplate} from './creationPageTemplate';

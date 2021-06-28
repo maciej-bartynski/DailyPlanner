@@ -4,7 +4,7 @@ interface iArgs {
   params?: object;
 }
 
-const navigate = ({ path, params }: iArgs): string => {
+const navigate = ({path, params}: iArgs): string => {
   if (navigationRef.current) {
     navigationRef.current.navigate(path, params);
     return '';
@@ -16,27 +16,21 @@ const navigate = ({ path, params }: iArgs): string => {
 export default navigate;
 
 export const navigation = {
-  navigateDashboard: () => {
-    navigate({ path: 'Dashboard', params: { title: 'Dashboard' } });
-  },
-
   navigateTask: () => {
-    navigate({ path: 'Tasks', params: { title: 'Task' } });
+    navigate({path: 'Tasks', params: {title: 'Task'}});
   },
 
   openCreateTask(taskId?: string) {
-    navigate({ path: 'Modals', params: { screen: "ModalCreateTask", params: { taskId } } })
+    navigate({
+      path: 'Modals',
+      params: {screen: 'ModalCreateTask', params: {taskId}},
+    });
   },
 
-  navigateDetail: () => {
-    navigate({ path: 'Detail', params: { title: 'Detail' } });
-  },
-
-  openModal1: () => {
-    navigate({ path: 'Modals', params: { screen: 'Modal1', title: 'Modal1' } });
-  },
-
-  openModal2: () => {
-    navigate({ path: 'Modals', params: { screen: 'Modal2', title: 'Modal2' } });
+  openCreateBoard: (boardId?: string) => {
+    navigate({
+      path: 'Modals',
+      params: {screen: 'ModalCreateBoard', params: {boardId}},
+    });
   },
 };

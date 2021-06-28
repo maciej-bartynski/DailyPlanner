@@ -1,5 +1,5 @@
-export { 
-    actionCreatorTaskCreate,
-    actionCreatorTaskUpdate,
-    actionCreatorTaskDelete
-} from "./tasks"
+export {
+  actionCreatorTaskCreate,
+  actionCreatorTaskUpdate,
+  actionCreatorTaskDelete,
+} from './tasks';

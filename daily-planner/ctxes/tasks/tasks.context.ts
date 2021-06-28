@@ -1,12 +1,14 @@
 import {createContext} from 'react';
-import {iTaskContext, iTask} from './_types';
+import {iTaskContext} from './_types';
 
 const TaskContext = createContext<iTaskContext>({
   state: {
     tasks: [],
   },
   addTask: () => {},
-  removeTask: (id: number) => {},
+  removeTask: (id: number) => {
+    console.log(id);
+  },
 });
 
 export default TaskContext;
