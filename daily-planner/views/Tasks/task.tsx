@@ -14,7 +14,7 @@ type ViewProp = {
   route: ViewsScreensProps;
 };
 
-const Task: React.FC<ViewProp> = () => {
+const Tasks: React.FC<ViewProp> = () => {
   const {loading, error, data} = useTasks();
 
   const {total, tasks} = data;
@@ -56,4 +56,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Task;
+export default Tasks;

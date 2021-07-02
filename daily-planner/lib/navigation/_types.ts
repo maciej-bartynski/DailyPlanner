@@ -6,6 +6,7 @@ export type MainStackParamList = {
 export type ModalsStackParamList = {
   ModalCreateTask: {taskId?: string};
   ModalCreateBoard: {boardId?: string};
+  ModalAddTasks: {boardId?: string};
 };
 
 export type ViewsStackParamList = {

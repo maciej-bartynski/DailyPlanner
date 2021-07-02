@@ -33,4 +33,11 @@ export const navigation = {
       params: {screen: 'ModalCreateBoard', params: {boardId}},
     });
   },
+
+  openAddTasks: (boardId?: string) => {
+    navigate({
+      path: 'Modals',
+      params: {screen: 'ModalAddTasks', params: {boardId}},
+    });
+  },
 };

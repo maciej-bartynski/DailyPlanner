@@ -3,21 +3,21 @@ import {StyleSheet, View} from 'react-native';
 import {ViewsStackParamList} from 'lib/navigation/_types';
 import {RouteProp} from '@react-navigation/native';
 import {CreationPageTemplate} from 'atomic/templates/CreationPageTemplate';
-import useTasks from 'lib/storageAccess/tasks';
 import {navigation} from 'lib/navigation';
 import {ScrollView} from 'react-native';
-import {TaskCard} from 'atomic';
+import {BoardCard} from 'atomic/atoms/BoardCard';
+import useBoards from 'lib/storageAccess/boards';
 
-type ViewsScreensProps = RouteProp<ViewsStackParamList, 'Tasks'>;
+type ViewsScreensProps = RouteProp<ViewsStackParamList, 'Boards'>;
 
 type ViewProp = {
   route: ViewsScreensProps;
 };
 
 const Boards: React.FC<ViewProp> = () => {
-  const {loading, error, data} = useTasks();
+  const {loading, error, data} = useBoards();
 
-  const {total, tasks} = data;
+  const {total, boards} = data;
 
   return (
     <CreationPageTemplate
@@ -28,14 +28,14 @@ const Boards: React.FC<ViewProp> = () => {
       onCreatePressHandler={navigation.openCreateBoard}>
       {total ? (
         <ScrollView style={styles.scrollView}>
-          {Object.values(tasks).map(task => {
+          {Object.values(boards).map(board => {
             return (
-              <View key={task.id} style={styles.taskWrapper}>
-                <TaskCard
-                  taskId={task.id}
-                  name={task.name}
-                  description={task.description}
-                  duration={'' + task.duration}
+              <View key={board.id} style={styles.taskWrapper}>
+                <BoardCard
+                  boardId={board.id}
+                  title={board.title}
+                  description={board.description}
+                  tasksAmount={'' + board.tasks.length}
                 />
               </View>
             );
