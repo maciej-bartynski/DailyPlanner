@@ -6,8 +6,9 @@ import {
   actionCreatorTaskCreate,
   actionCreatorTaskDelete,
   actionCreatorTaskUpdate,
+  actionCreatorTasksInit,
 } from 'lib/storageRedux/actions/tasks';
-import {useReducer, useMemo} from 'react';
+import {useReducer, useMemo, useEffect} from 'react';
 import {hookReducer, hookStateInitial} from './useTasks.reducer';
 
 const tasksStorage = new Storage('TASKS');
@@ -65,6 +66,19 @@ const useTasks = () => {
     );
     return entry ? entry[1] : null;
   };
+
+  async function loadAllFromStorage() {
+    dispatchHookAction({type: 'LOADING'});
+    const result = await tasksStorage.getAll<iTask>();
+    if (result instanceof Object) {
+      dispatch(actionCreatorTasksInit(result));
+    }
+    dispatchHookAction({type: 'DATA'});
+  }
+
+  useEffect(() => {
+    loadAllFromStorage();
+  }, []);
 
   return useMemo(
     () => ({

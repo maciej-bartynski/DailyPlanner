@@ -4,11 +4,17 @@ import TimeRuler from 'atomic/atoms/TimeRuler';
 
 type Props = {
   height?: number;
+  scrollable?: boolean;
 };
 
-const TimeRulerBoard: React.FC<Props> = ({children, height = 1440}) => {
+const TimeRulerBoard: React.FC<Props> = ({
+  children,
+  height = 1440,
+  scrollable = true,
+}) => {
   return (
     <ScrollView
+      scrollEnabled={scrollable}
       style={styles.timeRulerBoard}
       contentContainerStyle={styles.timeRulerBoard__contentContainer}>
       <TimeRuler height={height} />

@@ -10,6 +10,35 @@ import {
 class Storage implements iTable {
   constructor(public prefix: string) {}
 
+  async getAll<RecordType>() {
+    try {
+      const keys = await AsyncStorage.getAllKeys();
+      const thisStorageKeys = keys.filter(
+        key => key.split('_')[0] === this.prefix,
+      );
+      const allStorageStrings = await AsyncStorage.multiGet(thisStorageKeys);
+
+      const arrValuesOnly = allStorageStrings.reduce<
+        Record<string, RecordType>
+      >((result, entry) => {
+        const [, storageString] = entry;
+        if (storageString) {
+          const {item, _id} = storageItemToItem(storageString);
+          return {
+            ...result,
+            [_id]: {id: _id, ...item},
+          };
+        } else {
+          return result;
+        }
+      }, {});
+
+      return arrValuesOnly;
+    } catch {
+      return null;
+    }
+  }
+
   async getItem(id: string) {
     const storageKey = keyToStorageKey(this, id);
     try {

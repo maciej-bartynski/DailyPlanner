@@ -1,6 +1,13 @@
 import {eBoardsActions} from 'lib/storageRedux/storageRedux.types';
 import {iBoard} from 'lib/models/board';
 
+export const actionCreatorBoardsInit = (boards: Record<string, iBoard>) => {
+  return {
+    type: eBoardsActions.BOARDS_INIT,
+    payload: boards,
+  };
+};
+
 export const actionCreatorBoardCreate = (board: iBoard) => {
   return {
     type: eBoardsActions.BOARD_CREATE,

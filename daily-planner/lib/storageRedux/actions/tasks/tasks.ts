@@ -1,6 +1,13 @@
 import {eTasksActions} from 'lib/storageRedux/storageRedux.types';
 import {iTask} from 'lib/models/task';
 
+export const actionCreatorTasksInit = (tasks: Record<string, iTask>) => {
+  return {
+    type: eTasksActions.TASKS_INIT,
+    payload: tasks,
+  };
+};
+
 export const actionCreatorTaskCreate = (task: iTask) => {
   return {
     type: eTasksActions.TASK_CREATE,

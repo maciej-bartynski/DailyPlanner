@@ -3,6 +3,20 @@ import {iTask} from 'lib/models/task';
 import {Reducer} from 'redux';
 import {tasksInitialState} from './initialState';
 
+export const reducerInitTasks: Reducer<
+  iTasksState,
+  {
+    type: eTasksActions;
+    payload: Record<string, iTask>;
+  }
+> = (taskState = tasksInitialState, action) => {
+  return {
+    ...taskState,
+    total: Object.keys(action.payload).length,
+    tasks: action.payload,
+  };
+};
+
 export const reducerCreateTask: Reducer<
   iTasksState,
   {

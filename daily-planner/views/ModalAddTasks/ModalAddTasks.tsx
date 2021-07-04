@@ -11,10 +11,12 @@ import {
   Button,
   Pressable,
   GestureResponderEvent,
+  Animated,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import TimeRulerBoard from 'atomic/molecules/TimeRulerBoard';
 import TasksPicker from 'atomic/molecules/TasksPicker';
+import TaskBoardCard from 'atomic/molecules/TaskBoardCard';
 
 const MINUTES_PER_DAY = 1440;
 const BOARD_HEIGHT_PX = 1440;
@@ -39,6 +41,10 @@ const ModalAddTasks: React.FC<ViewProp> = ({route}) => {
 
   const [pressedLocation, setPressedLocation] = useState<number>();
   const [boardTasks, setBoardTasks] = useState<BoardTask[]>([]);
+  const [scrollable, setScrollable] = useState<boolean>(true);
+
+  const pressedTime =
+    ((pressedLocation || 0) / BOARD_HEIGHT_PX) * MINUTES_PER_DAY;
 
   const addTaskToBoard = (taskId: string) => {
     setBoardTasks(
@@ -61,7 +67,7 @@ const ModalAddTasks: React.FC<ViewProp> = ({route}) => {
 
   return (
     <ModalBasicTemplate title={`Add tasks to board ${currentBoard?.title}`}>
-      <TimeRulerBoard height={BOARD_HEIGHT_PX}>
+      <TimeRulerBoard height={BOARD_HEIGHT_PX} scrollable={scrollable}>
         <Pressable
           style={{
             height: '100%',
@@ -73,26 +79,22 @@ const ModalAddTasks: React.FC<ViewProp> = ({route}) => {
           }}>
           {boardTasks.map(boardTask => {
             const task = tasks[boardTask.taskId];
+
             return (
-              <View
-                style={{
-                  position: 'absolute',
-                  left: 0,
-                  top: boardTask.location,
-                  width: '100%',
-                  borderWidth: 1,
-                  borderRadius: 5,
-                  borderColor: 'red',
-                  height: (BOARD_HEIGHT_PX / MINUTES_PER_DAY) * task.duration,
-                }}>
-                <Text>{task.name}</Text>
-                <Button
-                  title="x"
-                  onPress={() => {
-                    removeTaskFromBoard(task.id);
-                  }}
-                />
-              </View>
+              <TaskBoardCard
+                key={task.id}
+                task={task}
+                boardTask={boardTask}
+                onResponderEnd={() => {
+                  setScrollable(true);
+                }}
+                onResponderStart={() => {
+                  setScrollable(false);
+                }}
+                onTouchMoveCallback={() => {}}
+                removeTaskFromBoard={removeTaskFromBoard}
+                boardHeight={BOARD_HEIGHT_PX}
+              />
             );
           })}
         </Pressable>
@@ -102,6 +104,7 @@ const ModalAddTasks: React.FC<ViewProp> = ({route}) => {
           cancelCallback={() => setPressedLocation(undefined)}
           tasks={Object.values(tasks)}
           addTaskToBoard={addTaskToBoard}
+          pressedTime={pressedTime}
         />
       ) : null}
     </ModalBasicTemplate>

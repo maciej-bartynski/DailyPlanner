@@ -12,12 +12,9 @@ type Props = {
   taskId: string;
 };
 
-export const TaskCard: React.FC<Props> = ({
-  name,
-  description,
-  duration,
-  taskId,
-}) => {
+export const TaskCard: React.FC<Props> = props => {
+  const {name, description, duration, taskId} = props;
+
   const {methods} = useTasks();
   return (
     <View style={styles.wrapper}>

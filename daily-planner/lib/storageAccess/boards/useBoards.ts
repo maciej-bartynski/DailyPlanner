@@ -6,10 +6,10 @@ import {
   actionCreatorBoardCreate,
   actionCreatorBoardDelete,
   actionCreatorBoardUpdate,
+  actionCreatorBoardsInit,
 } from 'lib/storageRedux/actions/boards';
-import {useReducer, useMemo} from 'react';
+import {useReducer, useMemo, useEffect} from 'react';
 import {hookReducer, hookStateInitial} from './useBoards.reducer';
-import {iBoardsState} from 'lib/storageRedux/storageRedux.types';
 
 const boardsStorage = new Storage('BOARDS');
 
@@ -87,6 +87,19 @@ const useBoards = () => {
     );
     return entry ? entry[1] : null;
   };
+
+  async function loadAllFromStorage() {
+    dispatchHookAction({type: 'LOADING'});
+    const result = await boardsStorage.getAll<iBoard>();
+    if (result instanceof Object) {
+      dispatch(actionCreatorBoardsInit(result));
+    }
+    dispatchHookAction({type: 'DATA'});
+  }
+
+  useEffect(() => {
+    loadAllFromStorage();
+  }, []);
 
   return useMemo(
     () => ({

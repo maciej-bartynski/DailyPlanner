@@ -6,6 +6,20 @@ import {iBoard} from 'lib/models/board';
 import {Reducer} from 'redux';
 import {boardsInitialState} from './initialState';
 
+export const reducerInitBoards: Reducer<
+  iBoardsState,
+  {
+    type: eBoardsActions;
+    payload: Record<string, iBoard>;
+  }
+> = (taskState = boardsInitialState, action) => {
+  return {
+    ...taskState,
+    total: Object.keys(action.payload).length,
+    boards: action.payload,
+  };
+};
+
 export const reducerCreateBoard: Reducer<
   iBoardsState,
   {
