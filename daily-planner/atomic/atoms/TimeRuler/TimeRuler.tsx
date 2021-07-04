@@ -16,9 +16,8 @@ const printMinutes = (isLast?: boolean) => {
       style={[
         styles.timeRuler__tenMinutes,
         isLast ? {borderBottomWidth: 0} : undefined,
-      ]}>
-      <View style={styles.timeRuler__fiveMinutes} />
-    </View>
+      ]}
+    />
   );
 };
 

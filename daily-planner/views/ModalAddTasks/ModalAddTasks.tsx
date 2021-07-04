@@ -17,9 +17,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import TimeRulerBoard from 'atomic/molecules/TimeRulerBoard';
 import TasksPicker from 'atomic/molecules/TasksPicker';
 import TaskBoardCard from 'atomic/molecules/TaskBoardCard';
-
-const MINUTES_PER_DAY = 1440;
-const BOARD_HEIGHT_PX = 1440;
+import {MINUTES_PER_DAY, BOARD_HEIGHT_PX} from './config';
 
 type ViewsScreensProps = RouteProp<ModalsStackParamList, 'ModalAddTasks'>;
 
