@@ -1,5 +1,5 @@
 import React from 'react';
-import {ModalsStackParamList} from 'lib/navigation/_types';
+import {ModalsStackParamList} from 'lib/navigation/types';
 import {RouteProp} from '@react-navigation/native';
 import {ModalBasicTemplate} from 'atomic/templates/ModalBasicTemplate';
 import BoardForm from 'components/BoardForm';

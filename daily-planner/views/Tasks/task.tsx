@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {ViewsStackParamList} from 'lib/navigation/_types';
+import {ViewsStackParamList} from 'lib/navigation/types';
 import {RouteProp} from '@react-navigation/native';
 import {CreationPageTemplate} from 'atomic/templates/CreationPageTemplate';
 import useTasks from 'lib/storageAccess/tasks';

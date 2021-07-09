@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {ModalsStackParamList} from 'lib/navigation/_types';
+import {ModalsStackParamList} from 'lib/navigation/types';
 import {RouteProp} from '@react-navigation/native';
 import {ModalBasicTemplate} from 'atomic/templates/ModalBasicTemplate';
 import useBoards from 'lib/storageAccess/boards';
