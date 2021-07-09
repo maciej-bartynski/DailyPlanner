@@ -99,6 +99,7 @@ const useBoards = () => {
 
   useEffect(() => {
     loadAllFromStorage();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return useMemo(
@@ -113,6 +114,7 @@ const useBoards = () => {
         addTasksToBoard,
       },
     }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [dispatch, hookState, boards],
   );
 };

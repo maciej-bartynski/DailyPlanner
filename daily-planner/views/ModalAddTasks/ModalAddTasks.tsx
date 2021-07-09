@@ -2,18 +2,9 @@ import React, {useState} from 'react';
 import {ModalsStackParamList} from 'lib/navigation/_types';
 import {RouteProp} from '@react-navigation/native';
 import {ModalBasicTemplate} from 'atomic/templates/ModalBasicTemplate';
-import BoardForm from 'components/BoardForm';
 import useBoards from 'lib/storageAccess/boards';
 import useTasks from 'lib/storageAccess/tasks';
-import {
-  View,
-  Text,
-  Button,
-  Pressable,
-  GestureResponderEvent,
-  Animated,
-} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
+import {Pressable, GestureResponderEvent} from 'react-native';
 import TimeRulerBoard from 'atomic/molecules/TimeRulerBoard';
 import TasksPicker from 'atomic/molecules/TasksPicker';
 import TaskBoardCard from 'atomic/molecules/TaskBoardCard';
@@ -35,7 +26,7 @@ const ModalAddTasks: React.FC<ViewProp> = ({route}) => {
   const {methods} = useBoards();
   const currentBoard = methods.getBoard(boardId || '');
   const {data} = useTasks();
-  const {tasks, total} = data;
+  const {tasks} = data;
 
   const [pressedLocation, setPressedLocation] = useState<number>();
   const [boardTasks, setBoardTasks] = useState<BoardTask[]>([]);

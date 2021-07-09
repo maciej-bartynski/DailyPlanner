@@ -76,9 +76,13 @@ const useTasks = () => {
     dispatchHookAction({type: 'DATA'});
   }
 
-  useEffect(() => {
-    loadAllFromStorage();
-  }, []);
+  useEffect(
+    () => {
+      loadAllFromStorage();
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
 
   return useMemo(
     () => ({
@@ -91,6 +95,7 @@ const useTasks = () => {
         getTask,
       },
     }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [dispatch, hookState, tasks],
   );
 };

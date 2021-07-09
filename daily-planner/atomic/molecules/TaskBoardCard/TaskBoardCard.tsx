@@ -5,7 +5,6 @@ import {
   Pressable,
   GestureResponderEvent,
   Text,
-  Button,
   View,
 } from 'react-native';
 import {iTask} from 'lib/models/task';
@@ -92,6 +91,7 @@ const TaskBoardCard: React.FC<Props> = ({
 
       removeTaskOnGestureEnd(e);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [onResponderEnd, moveStartRef, moveEndRef],
   );
 

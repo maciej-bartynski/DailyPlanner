@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, Text, Button, StyleSheet} from 'react-native';
-import useTasks from 'lib/storageAccess/tasks';
 import {navigation} from 'lib/navigation';
 import {eColors} from 'lib/styles/colors';
 import {mixins} from 'lib/styles/fonts';
