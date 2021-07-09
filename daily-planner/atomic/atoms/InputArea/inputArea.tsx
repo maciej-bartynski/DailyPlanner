@@ -10,7 +10,7 @@ import {
 import {eColors} from 'lib/styles/colors';
 import {mixins} from 'lib/styles/fonts';
 
-type Props = {
+export type InputAreaProps = {
   placeholder?: string;
   onChangeText: (text: string) => void;
   onBlur?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
@@ -21,7 +21,7 @@ type Props = {
   numberOfLines?: number;
 };
 
-export const InputArea: React.FC<Props> = ({
+export const InputArea: React.FC<InputAreaProps> = ({
   placeholder,
   onChangeText,
   onBlur,

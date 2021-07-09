@@ -1,4 +1,6 @@
 import navigationRef from './reference';
+import { eModals, eScreens, eViews } from 'lib/enums/screens';
+import { iViewsNavigation, iModalNavigation } from './types';
 
 interface iArgs {
   path: string;
@@ -14,31 +16,31 @@ const navigate = ({ path, params }: iArgs): string => {
   }
 };
 
-export default navigate;
-
-export const navigation = {
+export const viewsNavigation: iViewsNavigation = {
   navigateTask: () => {
-    navigate({ path: 'Tasks', params: { title: 'Task' } });
+    navigate({ path: eViews.Tasks });
   },
+}
 
-  openCreateTask(taskId?: string) {
+export const modalNavigation: iModalNavigation = {
+  openModalCreateTask: (taskId?: string) => {
     navigate({
-      path: 'Modals',
-      params: { screen: 'ModalCreateTask', params: { taskId } },
+      path: eScreens.Modals,
+      params: { screen: eModals.ModalCreateTask, params: { taskId } },
     });
   },
-
-  openCreateBoard: (boardId?: string) => {
+  openModalCreateBoard: (boardId?: string) => {
     navigate({
-      path: 'Modals',
-      params: { screen: 'ModalCreateBoard', params: { boardId } },
+      path: eScreens.Modals,
+      params: { screen: eModals.ModalCreateBoard, params: { boardId } },
     });
   },
-
-  openAddTasks: (boardId?: string) => {
+  openModalAddTasks: (boardId: string) => {
     navigate({
-      path: 'Modals',
-      params: { screen: 'ModalAddTasks', params: { boardId } },
+      path: eScreens.Modals,
+      params: { screen: eModals.ModalAddTasks, params: { boardId } },
     });
   },
-};
+}
+
+export default navigate;

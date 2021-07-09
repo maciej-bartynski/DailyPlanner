@@ -1,9 +1,10 @@
 import React from 'react';
-import {View, Text, Button, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import useTasks from 'lib/storageAccess/tasks';
-import {navigation} from 'lib/navigation';
+import {modalNavigation} from 'lib/navigation';
 import {eColors} from 'lib/styles/colors';
 import {mixins} from 'lib/styles/fonts';
+import Button from '../Button';
 
 type Props = {
   name: string;
@@ -26,7 +27,7 @@ export const TaskCard: React.FC<Props> = props => {
       <View style={styles.actions}>
         <Button
           title="Edit"
-          onPress={() => navigation.openCreateTask(taskId)}
+          onPress={() => modalNavigation.openModalCreateTask(taskId)}
         />
         <Button
           title="Delete"

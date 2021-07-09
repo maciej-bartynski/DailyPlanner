@@ -15,3 +15,13 @@ export type ViewsStackParamList = {
   [eViews.Tasks]: undefined;
   [eViews.Boards]: undefined;
 };
+
+export interface iViewsNavigation {
+  navigateTask: () => void
+}
+
+export interface iModalNavigation {
+  openModalCreateTask: (taskId?: string) => void,
+  openModalCreateBoard: (boardId?: string) => void,
+  openModalAddTasks: (boardId: string) => void,
+}

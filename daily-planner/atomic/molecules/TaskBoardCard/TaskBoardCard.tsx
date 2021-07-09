@@ -13,7 +13,7 @@ import {
   MINUTES_PER_DAY,
   MIN_TO_PX,
   BOARD_HEIGHT_PX,
-} from 'views/ModalAddTasks/config';
+} from 'screens/ModalAddTasks/config';
 
 type BoardTask = {
   taskId: string;

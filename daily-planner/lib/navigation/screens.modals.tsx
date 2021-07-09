@@ -1,9 +1,9 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ModalsStackParamList } from 'lib/navigation/types';
-import ModalCreateTask from 'views/ModalCreateTask';
-import ModalCreateBoard from 'views/ModalCreateBoard';
-import ModalAddTasks from 'views/ModalAddTasks';
+import ModalCreateTask from 'screens/ModalCreateTask';
+import ModalCreateBoard from 'screens/ModalCreateBoard';
+import ModalAddTasks from 'screens/ModalAddTasks';
 import { eModals } from 'lib/enums/screens';
 
 const ModalStack = createStackNavigator<ModalsStackParamList>();
@@ -30,14 +30,12 @@ const ScreensConfiguration = {
   },
 }
 
-const Modals = () => {
-  return (
-    <ModalStack.Navigator mode="modal">
-      <ModalStack.Screen {...ScreensConfiguration[eModals.ModalCreateTask]} />
-      <ModalStack.Screen {...ScreensConfiguration[eModals.ModalCreateBoard]} />
-      <ModalStack.Screen {...ScreensConfiguration[eModals.ModalAddTasks]} />
-    </ModalStack.Navigator>
-  );
-};
+const Modals = () => (
+  <ModalStack.Navigator mode="modal">
+    <ModalStack.Screen {...ScreensConfiguration[eModals.ModalCreateTask]} />
+    <ModalStack.Screen {...ScreensConfiguration[eModals.ModalCreateBoard]} />
+    <ModalStack.Screen {...ScreensConfiguration[eModals.ModalAddTasks]} />
+  </ModalStack.Navigator>
+);
 
 export default Modals;

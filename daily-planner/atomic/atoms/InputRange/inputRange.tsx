@@ -4,7 +4,7 @@ import Slider from '@react-native-community/slider';
 import {mixins} from 'lib/styles/fonts';
 import {eColors} from 'lib/styles/colors';
 
-type Props = {
+export type InputRangeProps = {
   label?: string;
   min: number;
   max: number;
@@ -12,7 +12,7 @@ type Props = {
   onValueChange: (arg: string) => void;
 };
 
-export const InputRange: React.FC<Props> = ({
+export const InputRange: React.FC<InputRangeProps> = ({
   label,
   min,
   max,

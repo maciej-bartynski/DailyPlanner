@@ -1,9 +1,9 @@
 import React from 'react';
-import {View, Text, Button, StyleSheet} from 'react-native';
-import {navigation} from 'lib/navigation';
-import {eColors} from 'lib/styles/colors';
-import {mixins} from 'lib/styles/fonts';
+import { View, Text, Button, StyleSheet } from 'react-native';
+import { eColors } from 'lib/styles/colors';
+import { mixins } from 'lib/styles/fonts';
 import useBoards from 'lib/storageAccess/boards';
+import { modalNavigation } from 'lib/navigation/navigate';
 
 type Props = {
   title: string;
@@ -18,7 +18,7 @@ export const BoardCard: React.FC<Props> = ({
   tasksAmount,
   boardId,
 }) => {
-  const {methods} = useBoards();
+  const { methods } = useBoards();
   return (
     <View style={styles.wrapper}>
       <Text style={styles.name}>{title}</Text>
@@ -29,12 +29,12 @@ export const BoardCard: React.FC<Props> = ({
       <View style={styles.actions}>
         <Button
           title="Edit"
-          onPress={() => navigation.openCreateBoard(boardId)}
+          onPress={() => modalNavigation.openModalCreateBoard(boardId)}
         />
         <Button
           title="Add tasks to board"
           onPress={() => {
-            navigation.openAddTasks(boardId);
+            modalNavigation.openModalAddTasks(boardId);
           }}
         />
         <Button

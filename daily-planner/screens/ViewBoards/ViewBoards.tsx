@@ -3,18 +3,19 @@ import {StyleSheet, View} from 'react-native';
 import {ViewsStackParamList} from 'lib/navigation/types';
 import {RouteProp} from '@react-navigation/native';
 import {CreationPageTemplate} from 'atomic/templates/CreationPageTemplate';
-import {navigation} from 'lib/navigation';
 import {ScrollView} from 'react-native';
 import {BoardCard} from 'atomic/atoms/BoardCard';
 import useBoards from 'lib/storageAccess/boards';
+import { eViews } from 'lib/enums/screens';
+import { modalNavigation } from 'lib/navigation/navigate';
 
-type ViewsScreensProps = RouteProp<ViewsStackParamList, 'Boards'>;
+type ViewsScreensProps = RouteProp<ViewsStackParamList, eViews.Boards>;
 
 type ViewProp = {
   route: ViewsScreensProps;
 };
 
-const Boards: React.FC<ViewProp> = () => {
+const ViewBoards: React.FC<ViewProp> = () => {
   const {loading, error, data} = useBoards();
 
   const {total, boards} = data;
@@ -25,7 +26,7 @@ const Boards: React.FC<ViewProp> = () => {
       loading={loading ? 'Loading...' : ''}
       error={error ? "Sorry, I couldn't display your boards :C" : ''}
       data={!total ? "No boards! Why don't you create some, lazy?" : ''}
-      onCreatePressHandler={navigation.openCreateBoard}>
+      onCreatePressHandler={() => modalNavigation.openModalCreateBoard()}>
       {total ? (
         <ScrollView style={styles.scrollView}>
           {Object.values(boards).map(board => {
@@ -56,4 +57,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Boards;
+export default ViewBoards;
