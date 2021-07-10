@@ -6,7 +6,7 @@ import useTasks from 'lib/storageAccess/tasks';
 import {InputArea, InputText, InputRange, Positioner} from 'atomic';
 import navigationRef from 'lib/navigation/reference';
 import {ScrollView} from 'react-native-gesture-handler';
-import { eButtons } from 'lib/enums/strings';
+import {eButtonTitles} from 'lib/enums/strings';
 
 const creationInitialValues: iTaskFormCreate = {
   name: '',
@@ -101,7 +101,9 @@ const TaskForm: React.FC<{
                     navigationRef.current?.goBack();
                   }
                 }}
-                title={taskId ? eButtons.ApplyChanges : eButtons.CreateTask}
+                title={
+                  taskId ? eButtonTitles.ApplyChanges : eButtonTitles.CreateTask
+                }
               />
             </Positioner>
           </ScrollView>

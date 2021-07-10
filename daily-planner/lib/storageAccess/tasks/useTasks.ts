@@ -44,8 +44,8 @@ const useTasks = () => {
     if (err) {
       dispatchHookAction({type: 'ERROR', error: err || 'Failure'});
     } else {
-      dispatch(actionCreatorTaskDelete(id));
       dispatchHookAction({type: 'DATA'});
+      dispatch(actionCreatorTaskDelete(id));
     }
   };
 

@@ -1,1 +1,1 @@
-export {default} from './buttonRounded';
+export {default} from './ButtonRounded';

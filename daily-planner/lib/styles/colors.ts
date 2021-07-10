@@ -9,4 +9,11 @@ export enum eColors {
   textOnSecondary = '#000000',
   primaryAccent = '#cddc39',
   warning = '#e53935',
+
+  // refactored:
+  Blue = 'blue',
+  Gray = 'gray',
+  White = 'white',
+  Primary = '#b6c2b7',
+  Secondary = '#cccab5',
 }

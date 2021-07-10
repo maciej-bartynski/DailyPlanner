@@ -9,8 +9,8 @@ import TimeRulerBoard from 'atomic/molecules/TimeRulerBoard';
 import TasksPicker from 'atomic/molecules/TasksPicker';
 import TaskBoardCard from 'atomic/molecules/TaskBoardCard';
 import {MINUTES_PER_DAY, BOARD_HEIGHT_PX} from './config';
-import { eModals } from 'lib/enums/screens';
-import { cScreenTitles } from 'lib/enums/strings';
+import {eModals} from 'lib/enums/screens';
+import {cScreenTitles} from 'lib/enums/strings';
 
 type ViewsScreensProps = RouteProp<ModalsStackParamList, eModals.ModalAddTasks>;
 
@@ -57,7 +57,8 @@ const ModalAddTasks: React.FC<ViewProp> = ({route}) => {
   };
 
   return (
-    <ModalBasicTemplate title={`${cScreenTitles.ModalAddTasks} ${currentBoard?.title}`}>
+    <ModalBasicTemplate
+      title={`${cScreenTitles.ModalAddTasks} ${currentBoard?.title}`}>
       <TimeRulerBoard height={BOARD_HEIGHT_PX} scrollable={scrollable}>
         <Pressable
           style={{

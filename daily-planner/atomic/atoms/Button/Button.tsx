@@ -1,42 +1,45 @@
-import React from "react";
-import { TouchableHighlight, Text, GestureResponderEvent, StyleSheet } from 'react-native';
-import { eFontSize } from "lib/styles/fonts";
+import React from 'react';
+import {TouchableHighlight, Text, GestureResponderEvent} from 'react-native';
+import {eButtonVariant} from 'lib/enums/buttons';
+import defaultStyles, {
+  stylesSecondary,
+  stylesTertiary,
+  stylesPrimary,
+} from './Button.styles';
 
 type Props = {
-    title: string,
-    onPress?: (e: GestureResponderEvent) => void;
-    onPressAsync?: (e: GestureResponderEvent) => Promise<void>;
-    styles?: Record<string, Record<string, unknown>>;
-}
+  title: string;
+  onPress?: (e: GestureResponderEvent) => void;
+  onPressAsync?: (e: GestureResponderEvent) => Promise<void>;
+  styles?: Record<string, Record<string, unknown>>;
+  variant?: eButtonVariant;
+};
 
-const defaultStyles = StyleSheet.create({
-    button: {
-        borderWidth: 1,
-        borderRadius: 15,
-        paddingHorizontal: 12,
-        paddingVertical: 6,
-    },
-    title: {
-        fontSize: eFontSize.paragraph,
+const Button: React.FC<Props> = ({title, onPress, onPressAsync, variant}) => {
+  let styleSheet = defaultStyles;
+
+  switch (true) {
+    case variant === eButtonVariant.Secondary: {
+      styleSheet = stylesSecondary;
+      break;
     }
-});
+    case variant === eButtonVariant.Tertiary: {
+      styleSheet = stylesTertiary;
+      break;
+    }
+    default: {
+      styleSheet = stylesPrimary;
+    }
+  }
 
-const Button: React.FC<Props> = ({
-    title,
-    onPress,
-    onPressAsync,
-    styles,
-}) => (
-        <TouchableHighlight
-            style={Object.assign(styles ||{}, defaultStyles).button}
-            onPress={onPressAsync
-                ? onPressAsync
-                : onPress
-            }>
-            <Text style={Object.assign(styles||{}, defaultStyles).title}>
-                {title}
-            </Text>
-        </TouchableHighlight>
-    )
+  return (
+    <TouchableHighlight
+      underlayColor={'rgba(0,0,0,0.3)'}
+      style={styleSheet.button}
+      onPress={onPressAsync ? onPressAsync : onPress}>
+      <Text style={styleSheet.title}>{title}</Text>
+    </TouchableHighlight>
+  );
+};
 
 export default Button;

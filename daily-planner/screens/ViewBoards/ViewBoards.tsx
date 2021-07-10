@@ -6,8 +6,8 @@ import {CreationPageTemplate} from 'atomic/templates/CreationPageTemplate';
 import {ScrollView} from 'react-native';
 import {BoardCard} from 'atomic/atoms/BoardCard';
 import useBoards from 'lib/storageAccess/boards';
-import { eViews } from 'lib/enums/screens';
-import { modalNavigation } from 'lib/navigation/navigate';
+import {eViews} from 'lib/enums/screens';
+import {modalNavigation} from 'lib/navigation/navigate';
 
 type ViewsScreensProps = RouteProp<ViewsStackParamList, eViews.Boards>;
 
