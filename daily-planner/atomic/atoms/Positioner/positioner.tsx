@@ -64,5 +64,6 @@ export const Positioner: React.FC<Props> = ({
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    padding: 10,
   },
 });

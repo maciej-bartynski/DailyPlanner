@@ -3,6 +3,13 @@ import {eFontSize, eFontWeight} from 'lib/styles/fonts';
 import {shadowMain, shadowMain_disabled} from 'lib/styles/shadow';
 import {eColors} from 'lib/styles/colors';
 
+export const button_disabled = {
+  backgroundColor: eColors.Gray,
+  borderColor: 'transparent',
+  ...shadowMain_disabled,
+  color: eColors.White,
+};
+
 export const stylesPrimary = StyleSheet.create({
   button: {
     ...shadowMain,

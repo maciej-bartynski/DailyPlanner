@@ -1,5 +1,4 @@
 import React from 'react';
-import {Button} from 'react-native';
 import {Formik, FormikErrors} from 'formik';
 import {iTaskFormCreate} from 'lib/models/task';
 import useTasks from 'lib/storageAccess/tasks';
@@ -7,6 +6,7 @@ import {InputArea, InputText, InputRange, Positioner} from 'atomic';
 import navigationRef from 'lib/navigation/reference';
 import {ScrollView} from 'react-native-gesture-handler';
 import {eButtonTitles} from 'lib/enums/strings';
+import Button from 'atomic/atoms/Button';
 
 const creationInitialValues: iTaskFormCreate = {
   name: '',
@@ -14,9 +14,11 @@ const creationInitialValues: iTaskFormCreate = {
   duration: 20,
 };
 
-const TaskForm: React.FC<{
+type Props = {
   taskId?: string;
-}> = ({taskId}) => {
+};
+
+const TaskForm: React.FC<Props> = ({taskId}) => {
   const {methods} = useTasks();
   const {updateTask, getTask, createTask} = methods;
   const currentTask = taskId ? getTask(taskId) : null;

@@ -5,6 +5,7 @@ import defaultStyles, {
   stylesSecondary,
   stylesTertiary,
   stylesPrimary,
+  button_disabled,
 } from './Button.styles';
 
 type Props = {
@@ -13,9 +14,16 @@ type Props = {
   onPressAsync?: (e: GestureResponderEvent) => Promise<void>;
   styles?: Record<string, Record<string, unknown>>;
   variant?: eButtonVariant;
+  disabled?: boolean;
 };
 
-const Button: React.FC<Props> = ({title, onPress, onPressAsync, variant}) => {
+const Button: React.FC<Props> = ({
+  title,
+  onPress,
+  onPressAsync,
+  variant,
+  disabled = false,
+}) => {
   let styleSheet = defaultStyles;
 
   switch (true) {
@@ -35,9 +43,12 @@ const Button: React.FC<Props> = ({title, onPress, onPressAsync, variant}) => {
   return (
     <TouchableHighlight
       underlayColor={'rgba(0,0,0,0.3)'}
-      style={styleSheet.button}
-      onPress={onPressAsync ? onPressAsync : onPress}>
-      <Text style={styleSheet.title}>{title}</Text>
+      style={[styleSheet.button, disabled ? button_disabled : undefined]}
+      onPress={onPressAsync ? onPressAsync : onPress}
+      disabled={disabled}>
+      <Text style={[styleSheet.title, disabled ? button_disabled : undefined]}>
+        {title}
+      </Text>
     </TouchableHighlight>
   );
 };

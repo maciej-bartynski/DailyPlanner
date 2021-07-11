@@ -5,16 +5,16 @@ import buttonRoundedStyles from './ButtonRounded.styles';
 
 const onPressDefaultHandler = () => null;
 
-const ButtonRounded: React.FC<{
+type Props = {
   onPressHandler?: (event?: GestureResponderEvent) => unknown;
-}> = ({onPressHandler = onPressDefaultHandler}) => {
-  return (
-    <TouchableOpacity
-      onPress={onPressHandler}
-      style={buttonRoundedStyles.button}>
-      <Text style={buttonRoundedStyles.text}>+</Text>
-    </TouchableOpacity>
-  );
 };
+
+const ButtonRounded: React.FC<Props> = ({
+  onPressHandler = onPressDefaultHandler,
+}) => (
+  <TouchableOpacity onPress={onPressHandler} style={buttonRoundedStyles.button}>
+    <Text style={buttonRoundedStyles.text}>+</Text>
+  </TouchableOpacity>
+);
 
 export default ButtonRounded;
