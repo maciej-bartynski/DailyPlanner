@@ -2,11 +2,7 @@ import React from 'react';
 import {Formik, FormikErrors} from 'formik';
 import {iTaskFormCreate} from 'lib/models/task';
 import useTasks from 'lib/storageAccess/tasks';
-import {InputArea, InputText, InputRange, Positioner} from 'atomic';
-import navigationRef from 'lib/navigation/reference';
-import {ScrollView} from 'react-native-gesture-handler';
-import {eButtonTitles} from 'lib/enums/strings';
-import Button from 'atomic/atoms/Button';
+import TaskFormBody from 'atomic/organisms/TaskFormBody';
 
 const creationInitialValues: iTaskFormCreate = {
   name: '',
@@ -55,62 +51,7 @@ const TaskForm: React.FC<Props> = ({taskId}) => {
       initialValues={initialValues}
       validate={validate}
       onSubmit={onSubmit}>
-      {({
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        values,
-        errors,
-        isValid,
-        dirty,
-      }) => (
-        <>
-          <ScrollView style={{width: '100%', padding: 10}}>
-            <InputText
-              label="Task name"
-              placeholder="eg. Breakfast"
-              onChangeText={handleChange('name')}
-              onBlur={handleBlur('name')}
-              value={values.name}
-              expectError={true}
-              error={errors.name}
-            />
-
-            <InputArea
-              label="Description"
-              placeholder="Put some description"
-              onChangeText={handleChange('description')}
-              onBlur={handleBlur('description')}
-              value={values.description}
-              expectError={true}
-              error={errors.description}
-              numberOfLines={10}
-            />
-
-            <InputRange
-              min={1}
-              max={60}
-              value={values.duration}
-              label={'Duration (min)'}
-              onValueChange={handleChange('duration')}
-            />
-            <Positioner>
-              <Button
-                disabled={!(isValid && dirty)}
-                onPress={() => {
-                  handleSubmit();
-                  if (isValid) {
-                    navigationRef.current?.goBack();
-                  }
-                }}
-                title={
-                  taskId ? eButtonTitles.ApplyChanges : eButtonTitles.CreateTask
-                }
-              />
-            </Positioner>
-          </ScrollView>
-        </>
-      )}
+      <TaskFormBody taskId={taskId} />
     </Formik>
   );
 };

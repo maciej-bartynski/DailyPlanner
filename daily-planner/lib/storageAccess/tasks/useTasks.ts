@@ -11,7 +11,7 @@ import {
 import {useReducer, useMemo, useEffect} from 'react';
 import {hookReducer, hookStateInitial} from './useTasks.reducer';
 
-const tasksStorage = new Storage('TASKS');
+export const tasksStorage = new Storage('TASKS');
 
 const useTasks = () => {
   const [hookState, dispatchHookAction] = useReducer(
