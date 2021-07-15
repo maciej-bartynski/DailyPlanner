@@ -19,6 +19,7 @@ export type InputAreaProps = {
   label?: string;
   expectError?: boolean;
   numberOfLines?: number;
+  borderColor?: string;
 };
 
 export const InputArea: React.FC<InputAreaProps> = ({
@@ -30,9 +31,14 @@ export const InputArea: React.FC<InputAreaProps> = ({
   error,
   expectError = false,
   numberOfLines = 10,
+  borderColor,
 }) => {
+  const additionalStyle: Record<string, string> = {};
+  if (borderColor) {
+    additionalStyle.borderColor = borderColor;
+  }
   return (
-    <View style={styles.wrapper}>
+    <View style={[styles.wrapper, borderColor]}>
       {label ? <Text style={styles.label}>{label}</Text> : null}
       <TextInput
         style={styles.input}

@@ -10,12 +10,13 @@ import styles from './TaskCard.styles';
 type Props = {
   name: string;
   description?: string;
-  duration?: string;
+  duration?: number;
   taskId: string;
+  hours?: number;
 };
 
 const TaskCard: React.FC<Props> = props => {
-  const {name, description, duration, taskId} = props;
+  const {name, description, duration, taskId, hours} = props;
   const {methods} = useTasks();
 
   const deteleTask = useCallback(() => {
@@ -26,10 +27,11 @@ const TaskCard: React.FC<Props> = props => {
     modalNavigation.openModalCreateTask(taskId);
   }, [taskId]);
 
+  const durationString = `${hours ? `${hours} h. ` : ''}${duration} min.`;
   return (
     <View style={styles.wrapper}>
       <Text style={styles.name}>{name}</Text>
-      <Text style={styles.duration}>{duration} min.</Text>
+      <Text style={styles.duration}>{durationString}</Text>
       {description ? (
         <Text style={styles.description}>{description}</Text>
       ) : null}

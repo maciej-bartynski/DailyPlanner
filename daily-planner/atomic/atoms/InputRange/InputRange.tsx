@@ -1,8 +1,8 @@
-import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import React, { useRef } from 'react';
+import {View, Text} from 'react-native';
 import Slider from '@react-native-community/slider';
-import {mixins} from 'lib/styles/fonts';
 import {eColors} from 'lib/styles/colors';
+import styles from './InputRange.styles';
 
 export type InputRangeProps = {
   label?: string;
@@ -10,17 +10,24 @@ export type InputRangeProps = {
   max: number;
   value: number;
   onValueChange: (arg: string) => void;
+  borderColor?: string;
 };
 
-export const InputRange: React.FC<InputRangeProps> = ({
+const InputRange: React.FC<InputRangeProps> = ({
   label,
   min,
   max,
   value,
   onValueChange,
+  borderColor,
 }) => {
+  const additionalStyle: Record<string, string> = {};
+  if (borderColor) {
+    additionalStyle.borderColor = borderColor;
+  }
+
   return (
-    <View style={styles.wrapper}>
+    <View style={[styles.wrapper, additionalStyle]}>
       {label ? (
         <Text style={styles.label}>
           {label}: {value}
@@ -30,6 +37,7 @@ export const InputRange: React.FC<InputRangeProps> = ({
       )}
       <Slider
         style={styles.slider}
+        value={+useRef(value).current}
         minimumValue={min}
         maximumValue={max}
         minimumTrackTintColor="#000000"
@@ -43,20 +51,4 @@ export const InputRange: React.FC<InputRangeProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  wrapper: {
-    borderWidth: 1,
-    borderColor: eColors.secondaryDark,
-    borderRadius: 10,
-    padding: 10,
-  },
-  label: {
-    ...mixins.label,
-    marginBottom: 10,
-    marginLeft: 10,
-  },
-  slider: {
-    width: '100%',
-    height: 40,
-  },
-});
+export default InputRange;

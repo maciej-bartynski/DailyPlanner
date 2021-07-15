@@ -10,6 +10,7 @@ export enum eTaskFormFieldNames {
   Name = 'name',
   Description = 'description',
   Duration = 'duration',
+  Hours = 'hours',
 }
 
 const MIN_TASK_NAME_LEN = 4;
@@ -22,6 +23,7 @@ export const TaskFormInitialValues: iTaskFormCreate = {
   [eTaskFormFieldNames.Name]: '',
   [eTaskFormFieldNames.Description]: '',
   [eTaskFormFieldNames.Duration]: 20,
+  [eTaskFormFieldNames.Hours]: 0,
 };
 
 export enum eTaskFormIssueCode {
@@ -149,7 +151,7 @@ export const taskFormValidation = async (values: iTaskFormCreate) => {
 };
 
 export const taskFormWarningManager = async (values: iTaskFormCreate) => {
-  const errors: FormikErrors<Record<eTaskFormFieldNames, string>> = {};
+  const errors: Partial<Record<keyof iTaskFormCreate, string>> = {};
 
   const nameValue = values[eTaskFormFieldNames.Name];
   const durationValue = values[eTaskFormFieldNames.Duration];

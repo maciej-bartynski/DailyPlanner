@@ -1,6 +1,7 @@
 import {StyleSheet} from 'react-native';
 import {shadowMain} from 'lib/styles/shadow';
 import {eColors} from 'lib/styles/colors';
+import {eFontWeight} from 'lib/styles/fonts';
 
 const navigationTabBarStyles = StyleSheet.create({
   navigationTabBar: {
@@ -18,11 +19,9 @@ const navigationTabBarStyles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1,
     borderColor: eColors.White,
     backgroundColor: eColors.Primary,
     borderRadius: 20,
-    ...shadowMain,
   },
   navigationTabBar__itemButton_active: {
     height: '100%',
@@ -38,6 +37,7 @@ const navigationTabBarStyles = StyleSheet.create({
   },
   navigationTabBar__itemLabel_active: {
     color: eColors.Blue,
+    fontWeight: eFontWeight.black,
   },
 });
 

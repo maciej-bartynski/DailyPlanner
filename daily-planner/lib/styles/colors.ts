@@ -16,4 +16,6 @@ export enum eColors {
   White = 'white',
   Primary = '#b6c2b7',
   Secondary = '#cccab5',
+  Warning = 'orange',
+  Error = 'red',
 }

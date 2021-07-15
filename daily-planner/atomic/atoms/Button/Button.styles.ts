@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {eFontSize, eFontWeight} from 'lib/styles/fonts';
-import {shadowMain, shadowMain_disabled} from 'lib/styles/shadow';
+import {shadowMain_disabled} from 'lib/styles/shadow';
 import {eColors} from 'lib/styles/colors';
 
 export const button_disabled = {
@@ -12,16 +12,16 @@ export const button_disabled = {
 
 export const stylesPrimary = StyleSheet.create({
   button: {
-    ...shadowMain,
     borderColor: eColors.Blue as string,
-    borderWidth: 1,
+    borderWidth: 0,
     borderRadius: 15,
     paddingHorizontal: 12,
-    paddingVertical: 6,
-    backgroundColor: eColors.White,
+    paddingTop: 10,
+    paddingBottom: 12,
+    backgroundColor: eColors.Blue,
   },
   title: {
-    color: 'blue',
+    color: eColors.White,
     fontSize: eFontSize.paragraph,
     fontWeight: eFontWeight.bold,
   },
@@ -29,12 +29,12 @@ export const stylesPrimary = StyleSheet.create({
 
 export const stylesSecondary = StyleSheet.create({
   button: {
-    ...shadowMain,
     borderColor: eColors.Gray as string,
     borderWidth: 1,
     borderRadius: 15,
     paddingHorizontal: 12,
-    paddingVertical: 6,
+    paddingTop: 10,
+    paddingBottom: 12,
     backgroundColor: eColors.White,
   },
   title: {
@@ -50,9 +50,9 @@ export const stylesTertiary = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 15,
     paddingHorizontal: 12,
-    paddingVertical: 6,
+    paddingTop: 10,
+    paddingBottom: 12,
     backgroundColor: eColors.White,
-    ...shadowMain_disabled,
   },
   title: {
     color: eColors.Gray,

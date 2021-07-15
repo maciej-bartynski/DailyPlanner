@@ -10,8 +10,6 @@ const buttonRoundedStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 40,
-    borderColor: eColors.White,
-    borderWidth: 1,
     ...shadowMain,
   },
   text: {

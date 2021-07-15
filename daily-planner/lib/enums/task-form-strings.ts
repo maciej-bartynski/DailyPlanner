@@ -4,4 +4,5 @@ export enum eTaskFormFieldTexts {
   DescriptionLabel = 'Task description',
   DescriptionPlaceholder = 'Put some description here',
   DurationLabel = 'Duration (min)',
+  HoursLabel = 'Duration (hours)',
 }

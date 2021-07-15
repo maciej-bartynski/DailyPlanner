@@ -44,7 +44,8 @@ const ViewTasks: React.FC<ViewProp> = () => {
                   taskId={task.id}
                   name={task.name}
                   description={task.description}
-                  duration={'' + task.duration}
+                  duration={+task.duration}
+                  hours={+task.hours}
                 />
               </ViewTasksTaskWrapper>
             );

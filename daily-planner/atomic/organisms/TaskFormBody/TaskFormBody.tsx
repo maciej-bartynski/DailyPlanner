@@ -1,9 +1,8 @@
-import React, {useState, useEffect} from 'react';
-import {InputArea, InputText, InputRange} from 'atomic';
+import React from 'react';
 import navigationRef from 'lib/navigation/reference';
 import Button from 'atomic/atoms/Button';
 import {iTaskFormCreate} from 'lib/models/task';
-import {useFormikContext, FormikErrors} from 'formik';
+import {useFormikContext} from 'formik';
 import {eButtonTitles} from 'lib/enums/strings';
 import Positioner from './atoms/Positioner';
 import ScrollViewStyled from './atoms/ScrollView';
@@ -12,7 +11,12 @@ import {
   eTaskFormFieldNames,
   taskFormWarningManager,
 } from 'components/TaskForm/config';
-import {Text} from 'react-native';
+import FormField from 'atomic/molecules/FormField';
+import {eFieldType} from 'lib/enums/forms';
+import {InputTextProps} from 'atomic/atoms/InputText/inputText';
+import {InputRangeProps} from 'atomic/atoms/InputRange/InputRange';
+import {InputAreaProps} from 'atomic/atoms/InputArea/inputArea';
+import formFieldStyles from './stylesOverride/FormField.styles';
 
 type Props = {
   taskId?: string;
@@ -29,35 +33,29 @@ const useSubmitButtonAction = (
     }
   }, [handleSubmit, isValid]);
 
-const useWarnings = (values: iTaskFormCreate) => {
-  const [warnings, setWarnings] = useState<
-    FormikErrors<Record<eTaskFormFieldNames, string>>
-  >({});
 
-  async function getWarnings(valuesReceived: iTaskFormCreate) {
-    const warns = await taskFormWarningManager(valuesReceived);
-    setWarnings(warns);
+function determineTimeEdgeValues(currentMin: number, currentHours: number){
+  return {
+    hoursMaxValue: currentMin ? 23 : 24,
+    minutesMaxValue: currentHours ? 59 : 60,
+    minutesMinValue: currentHours ? 0 : 1
   }
-
-  useEffect(() => {
-    getWarnings(values);
-  }, [values]);
-
-  return warnings;
-};
+}
 
 const TaskFormBody: React.FC<Props> = ({taskId}) => {
-  const {
-    handleChange,
-    handleBlur,
-    values,
-    errors,
-    isValid,
-    dirty,
-    handleSubmit,
-  } = useFormikContext<iTaskFormCreate>();
+  const {isValid, dirty, handleSubmit, values} = useFormikContext<iTaskFormCreate>();
 
-  const warnings = useWarnings(values);
+  const currentDurationValue = +values[eTaskFormFieldNames.Duration];
+  const currentHoursValue = +values[eTaskFormFieldNames.Hours];
+
+  const { 
+    hoursMaxValue,
+    minutesMaxValue,
+    minutesMinValue
+  } = determineTimeEdgeValues(
+    currentDurationValue,
+    currentHoursValue
+  )
 
   const submitButtonTitle = taskId
     ? eButtonTitles.ApplyChanges
@@ -67,39 +65,38 @@ const TaskFormBody: React.FC<Props> = ({taskId}) => {
 
   return (
     <ScrollViewStyled>
-      <InputText
+      <FormField<iTaskFormCreate, InputTextProps>
+        name={eTaskFormFieldNames.Name}
+        type={eFieldType.TextInput}
         label={eTaskFormFieldTexts.NameLabel}
-        placeholder={eTaskFormFieldTexts.DescriptionPlaceholder}
-        onChangeText={handleChange('name')}
-        onBlur={handleBlur('name')}
-        value={values.name}
-        expectError={true}
-        error={errors.name}
+        placeholder={eTaskFormFieldTexts.NamePlaceholder}
+        formWarningManager={taskFormWarningManager}
       />
-      <Text>{warnings?.name}</Text>
-
-      <InputArea
+      <FormField<iTaskFormCreate, InputAreaProps>
+        name={eTaskFormFieldNames.Description}
+        type={eFieldType.TextArea}
         label={eTaskFormFieldTexts.DescriptionLabel}
         placeholder={eTaskFormFieldTexts.DescriptionPlaceholder}
-        onChangeText={handleChange('description')}
-        onBlur={handleBlur('description')}
-        value={values.description}
-        expectError={true}
-        error={errors.description}
-        numberOfLines={10}
+        formWarningManager={taskFormWarningManager}
       />
-
-      <Text>{warnings?.description}</Text>
-
-      <InputRange
-        min={1}
-        max={60}
-        value={values.duration}
+      <FormField<iTaskFormCreate, InputRangeProps>
+        name={eTaskFormFieldNames.Hours}
+        type={eFieldType.ValueSlider}
+        label={eTaskFormFieldTexts.HoursLabel}
+        formWarningManager={taskFormWarningManager}
+        min={0}
+        max={hoursMaxValue}
+        styles={formFieldStyles}
+      />
+      <FormField<iTaskFormCreate, InputRangeProps>
+        name={eTaskFormFieldNames.Duration}
+        type={eFieldType.ValueSlider}
         label={eTaskFormFieldTexts.DurationLabel}
-        onValueChange={handleChange('duration')}
+        formWarningManager={taskFormWarningManager}
+        min={minutesMinValue}
+        max={minutesMaxValue}
+        styles={formFieldStyles}
       />
-
-      <Text>{warnings?.duration}</Text>
       <Positioner>
         <Button
           disabled={!(isValid && dirty)}

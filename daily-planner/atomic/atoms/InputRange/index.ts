@@ -1,1 +1,1 @@
-export {InputRange} from './inputRange';
+export {default} from './InputRange';
