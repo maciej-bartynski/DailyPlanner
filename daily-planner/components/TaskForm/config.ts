@@ -62,7 +62,7 @@ export const cTaskFormIssuesSeverity = {
 
 async function testFunc(x: string) {
   return new Promise(res => {
-    res(!!x);
+    res(!x);
   });
 }
 

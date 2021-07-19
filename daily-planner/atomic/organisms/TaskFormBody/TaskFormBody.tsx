@@ -1,22 +1,23 @@
 import React from 'react';
 import navigationRef from 'lib/navigation/reference';
 import Button from 'atomic/atoms/Button';
-import {iTaskFormCreate} from 'lib/models/task';
-import {useFormikContext} from 'formik';
-import {eButtonTitles} from 'lib/enums/strings';
+import { iTaskFormCreate } from 'lib/models/task';
+import { useFormikContext } from 'formik';
+import { eButtonTitles } from 'lib/enums/strings';
 import Positioner from './atoms/Positioner';
 import ScrollViewStyled from './atoms/ScrollView';
-import {eTaskFormFieldTexts} from 'lib/enums/task-form-strings';
+import { eTaskFormFieldTexts } from 'lib/enums/task-form-strings';
 import {
   eTaskFormFieldNames,
   taskFormWarningManager,
 } from 'components/TaskForm/config';
 import FormField from 'atomic/molecules/FormField';
-import {eFieldType} from 'lib/enums/forms';
-import {InputTextProps} from 'atomic/atoms/InputText/inputText';
-import {InputRangeProps} from 'atomic/atoms/InputRange/InputRange';
-import {InputAreaProps} from 'atomic/atoms/InputArea/inputArea';
+import { eFieldType } from 'lib/enums/forms';
+import { InputTextProps } from 'atomic/atoms/InputText/InputText';
+import { InputRangeProps } from 'atomic/atoms/InputValueSlider/InputValueSlider';
+import { InputAreaProps } from 'atomic/atoms/InputArea/inputArea';
 import formFieldStyles from './stylesOverride/FormField.styles';
+import FieldLabel from 'atomic/atoms/FieldLabel';
 
 type Props = {
   taskId?: string;
@@ -34,7 +35,7 @@ const useSubmitButtonAction = (
   }, [handleSubmit, isValid]);
 
 
-function determineTimeEdgeValues(currentMin: number, currentHours: number){
+function determineTimeEdgeValues(currentMin: number, currentHours: number) {
   return {
     hoursMaxValue: currentMin ? 23 : 24,
     minutesMaxValue: currentHours ? 59 : 60,
@@ -42,13 +43,13 @@ function determineTimeEdgeValues(currentMin: number, currentHours: number){
   }
 }
 
-const TaskFormBody: React.FC<Props> = ({taskId}) => {
-  const {isValid, dirty, handleSubmit, values} = useFormikContext<iTaskFormCreate>();
+const TaskFormBody: React.FC<Props> = ({ taskId }) => {
+  const { isValid, dirty, handleSubmit, values } = useFormikContext<iTaskFormCreate>();
 
   const currentDurationValue = +values[eTaskFormFieldNames.Duration];
   const currentHoursValue = +values[eTaskFormFieldNames.Hours];
 
-  const { 
+  const {
     hoursMaxValue,
     minutesMaxValue,
     minutesMinValue
@@ -79,24 +80,28 @@ const TaskFormBody: React.FC<Props> = ({taskId}) => {
         placeholder={eTaskFormFieldTexts.DescriptionPlaceholder}
         formWarningManager={taskFormWarningManager}
       />
-      <FormField<iTaskFormCreate, InputRangeProps>
-        name={eTaskFormFieldNames.Hours}
-        type={eFieldType.ValueSlider}
-        label={eTaskFormFieldTexts.HoursLabel}
-        formWarningManager={taskFormWarningManager}
-        min={0}
-        max={hoursMaxValue}
-        styles={formFieldStyles}
-      />
-      <FormField<iTaskFormCreate, InputRangeProps>
-        name={eTaskFormFieldNames.Duration}
-        type={eFieldType.ValueSlider}
-        label={eTaskFormFieldTexts.DurationLabel}
-        formWarningManager={taskFormWarningManager}
-        min={minutesMinValue}
-        max={minutesMaxValue}
-        styles={formFieldStyles}
-      />
+      <FieldLabel label='Task duration'>
+        <FormField<iTaskFormCreate, InputRangeProps>
+          name={eTaskFormFieldNames.Hours}
+          type={eFieldType.ValueSlider}
+          label={eTaskFormFieldTexts.HoursLabel}
+          formWarningManager={taskFormWarningManager}
+          min={0}
+          max={hoursMaxValue}
+          formFieldStyles={formFieldStyles}
+          unit='hour(s)'
+        />
+        <FormField<iTaskFormCreate, InputRangeProps>
+          name={eTaskFormFieldNames.Duration}
+          type={eFieldType.ValueSlider}
+          label={eTaskFormFieldTexts.DurationLabel}
+          formWarningManager={taskFormWarningManager}
+          min={minutesMinValue}
+          max={minutesMaxValue}
+          formFieldStyles={formFieldStyles}
+          unit='minute(s)'
+        />
+      </FieldLabel>
       <Positioner>
         <Button
           disabled={!(isValid && dirty)}

@@ -1,22 +1,24 @@
 import React, { PropsWithChildren } from 'react';
-import { Text, View } from 'react-native';
+import { Text } from 'react-native';
 import defaultStyles, { tFormFieldStylesheetType } from './FormField.styles';
 import { useFormikContext } from 'formik';
 import useWarnings from './useWarning';
-import { InputText, InputArea } from 'atomic/atoms';
-import InputRange from 'atomic/atoms/InputRange';
-import { InputTextProps } from 'atomic/atoms/InputText/inputText';
-import { InputRangeProps } from 'atomic/atoms/InputRange/InputRange';
+import { InputArea } from 'atomic/atoms';
+import InputText from 'atomic/atoms/InputText';
+import InputRange from 'atomic/atoms/InputValueSlider';
+import { InputTextProps } from 'atomic/atoms/InputText/InputText';
+import { InputRangeProps } from 'atomic/atoms/InputValueSlider/InputValueSlider';
 import { InputAreaProps } from 'atomic/atoms/InputArea/inputArea';
 import { eFieldType } from 'lib/enums/forms';
 import { eColors } from 'lib/styles/colors';
 import useResultStylesheet from 'lib/hooks/useResultStylesheet';
+import FieldLabel from 'atomic/atoms/FieldLabel';
 
 type FormFieldRequiredProps<FormContextType> = {
   name: keyof FormContextType;
-  label?: string;
+  label: string;
   type: eFieldType;
-  styles?: tFormFieldStylesheetType;
+  formFieldStyles?: Partial<tFormFieldStylesheetType>;
   formWarningManager: (
     values: FormContextType,
   ) => Promise<Partial<Record<keyof FormContextType, string>>>;
@@ -33,7 +35,7 @@ const FormField = function <FormContextType, CustomInputProps>(
   >,
 ) {
   const {
-    styles,
+    formFieldStyles,
     name,
     label,
     formWarningManager,
@@ -44,7 +46,7 @@ const FormField = function <FormContextType, CustomInputProps>(
 
   const resultStyles = useResultStylesheet<tFormFieldStylesheetType>({
     defaultStyles,
-    styles,
+    styles: formFieldStyles
   })
 
   const { handleChange, handleBlur, values, errors } =
@@ -72,8 +74,8 @@ const FormField = function <FormContextType, CustomInputProps>(
           {...fieldProps}
           value={currentValue as unknown as string}
           onChangeText={onChangeHandler}
-          borderColor={borderColor}
           onBlur={onBlurHandler}
+          borderColor={borderColor}
         />
       );
       break;
@@ -85,8 +87,8 @@ const FormField = function <FormContextType, CustomInputProps>(
           {...fieldProps}
           value={currentValue as unknown as string}
           onChangeText={onChangeHandler}
-          borderColor={borderColor}
           onBlur={onBlurHandler}
+          borderColor={borderColor}
         />
       );
       break;
@@ -110,14 +112,16 @@ const FormField = function <FormContextType, CustomInputProps>(
 
   return (
     currentInputElement && (
-      <View style={resultStyles.wrapper}>
-        {label ? <Text style={resultStyles.label}>{label}</Text> : null}
+      <FieldLabel
+        label={label || ''}
+        styles={resultStyles}
+      >
         {currentInputElement}
-        {currentError ? <Text style={resultStyles.error}>{currentError}</Text> : null}
+        {currentError ? <Text style={resultStyles.fieldError}>{currentError}</Text> : null}
         {!currentError && currentWarning ? (
-          <Text style={resultStyles.warning}>{currentWarning}</Text>
+          <Text style={resultStyles.fieldWarning}>{currentWarning}</Text>
         ) : null}
-      </View>
+      </FieldLabel>
     )
   );
 };

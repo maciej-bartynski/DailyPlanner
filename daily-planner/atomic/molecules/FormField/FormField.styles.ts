@@ -1,29 +1,36 @@
-import {StyleSheet} from 'react-native';
-import {mixins} from 'lib/styles/fonts';
-import {eColors} from 'lib/styles/colors';
+import { StyleSheet, StyleProp, ViewStyle } from 'react-native';
+import { mixins } from 'lib/styles/fonts';
+import { eColors } from 'lib/styles/colors';
 
-const styles = StyleSheet.create({
-  wrapper: {
-    paddingVertical: 10,
+export interface tFormFieldStylesheetType {
+  fieldWrapper: StyleProp<ViewStyle>,
+  fieldLabel: StyleProp<ViewStyle>,
+  fieldError: StyleProp<ViewStyle>,
+  fieldWarning: StyleProp<ViewStyle>,
+}
+
+const styles: tFormFieldStylesheetType = StyleSheet.create({
+  fieldWrapper: {
+    width: '100%'
   },
-  error: {
+  fieldLabel: {
+    ...mixins.label,
+    paddingLeft: 10,
+    paddingBottom: 10,
+    paddingTop: 15,
+  },
+  fieldError: {
     ...mixins.input,
     marginBottom: 10,
     marginLeft: 10,
     color: eColors.Error,
   },
-  warning: {
+  fieldWarning: {
     ...mixins.input,
     marginBottom: 10,
     marginLeft: 10,
     color: eColors.Warning,
   },
-  label: {
-    ...mixins.label,
-    marginBottom: 10,
-    marginLeft: 10,
-  },
 });
 
-export type tFormFieldStylesheetType = typeof styles;
 export default styles;
