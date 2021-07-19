@@ -1,8 +1,8 @@
-import React, { useRef } from 'react';
-import { View, Text } from 'react-native';
+import React, {useRef} from 'react';
+import {View, Text} from 'react-native';
 import Slider from '@react-native-community/slider';
-import { eColors } from 'lib/styles/colors';
-import defaultStyles, { iInputRangeStylesheet } from './InputValueSlider.styles';
+import {eColors} from 'lib/styles/colors';
+import defaultStyles, {iInputRangeStylesheet} from './InputValueSlider.styles';
 import useResultStylesheet from 'lib/hooks/useResultStylesheet';
 
 export type InputRangeProps = {
@@ -10,10 +10,10 @@ export type InputRangeProps = {
   min: number;
   max: number;
   value: number;
-  unit?: string,
+  unit?: string;
   onValueChange: (arg: string) => void;
   borderColor?: string;
-  styles?: Partial<iInputRangeStylesheet>
+  styles?: Partial<iInputRangeStylesheet>;
 };
 
 const InputValueSlider: React.FC<InputRangeProps> = ({
@@ -23,14 +23,21 @@ const InputValueSlider: React.FC<InputRangeProps> = ({
   value,
   onValueChange,
   borderColor,
-  styles
+  styles,
 }) => {
-  const resultStyles = useResultStylesheet<iInputRangeStylesheet>({ defaultStyles, styles })
+  const resultStyles = useResultStylesheet<iInputRangeStylesheet>({
+    defaultStyles,
+    styles,
+  });
 
   return (
-    <View style={[resultStyles.input, borderColor?{borderColor}:null]}>
-      <Text style={resultStyles.input__value}>{value} {unit}</Text>
-      <Text numberOfLines={1} style={resultStyles.input__minLabel}>{min}</Text>
+    <View style={[resultStyles.input, borderColor ? {borderColor} : null]}>
+      <Text style={resultStyles.input__value}>
+        {value} {unit}
+      </Text>
+      <Text numberOfLines={1} style={resultStyles.input__minLabel}>
+        {min}
+      </Text>
       <Slider
         style={resultStyles.input__slider}
         value={+useRef(value).current}
@@ -43,7 +50,9 @@ const InputValueSlider: React.FC<InputRangeProps> = ({
           onValueChange('' + arg);
         }}
       />
-      <Text numberOfLines={1} style={resultStyles.input__maxLabel}>{max}</Text>
+      <Text numberOfLines={1} style={resultStyles.input__maxLabel}>
+        {max}
+      </Text>
     </View>
   );
 };

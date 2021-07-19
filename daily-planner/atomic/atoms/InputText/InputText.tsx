@@ -1,17 +1,16 @@
 import React from 'react';
-import { TextInput } from 'react-native-gesture-handler';
+import {TextInput} from 'react-native-gesture-handler';
 import useResultStylesheet from 'lib/hooks/useResultStylesheet';
-import { iInputTextStyleSheet } from './InputText.styles';
+import {iInputTextStyleSheet} from './InputText.styles';
 import defaultStyles from './InputText.styles';
-import { StyleSheet } from 'react-native';
 
 export type InputTextProps = {
   placeholder?: string;
   onChangeText: (text: string) => void;
   onBlur?: (e: any) => void;
   value: string;
-  styles?: Partial<iInputTextStyleSheet>,
-  borderColor?: string
+  styles?: Partial<iInputTextStyleSheet>;
+  borderColor?: string;
 };
 
 const InputText: React.FC<InputTextProps> = ({
@@ -20,17 +19,16 @@ const InputText: React.FC<InputTextProps> = ({
   onBlur,
   value,
   styles,
-  borderColor
+  borderColor,
 }) => {
-
   const resultStyles = useResultStylesheet<iInputTextStyleSheet>({
     defaultStyles,
-    styles
+    styles,
   });
 
   return (
     <TextInput
-      style={[resultStyles.input, borderColor ? { borderColor } : null ]}
+      style={[resultStyles.input, borderColor ? {borderColor} : null]}
       placeholder={placeholder}
       onChangeText={onChangeText}
       onBlur={onBlur}
@@ -39,4 +37,4 @@ const InputText: React.FC<InputTextProps> = ({
   );
 };
 
-export default InputText
+export default InputText;

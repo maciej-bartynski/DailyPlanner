@@ -1,15 +1,15 @@
-import { StyleSheet, StyleProp, ViewStyle, TextStyle } from "react-native";
-import { eColors } from "lib/styles/colors";
-import { mixins } from "lib/styles/fonts";
+import {StyleSheet, StyleProp, ViewStyle, TextStyle} from 'react-native';
+import {eColors} from 'lib/styles/colors';
+import {mixins} from 'lib/styles/fonts';
 
 export interface iInputRangeStylesheet {
-  wrapper: StyleProp<ViewStyle>,
-  label:  StyleProp<TextStyle>,
-  input: StyleProp<ViewStyle>,
-  input__value: StyleProp<TextStyle>,
-  input__minLabel:StyleProp<TextStyle>,
-  input__maxLabel: StyleProp<TextStyle>,
-  input__slider:StyleProp<ViewStyle>,
+  wrapper: StyleProp<ViewStyle>;
+  label: StyleProp<TextStyle>;
+  input: StyleProp<ViewStyle>;
+  input__value: StyleProp<TextStyle>;
+  input__minLabel: StyleProp<TextStyle>;
+  input__maxLabel: StyleProp<TextStyle>;
+  input__slider: StyleProp<ViewStyle>;
 }
 
 const styles: iInputRangeStylesheet = StyleSheet.create({
@@ -33,7 +33,7 @@ const styles: iInputRangeStylesheet = StyleSheet.create({
     width: '100%',
     textAlign: 'center',
   },
-  input__minLabel:{
+  input__minLabel: {
     ...mixins.label,
     flex: 0,
   },

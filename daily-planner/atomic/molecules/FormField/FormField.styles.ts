@@ -1,17 +1,17 @@
-import { StyleSheet, StyleProp, ViewStyle } from 'react-native';
-import { mixins } from 'lib/styles/fonts';
-import { eColors } from 'lib/styles/colors';
+import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
+import {mixins} from 'lib/styles/fonts';
+import {eColors} from 'lib/styles/colors';
 
 export interface tFormFieldStylesheetType {
-  fieldWrapper: StyleProp<ViewStyle>,
-  fieldLabel: StyleProp<ViewStyle>,
-  fieldError: StyleProp<ViewStyle>,
-  fieldWarning: StyleProp<ViewStyle>,
+  fieldWrapper: StyleProp<ViewStyle>;
+  fieldLabel: StyleProp<ViewStyle>;
+  fieldError: StyleProp<ViewStyle>;
+  fieldWarning: StyleProp<ViewStyle>;
 }
 
 const styles: tFormFieldStylesheetType = StyleSheet.create({
   fieldWrapper: {
-    width: '100%'
+    width: '100%',
   },
   fieldLabel: {
     ...mixins.label,

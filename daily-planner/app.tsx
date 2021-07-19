@@ -9,6 +9,7 @@ import Modals from 'lib/navigation/screens.modals';
 import {Provider} from 'react-redux';
 import store from 'lib/storageRedux/storageRedux.store';
 import {eScreens} from 'lib/enums/screens';
+
 const MainStack = createStackNavigator<MainStackParamList>();
 
 const ScreensConfiguration = {

@@ -3,10 +3,10 @@ import {eColors} from 'lib/styles/colors';
 import {mixins} from 'lib/styles/fonts';
 
 export interface iInputTextStyleSheet {
-    input: StyleProp<ViewStyle>
+  input: StyleProp<ViewStyle>;
 }
 
-const defaultStyles:iInputTextStyleSheet = StyleSheet.create({
+const defaultStyles: iInputTextStyleSheet = StyleSheet.create({
   input: {
     width: '100%',
     height: 60,

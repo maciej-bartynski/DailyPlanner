@@ -1,16 +1,16 @@
-import React, { PropsWithChildren } from 'react';
-import { Text } from 'react-native';
-import defaultStyles, { tFormFieldStylesheetType } from './FormField.styles';
-import { useFormikContext } from 'formik';
+import React, {PropsWithChildren} from 'react';
+import {Text} from 'react-native';
+import defaultStyles, {tFormFieldStylesheetType} from './FormField.styles';
+import {useFormikContext} from 'formik';
 import useWarnings from './useWarning';
-import { InputArea } from 'atomic/atoms';
+import {InputArea} from 'atomic/atoms';
 import InputText from 'atomic/atoms/InputText';
 import InputRange from 'atomic/atoms/InputValueSlider';
-import { InputTextProps } from 'atomic/atoms/InputText/InputText';
-import { InputRangeProps } from 'atomic/atoms/InputValueSlider/InputValueSlider';
-import { InputAreaProps } from 'atomic/atoms/InputArea/inputArea';
-import { eFieldType } from 'lib/enums/forms';
-import { eColors } from 'lib/styles/colors';
+import {InputTextProps} from 'atomic/atoms/InputText/InputText';
+import {InputRangeProps} from 'atomic/atoms/InputValueSlider/InputValueSlider';
+import {InputAreaProps} from 'atomic/atoms/InputArea/inputArea';
+import {eFieldType} from 'lib/enums/forms';
+import {eColors} from 'lib/styles/colors';
 import useResultStylesheet from 'lib/hooks/useResultStylesheet';
 import FieldLabel from 'atomic/atoms/FieldLabel';
 
@@ -34,22 +34,15 @@ const FormField = function <FormContextType, CustomInputProps>(
     InputProps<CustomInputProps> & FormFieldRequiredProps<FormContextType>
   >,
 ) {
-  const {
-    formFieldStyles,
-    name,
-    label,
-    formWarningManager,
-    type,
-    children,
-    ...rest
-  } = props;
+  const {formFieldStyles, name, label, formWarningManager, type, ...rest} =
+    props;
 
   const resultStyles = useResultStylesheet<tFormFieldStylesheetType>({
     defaultStyles,
-    styles: formFieldStyles
-  })
+    styles: formFieldStyles,
+  });
 
-  const { handleChange, handleBlur, values, errors } =
+  const {handleChange, handleBlur, values, errors} =
     useFormikContext<FormContextType>();
 
   const currentValue = values[name];
@@ -63,8 +56,8 @@ const FormField = function <FormContextType, CustomInputProps>(
   const borderColor = currentError
     ? eColors.Error
     : currentWarning
-      ? eColors.Warning
-      : eColors.Primary;
+    ? eColors.Warning
+    : eColors.Primary;
 
   switch (true) {
     case type === eFieldType.TextInput: {
@@ -112,12 +105,11 @@ const FormField = function <FormContextType, CustomInputProps>(
 
   return (
     currentInputElement && (
-      <FieldLabel
-        label={label || ''}
-        styles={resultStyles}
-      >
+      <FieldLabel label={label || ''} styles={resultStyles}>
         {currentInputElement}
-        {currentError ? <Text style={resultStyles.fieldError}>{currentError}</Text> : null}
+        {currentError ? (
+          <Text style={resultStyles.fieldError}>{currentError}</Text>
+        ) : null}
         {!currentError && currentWarning ? (
           <Text style={resultStyles.fieldWarning}>{currentWarning}</Text>
         ) : null}
