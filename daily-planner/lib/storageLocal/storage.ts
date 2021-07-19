@@ -39,7 +39,9 @@ class Storage implements iTable {
     }
   }
 
-  async getItem(id: string) {
+  async getItem<ItemType = unknown>(id: string): Promise<[
+    string, ItemType | null, number?, string? 
+  ]> {
     const storageKey = keyToStorageKey(this, id);
     try {
       const storageString = (await AsyncStorage.getItem(storageKey)) || '';
@@ -75,8 +77,8 @@ class Storage implements iTable {
     }
   }
 
-  async patchItem(key: string, fields: Record<string, unknown>) {
-    const [err, item, createdAt] = await this.getItem(key);
+  async patchItem<FieldsType>(key: string, fields: Record<string, unknown>) {
+    const [err, item, createdAt] = await this.getItem<FieldsType>(key);
 
     if (!item) {
       return [`Item not found - ${err}`, null];
