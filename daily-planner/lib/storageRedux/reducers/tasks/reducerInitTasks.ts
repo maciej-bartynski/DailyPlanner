@@ -1,22 +1,20 @@
-import { eTasksActions, iTasksState } from 'lib/storageRedux/storageRedux.types';
-import { iTask } from 'lib/models/task';
-import { Reducer } from 'redux';
-import { tasksInitialState } from './initialState';
-import { tTaskInitAction } from 'lib/storageRedux/actions/tasks/types';
+import {iTasksState} from './types';
+import {Reducer} from 'redux';
+import {tActionTaskInit} from 'lib/storageRedux/actions/tasks/types';
 
-type tReducerInitTasks = Reducer<iTasksState, tTaskInitAction>;
+type tReducerInitTasks = Reducer<iTasksState, tActionTaskInit>;
 
-const reducerInitTasks: tReducerInitTasks =
-    (tasksState = tasksInitialState, action): iTasksState => {
-        return {
-            loading: false,
-            message: action.payload.message,
-            severity: action.payload.severity,
-            data: {
-                total: Object.keys(action.payload.tasks).length,
-                tasks: action.payload.tasks,
-            }
-        };
-    };
+const reducerInitTasks: tReducerInitTasks = (_, action): iTasksState => {
+  const tasksAmount = Object.keys(action.payload.tasks).length;
+  return {
+    loading: false,
+    message: action.payload.message,
+    severity: action.payload.severity,
+    data: {
+      total: tasksAmount,
+      tasks: tasksAmount ? action.payload.tasks : null,
+    },
+  };
+};
 
 export default reducerInitTasks;

@@ -1,118 +1,110 @@
-import { iTask } from 'lib/models/task';
-import { useReducer, useMemo, useEffect } from 'react';
-import { tasksInitialState, tasksReducer, eUseTasksActionName } from './useTasks.reducer';
+import {iTask} from 'lib/models/task';
+import {useMemo, useEffect} from 'react';
 import getTasks from 'api/tasks/getTasks';
 import apiUpdateTask from 'api/tasks/updateTask';
 import apiDeleteTask from 'api/tasks/deleteTask';
 import apiCreateTask from 'api/tasks/createTask';
 import getTaskById from 'api/tasks/getTaskById';
+import {
+  RootState,
+  useAppSelector,
+  useAppDispatch,
+} from 'lib/storageRedux/storageRedux.store';
+import {eTasksActions} from 'lib/storageRedux/actions/tasks/types';
+
+const selectorGetTasksState = (state: RootState) => state.tasks;
 
 const useTasks = () => {
-  const [state, dispatch] = useReducer(tasksReducer, tasksInitialState);
+  const _dispatch = useAppDispatch();
+  const tasks = useAppSelector(selectorGetTasksState);
 
   const createTask = async (fields: Omit<iTask, 'id'>) => {
-    dispatch({ type: eUseTasksActionName.Loading });
-    const { severity: creationSeverity, message: creationMessage, data: taskId } = await apiCreateTask(fields);
+    _dispatch({type: eTasksActions.TASKS_LOADING, payload: {loading: true}});
+    const {
+      severity: creationSeverity,
+      message: creationMessage,
+      data: taskId,
+    } = await apiCreateTask(fields);
 
     if (!taskId) {
-      dispatch({
-        type: eUseTasksActionName.Data,
-        severity: creationSeverity,
-        message: creationMessage,
+      _dispatch({
+        type: eTasksActions.TASKS_ISSUE,
+        payload: {
+          severity: creationSeverity,
+          message: creationMessage,
+        },
       });
     } else {
-
       const {
         severity: getTaskSeverity,
         message: getTaskMessage,
-        data: task
-      } = await getTaskById(taskId || "");
+        data: task,
+      } = await getTaskById(taskId || '');
 
       if (task) {
-        dispatch({
-          type: eUseTasksActionName.Data,
-          severity: getTaskSeverity,
-          message: getTaskMessage,
-          data: {
-            tasks: {
-              ...state.data.tasks,
-              [taskId]: task,
-            },
-            total: Object.keys(state.data.tasks || {}).length + 1,
+        _dispatch({
+          type: eTasksActions.TASK_CREATE,
+          payload: {
+            severity: getTaskSeverity,
+            message: getTaskMessage,
+            task,
           },
         });
       } else {
-        dispatch({
-          type: eUseTasksActionName.Data,
-          severity: getTaskSeverity,
-          message: getTaskMessage,
+        _dispatch({
+          type: eTasksActions.TASKS_ISSUE,
+          payload: {
+            severity: getTaskSeverity,
+            message: getTaskMessage,
+          },
         });
       }
-
     }
   };
 
   const deleteTask = async (id: string) => {
-    dispatch({ type: eUseTasksActionName.Loading });
-    const { severity, message } = await apiDeleteTask(id);
-    let newTasks: Record<string, iTask> = {};
-    if (state.data.tasks) {
-      newTasks = { ...state.data.tasks };
-      delete newTasks[id];
-    }
-    dispatch({
-      type: eUseTasksActionName.Data,
-      severity,
-      message,
-      data: {
-        tasks: newTasks,
-        total: Object.keys(newTasks || {}).length,
+    _dispatch({type: eTasksActions.TASKS_LOADING, payload: {loading: true}});
+    const {severity, message} = await apiDeleteTask(id);
+    _dispatch({
+      type: eTasksActions.TASK_DELETE,
+      payload: {
+        severity,
+        message,
+        id: id,
       },
     });
   };
 
   const updateTask = async (id: string, fields: Omit<iTask, 'id'>) => {
-    dispatch({ type: eUseTasksActionName.Loading });
-    const { severity, message } = await apiUpdateTask(id, fields);
-    const taskToUpdate = state.data.tasks && state.data.tasks[id];
-    const newTasks = state.data.tasks && taskToUpdate
-      ? {
-        ...state.data.tasks,
-        [id]: {
-          ...taskToUpdate,
-          ...fields,
-        }
-      }
-      : state.data.tasks
-
-    dispatch({
-      type: eUseTasksActionName.Data,
-      severity,
-      message,
-      data: {
-        tasks: newTasks,
-        total: Object.keys(newTasks || {}).length,
+    _dispatch({type: eTasksActions.TASKS_LOADING, payload: {loading: true}});
+    const {severity, message} = await apiUpdateTask(id, fields);
+    _dispatch({
+      type: eTasksActions.TASK_UPDATE,
+      payload: {
+        severity,
+        message,
+        id,
+        fields,
       },
     });
   };
 
   const getTask = (id: string): iTask | null => {
-    const entry = Object.entries(state.data.tasks || {}).find(
+    const entry = Object.entries(tasks.data.tasks || {}).find(
       taskEntry => taskEntry[0] === id,
     );
     return entry ? entry[1] : null;
   };
 
   async function loadAllFromStorage() {
-    dispatch({ type: eUseTasksActionName.Loading });
-    const { severity, message, data: tasks } = await getTasks();
-    dispatch({
-      type: eUseTasksActionName.Data,
-      severity,
-      message,
-      data: {
-        tasks,
-        total: Object.keys(tasks || {}).length,
+    _dispatch({type: eTasksActions.TASKS_LOADING, payload: {loading: true}});
+    const {severity, message, data: allTasks} = await getTasks();
+    _dispatch({
+      type: eTasksActions.TASKS_INIT,
+      payload: {
+        severity,
+        message,
+        tasks: allTasks || {},
       },
     });
   }
@@ -127,7 +119,7 @@ const useTasks = () => {
 
   return useMemo(
     () => ({
-      ...state,
+      ...tasks,
       methods: {
         createTask,
         deleteTask,
@@ -135,7 +127,8 @@ const useTasks = () => {
         getTask,
       },
     }),
-    [state],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [tasks, _dispatch],
   );
 };
 

@@ -1,6 +1,6 @@
 import {iTaskFormCreate} from 'lib/models/task';
 import {FormikErrors} from 'formik';
-import getTasks from '../../api/tasks/getTasks'
+import getTasks from '../../api/tasks/getTasks';
 
 export enum eFormIssueSeverity {
   Warning = 'warning',
@@ -61,18 +61,14 @@ export const cTaskFormIssuesSeverity = {
   [eTaskFormIssueCode.DurationBadToHandle]: eFormIssueSeverity.Warning,
 };
 
-async function testFunc(x: string) {
-  return new Promise(res => {
-    res(!x);
-  });
-}
-
 export const valueCheckers = {
   [eTaskFormFieldNames.Name]: async function (
     value: string,
   ): Promise<null | eTaskFormIssueCode> {
     const response = await getTasks();
-    const taskExists = Object.values(response.tasks || {}).find(task => task.name === value)
+    const taskExists = Object.values(response.data || {}).find(
+      task => task.name === value,
+    );
     switch (true) {
       case value.length < MIN_TASK_NAME_LEN: {
         return eTaskFormIssueCode.NameToShort;
@@ -80,7 +76,7 @@ export const valueCheckers = {
       case value.length > MAX_TASK_NAME_LEN: {
         return eTaskFormIssueCode.NameToLong;
       }
-      case !!(taskExists): {
+      case !!taskExists: {
         return eTaskFormIssueCode.NameExists;
       }
       default: {

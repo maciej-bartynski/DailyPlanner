@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback} from 'react';
 import {ViewsStackParamList} from 'lib/navigation/types';
 import {RouteProp} from '@react-navigation/native';
 import {CreationPageTemplate} from 'atomic/templates/CreationPageTemplate';
@@ -20,7 +20,7 @@ type ViewProp = {
 };
 
 const ViewTasks: React.FC<ViewProp> = () => {
-  const {loading, message: error, data } = useTasks();
+  const {loading, message: error, data} = useTasks();
   const {total, tasks} = data;
 
   const openModalCreateTask = useCallback(

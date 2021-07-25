@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { iTable } from './_types';
+import {iTable} from './_types';
 import {
   storageItemToItem,
   keyToStorageKey,
@@ -8,7 +8,7 @@ import {
 } from './table.helpers';
 
 class Storage implements iTable {
-  constructor(public prefix: string) { }
+  constructor(public prefix: string) {}
 
   async getAll<RecordType>() {
     try {
@@ -23,34 +23,37 @@ class Storage implements iTable {
       >((result, entry) => {
         const [, storageString] = entry;
         if (storageString) {
-          const { item, _id } = storageItemToItem(storageString);
+          const {item, _id} = storageItemToItem(storageString);
           return {
             ...result,
-            [_id]: { id: _id, ...item },
+            [_id]: {id: _id, ...item},
           };
         } else {
           return result;
         }
       }, {});
 
-      const toReturn: [string, Record<string, RecordType>] = ['', arrValuesOnly];
+      const toReturn: [string, Record<string, RecordType>] = [
+        '',
+        arrValuesOnly,
+      ];
       return toReturn;
     } catch (e) {
-      const toReturn: [string, null] =  [`${e}`, null];
+      const toReturn: [string, null] = [`${e}`, null];
       return toReturn;
     }
   }
 
-  async getItem<ItemType = unknown>(id: string): Promise<[
-    string, ItemType | null, number?, string?
-  ]> {
+  async getItem<ItemType = unknown>(
+    id: string,
+  ): Promise<[string, ItemType | null, number?, string?]> {
     const storageKey = keyToStorageKey(this, id);
     try {
       const storageString = (await AsyncStorage.getItem(storageKey)) || '';
       if (!storageString) {
         return ['Nothing found', null];
       }
-      const { item, _createdAt, _id } = storageItemToItem(storageString);
+      const {item, _createdAt, _id} = storageItemToItem(storageString);
       return ['', item, _createdAt, _id];
     } catch (e) {
       return [`${e}`, null];

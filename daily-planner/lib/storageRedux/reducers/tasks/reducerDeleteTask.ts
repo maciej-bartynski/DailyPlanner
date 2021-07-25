@@ -1,40 +1,35 @@
-import { eTasksActions, iTasksState } from 'lib/storageRedux/storageRedux.types';
-import { iTask } from 'lib/models/task';
-import { Reducer } from 'redux';
-import { tasksInitialState } from './initialState';
+import {tActionTaskDelete} from 'lib/storageRedux/actions/tasks/types';
+import {iTasksState} from './types';
+import {Reducer} from 'redux';
+import {tasksInitialState} from './initialState';
 
-type tReducerDeleteTask = Reducer<
-  iTasksState,
-  {
-    type: eTasksActions;
-    payload: {
-      id: string,
-      message: string,
-      severity: string,
-    };
-  }>;
+type tReducerDeleteTask = Reducer<iTasksState, tActionTaskDelete>;
 
-const reducerDeleteTask: tReducerDeleteTask =
-  (taskState = tasksInitialState, action): iTasksState => {
-    const { message, severity, id } = action.payload;
-    const { data } = taskState;
-    const { tasks } = data;
+const reducerDeleteTask: tReducerDeleteTask = (
+  taskState = tasksInitialState,
+  action,
+): iTasksState => {
+  const {message, severity, id} = action.payload;
+  const {data} = taskState;
+  const {tasks} = data;
 
-    if (!tasks) return { ...taskState, loading: false }
+  if (!tasks) {
+    return {...taskState, loading: false};
+  }
 
-    const newTasks = { ...tasks };
-    delete newTasks[id];
-    const newTasksAmount = Object.keys(newTasks).length;
+  const newTasks = {...tasks};
+  delete newTasks[id];
+  const newTasksAmount = Object.keys(newTasks).length;
 
-    return {
-      message,
-      severity,
-      loading: false,
-      data: {
-        total: newTasksAmount,
-        tasks: newTasks
-      }
-    };
+  return {
+    message,
+    severity,
+    loading: false,
+    data: {
+      total: newTasksAmount,
+      tasks: newTasksAmount ? newTasks : null,
+    },
   };
+};
 
 export default reducerDeleteTask;
