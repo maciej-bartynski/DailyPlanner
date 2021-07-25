@@ -1,8 +1,11 @@
 import {iTasksState} from 'lib/storageRedux/storageRedux.types';
 
 export const tasksInitialState: iTasksState = {
-  tasks: {},
-  current: null,
-  total: 0,
-  active: 0,
+  data: {
+    tasks: null,
+    total: 0,
+  },
+  message: "",
+  severity: "",
+  loading: false,
 };

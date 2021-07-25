@@ -1,6 +1,6 @@
 import React, {useCallback} from 'react';
 import {View, Text} from 'react-native';
-import useTasks from 'lib/storageAccess/tasks';
+import useTasks from 'lib/hooks/useTasks';
 import {modalNavigation} from 'lib/navigation';
 import Button from '../../atoms/Button';
 import {eButtonTitles} from 'lib/enums/strings';

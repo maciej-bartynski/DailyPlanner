@@ -1,12 +1,17 @@
-import {eTasksActions} from 'lib/storageRedux/storageRedux.types';
-import {iTask} from 'lib/models/task';
+import { eTasksActions, tTaskInitActionCreator } from './types';
+import { iTask } from 'lib/models/task';
 
-export const actionCreatorTasksInit = (tasks: Record<string, iTask>) => {
-  return {
-    type: eTasksActions.TASKS_INIT,
-    payload: tasks,
+export const actionCreatorTasksInit: tTaskInitActionCreator =
+  ({ tasks, severity, message }) => {
+    return {
+      type: eTasksActions.TASKS_INIT,
+      payload: {
+        tasks,
+        severity,
+        message,
+      },
+    };
   };
-};
 
 export const actionCreatorTaskCreate = (task: iTask) => {
   return {
@@ -21,11 +26,11 @@ export const actionCreatorTaskUpdate = (
 ) => {
   return {
     type: eTasksActions.TASK_UPDATE,
-    payload: {id, fields: taskFields},
+    payload: { id, fields: taskFields },
   };
 };
 
-export const actionCreatorTaskDelete = (id: string) => {
+export const actionCreatorTaskDelete = (id: iTask['id']) => {
   return {
     type: eTasksActions.TASK_DELETE,
     payload: id,

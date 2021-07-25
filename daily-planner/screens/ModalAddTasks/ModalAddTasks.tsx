@@ -3,7 +3,7 @@ import {ModalsStackParamList} from 'lib/navigation/types';
 import {RouteProp} from '@react-navigation/native';
 import {ModalBasicTemplate} from 'atomic/templates/ModalBasicTemplate';
 import useBoards from 'lib/storageAccess/boards';
-import useTasks from 'lib/storageAccess/tasks';
+import useTasks from 'lib/hooks/useTasks';
 import {Pressable, GestureResponderEvent} from 'react-native';
 import TimeRulerBoard from 'atomic/molecules/TimeRulerBoard';
 import TasksPicker from 'atomic/molecules/TasksPicker';

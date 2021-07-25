@@ -1,7 +1,7 @@
 import React, {useCallback, useRef} from 'react';
 import {Formik} from 'formik';
 import {iTaskFormCreate} from 'lib/models/task';
-import useTasks from 'lib/storageAccess/tasks';
+import useTasks from 'lib/hooks/useTasks';
 import TaskFormBody from 'atomic/organisms/TaskFormBody';
 import {TaskFormInitialValues, taskFormValidation} from './config';
 

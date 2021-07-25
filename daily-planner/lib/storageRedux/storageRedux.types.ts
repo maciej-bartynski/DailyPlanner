@@ -11,13 +11,15 @@ export enum eTasksActions {
   TASKS_INIT = 'TASKS_INIT',
 }
 
+type tTaskIdAlias = string;
 export interface iTasksState {
-  tasks: {
-    [id: string]: iTask;
+  data: {
+    tasks: Record<tTaskIdAlias, iTask> | null,
+    total: number
   };
-  current: iTask | null;
-  total: number;
-  active: number;
+  message: string,
+  severity: string,
+  loading: boolean,
 }
 
 export enum eTasksReducers {
