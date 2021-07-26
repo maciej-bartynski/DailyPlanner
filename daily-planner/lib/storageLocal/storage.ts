@@ -54,7 +54,7 @@ class Storage implements iTable {
         return ['Nothing found', null];
       }
       const {item, _createdAt, _id} = storageItemToItem(storageString);
-      return ['', item, _createdAt, _id];
+      return ['', {id: id, ...item}, _createdAt, _id];
     } catch (e) {
       return [`${e}`, null];
     }

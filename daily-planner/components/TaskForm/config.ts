@@ -85,16 +85,18 @@ export const valueCheckers = {
     }
   },
   [eTaskFormFieldNames.Duration]: function (
-    value: number,
+    minutesValue: number,
+    hoursValue: number,
   ): null | eTaskFormIssueCode {
+    const totalDuration = minutesValue + hoursValue * 60;
     switch (true) {
-      case value < MIN_TASK_DURATION: {
+      case totalDuration < MIN_TASK_DURATION: {
         return eTaskFormIssueCode.DurationToLow;
       }
-      case value > MAX_TASK_DURATION: {
+      case totalDuration > MAX_TASK_DURATION: {
         return eTaskFormIssueCode.DurationToHight;
       }
-      case value < 5: {
+      case totalDuration < 5: {
         return eTaskFormIssueCode.DurationBadToHandle;
       }
       default: {
@@ -121,6 +123,7 @@ export const taskFormValidation = async (values: iTaskFormCreate) => {
 
   const nameValue = values[eTaskFormFieldNames.Name];
   const durationValue = values[eTaskFormFieldNames.Duration];
+  const hoursValue = values[eTaskFormFieldNames.Hours];
   const descriptionValue = values[eTaskFormFieldNames.Description];
 
   const nameIssueCode = await valueCheckers[eTaskFormFieldNames.Name](
@@ -131,6 +134,7 @@ export const taskFormValidation = async (values: iTaskFormCreate) => {
   ](descriptionValue);
   const durationIssueCode = await valueCheckers[eTaskFormFieldNames.Duration](
     durationValue,
+    hoursValue,
   );
 
   const issueCodes = [nameIssueCode, descriptionIssueCode, durationIssueCode];
@@ -153,7 +157,8 @@ export const taskFormWarningManager = async (values: iTaskFormCreate) => {
   const errors: Partial<Record<keyof iTaskFormCreate, string>> = {};
 
   const nameValue = values[eTaskFormFieldNames.Name];
-  const durationValue = values[eTaskFormFieldNames.Duration];
+  const minutesValue = values[eTaskFormFieldNames.Duration];
+  const hoursValue = values[eTaskFormFieldNames.Hours];
   const descriptionValue = values[eTaskFormFieldNames.Description];
 
   const nameIssueCode = await valueCheckers[eTaskFormFieldNames.Name](
@@ -163,7 +168,8 @@ export const taskFormWarningManager = async (values: iTaskFormCreate) => {
     eTaskFormFieldNames.Description
   ](descriptionValue);
   const durationIssueCode = await valueCheckers[eTaskFormFieldNames.Duration](
-    durationValue,
+    minutesValue,
+    hoursValue,
   );
 
   const issueCodes = [nameIssueCode, descriptionIssueCode, durationIssueCode];

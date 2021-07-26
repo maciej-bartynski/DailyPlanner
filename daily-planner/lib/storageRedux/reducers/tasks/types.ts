@@ -9,4 +9,5 @@ export interface iTasksState {
   message: string;
   severity: eApiIssueSeverity;
   loading: boolean;
+  wasDataFetchAttempt: boolean;
 }

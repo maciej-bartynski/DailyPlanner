@@ -6,17 +6,18 @@ import {tasksInitialState} from './initialState';
 type tReducerUpdateTask = Reducer<iTasksState, tActionTaskUpdate>;
 
 const reducerUpdateTask: tReducerUpdateTask = (
-  taskState = tasksInitialState,
+  tasksState = tasksInitialState,
   action,
 ): iTasksState => {
   const {id, fields, severity, message} = action.payload;
-  const {tasks: oldTasks, total} = taskState.data;
+  const {tasks: oldTasks, total} = tasksState.data;
 
   if (!oldTasks) {
-    return {...taskState, loading: false};
+    return {...tasksState, loading: false};
   }
 
   return {
+    ...tasksState,
     loading: false,
     severity,
     message,

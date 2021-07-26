@@ -18,6 +18,8 @@ import {InputRangeProps} from 'atomic/atoms/InputValueSlider/InputValueSlider';
 import {InputAreaProps} from 'atomic/atoms/InputArea/inputArea';
 import formFieldStyles from './stylesOverride/FormField.styles';
 import FieldLabel from 'atomic/atoms/FieldLabel';
+import valueSliderStyles from './stylesOverride/ValueSlider.styles';
+import FormFieldIssuesManager from 'atomic/atoms/FormFieldIssuesManager';
 
 type Props = {
   taskId?: string;
@@ -34,23 +36,13 @@ const useSubmitButtonAction = (
     }
   }, [handleSubmit, isValid]);
 
-function determineTimeEdgeValues(currentMin: number, currentHours: number) {
-  return {
-    hoursMaxValue: currentMin ? 23 : 24,
-    minutesMaxValue: currentHours ? 59 : 60,
-    minutesMinValue: currentHours ? 0 : 1,
-  };
-}
+const HOURS_MAX_VALUE = 8;
+const MINUTES_MAX_VALUE = 60;
+const MINUTES_MIN_VALUE = 0;
+const HOURS_MIN_VALUE = 0;
 
 const TaskFormBody: React.FC<Props> = ({taskId}) => {
-  const {isValid, dirty, handleSubmit, values} =
-    useFormikContext<iTaskFormCreate>();
-
-  const currentDurationValue = +values[eTaskFormFieldNames.Duration];
-  const currentHoursValue = +values[eTaskFormFieldNames.Hours];
-
-  const {hoursMaxValue, minutesMaxValue, minutesMinValue} =
-    determineTimeEdgeValues(currentDurationValue, currentHoursValue);
+  const {isValid, dirty, handleSubmit} = useFormikContext<iTaskFormCreate>();
 
   const submitButtonTitle = taskId
     ? eButtonTitles.ApplyChanges
@@ -80,9 +72,10 @@ const TaskFormBody: React.FC<Props> = ({taskId}) => {
           type={eFieldType.ValueSlider}
           label={eTaskFormFieldTexts.HoursLabel}
           formWarningManager={taskFormWarningManager}
-          min={0}
-          max={hoursMaxValue}
+          min={HOURS_MIN_VALUE}
+          max={HOURS_MAX_VALUE}
           formFieldStyles={formFieldStyles}
+          styles={valueSliderStyles}
           unit="hour(s)"
         />
         <FormField<iTaskFormCreate, InputRangeProps>
@@ -90,10 +83,15 @@ const TaskFormBody: React.FC<Props> = ({taskId}) => {
           type={eFieldType.ValueSlider}
           label={eTaskFormFieldTexts.DurationLabel}
           formWarningManager={taskFormWarningManager}
-          min={minutesMinValue}
-          max={minutesMaxValue}
+          min={MINUTES_MIN_VALUE}
+          max={MINUTES_MAX_VALUE}
           formFieldStyles={formFieldStyles}
+          styles={valueSliderStyles}
           unit="minute(s)"
+        />
+        <FormFieldIssuesManager<iTaskFormCreate>
+          name={eTaskFormFieldNames.Duration}
+          formWarningManager={taskFormWarningManager}
         />
       </FieldLabel>
       <Positioner>

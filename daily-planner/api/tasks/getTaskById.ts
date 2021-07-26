@@ -8,9 +8,10 @@ import {
 
 const getTaskById = async (id: string) => {
   const [errorMessage, task] = await tasksStorage.getItem<iTask>(id);
-  const issueType = errorMessage
-    ? eTasksIssueCode.InternalStorageError
-    : eTasksIssueCode.StatusOk;
+  const issueType =
+    errorMessage && !task
+      ? eTasksIssueCode.InternalStorageError
+      : eTasksIssueCode.StatusOk;
 
   const message = issueType && cTasksIssueMessage[issueType];
   const severity = issueType && cTasksIssueSeverity[issueType];

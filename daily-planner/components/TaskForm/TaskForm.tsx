@@ -39,6 +39,8 @@ const TaskForm: React.FC<Props> = ({taskId}) => {
     <Formik
       initialValues={initialValues}
       validate={taskFormValidation}
+      validateOnBlur={false}
+      validateOnChange={true}
       onSubmit={onSubmit}>
       <TaskFormBody taskId={taskId} />
     </Formik>

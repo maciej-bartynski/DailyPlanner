@@ -1,5 +1,4 @@
 import React, {PropsWithChildren} from 'react';
-import {Text} from 'react-native';
 import defaultStyles, {tFormFieldStylesheetType} from './FormField.styles';
 import {useFormikContext} from 'formik';
 import useWarnings from './useWarning';
@@ -13,6 +12,7 @@ import {eFieldType} from 'lib/enums/forms';
 import {eColors} from 'lib/styles/colors';
 import useResultStylesheet from 'lib/hooks/useResultStylesheet';
 import FieldLabel from 'atomic/atoms/FieldLabel';
+import FormFieldIssuesManager from 'atomic/atoms/FormFieldIssuesManager';
 
 type FormFieldRequiredProps<FormContextType> = {
   name: keyof FormContextType;
@@ -107,12 +107,11 @@ const FormField = function <FormContextType, CustomInputProps>(
     currentInputElement && (
       <FieldLabel label={label || ''} styles={resultStyles}>
         {currentInputElement}
-        {currentError ? (
-          <Text style={resultStyles.fieldError}>{currentError}</Text>
-        ) : null}
-        {!currentError && currentWarning ? (
-          <Text style={resultStyles.fieldWarning}>{currentWarning}</Text>
-        ) : null}
+        <FormFieldIssuesManager<FormContextType>
+          name={name}
+          formWarningManager={formWarningManager}
+          styles={formFieldStyles}
+        />
       </FieldLabel>
     )
   );

@@ -1,5 +1,5 @@
 import {iTask} from 'lib/models/task';
-import {useMemo, useEffect} from 'react';
+import {useEffect, useCallback} from 'react';
 import getTasks from 'api/tasks/getTasks';
 import apiUpdateTask from 'api/tasks/updateTask';
 import apiDeleteTask from 'api/tasks/deleteTask';
@@ -15,91 +15,103 @@ import {eTasksActions} from 'lib/storageRedux/actions/tasks/types';
 const selectorGetTasksState = (state: RootState) => state.tasks;
 
 const useTasks = () => {
-  const _dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   const tasks = useAppSelector(selectorGetTasksState);
 
-  const createTask = async (fields: Omit<iTask, 'id'>) => {
-    _dispatch({type: eTasksActions.TASKS_LOADING, payload: {loading: true}});
-    const {
-      severity: creationSeverity,
-      message: creationMessage,
-      data: taskId,
-    } = await apiCreateTask(fields);
-
-    if (!taskId) {
-      _dispatch({
-        type: eTasksActions.TASKS_ISSUE,
-        payload: {
-          severity: creationSeverity,
-          message: creationMessage,
-        },
-      });
-    } else {
+  const createTask = useCallback(
+    async (fields: Omit<iTask, 'id'>) => {
+      dispatch({type: eTasksActions.TASKS_LOADING, payload: {loading: true}});
       const {
-        severity: getTaskSeverity,
-        message: getTaskMessage,
-        data: task,
-      } = await getTaskById(taskId || '');
+        severity: creationSeverity,
+        message: creationMessage,
+        data: taskId,
+      } = await apiCreateTask(fields);
 
-      if (task) {
-        _dispatch({
-          type: eTasksActions.TASK_CREATE,
+      if (!taskId) {
+        dispatch({
+          type: eTasksActions.TASKS_ISSUE,
           payload: {
-            severity: getTaskSeverity,
-            message: getTaskMessage,
-            task,
+            severity: creationSeverity,
+            message: creationMessage,
           },
         });
       } else {
-        _dispatch({
-          type: eTasksActions.TASKS_ISSUE,
-          payload: {
-            severity: getTaskSeverity,
-            message: getTaskMessage,
-          },
-        });
+        const {
+          severity: getTaskSeverity,
+          message: getTaskMessage,
+          data: task,
+        } = await getTaskById(taskId);
+
+        if (task) {
+          dispatch({
+            type: eTasksActions.TASK_CREATE,
+            payload: {
+              severity: getTaskSeverity,
+              message: getTaskMessage,
+              task: task,
+            },
+          });
+        } else {
+          dispatch({
+            type: eTasksActions.TASKS_ISSUE,
+            payload: {
+              severity: getTaskSeverity,
+              message: getTaskMessage,
+            },
+          });
+        }
       }
-    }
-  };
+    },
+    [dispatch],
+  );
 
-  const deleteTask = async (id: string) => {
-    _dispatch({type: eTasksActions.TASKS_LOADING, payload: {loading: true}});
-    const {severity, message} = await apiDeleteTask(id);
-    _dispatch({
-      type: eTasksActions.TASK_DELETE,
-      payload: {
-        severity,
-        message,
-        id: id,
-      },
-    });
-  };
+  const deleteTask = useCallback(
+    async (id: string) => {
+      dispatch({type: eTasksActions.TASKS_LOADING, payload: {loading: true}});
+      const {severity, message} = await apiDeleteTask(id);
+      dispatch({
+        type: eTasksActions.TASK_DELETE,
+        payload: {
+          severity,
+          message,
+          id: id,
+        },
+      });
+    },
+    [dispatch],
+  );
 
-  const updateTask = async (id: string, fields: Omit<iTask, 'id'>) => {
-    _dispatch({type: eTasksActions.TASKS_LOADING, payload: {loading: true}});
-    const {severity, message} = await apiUpdateTask(id, fields);
-    _dispatch({
-      type: eTasksActions.TASK_UPDATE,
-      payload: {
-        severity,
-        message,
-        id,
-        fields,
-      },
-    });
-  };
+  const updateTask = useCallback(
+    async (id: string, fields: Omit<iTask, 'id'>) => {
+      dispatch({type: eTasksActions.TASKS_LOADING, payload: {loading: true}});
+      const {severity, message} = await apiUpdateTask(id, fields);
+      dispatch({
+        type: eTasksActions.TASK_UPDATE,
+        payload: {
+          severity,
+          message,
+          id,
+          fields,
+        },
+      });
+    },
+    [dispatch],
+  );
 
-  const getTask = (id: string): iTask | null => {
-    const entry = Object.entries(tasks.data.tasks || {}).find(
-      taskEntry => taskEntry[0] === id,
-    );
-    return entry ? entry[1] : null;
-  };
+  const getTask = useCallback(
+    (id: string): iTask | null => {
+      const entry = Object.entries(tasks.data.tasks || {}).find(
+        taskEntry => taskEntry[0] === id,
+      );
+      return entry ? entry[1] : null;
+    },
+    [tasks.data.tasks],
+  );
 
-  async function loadAllFromStorage() {
-    _dispatch({type: eTasksActions.TASKS_LOADING, payload: {loading: true}});
+  const loadAllTasksFromStorage = useCallback(async () => {
+    dispatch({type: eTasksActions.TASKS_LOADING, payload: {loading: true}});
     const {severity, message, data: allTasks} = await getTasks();
-    _dispatch({
+    dispatch({
       type: eTasksActions.TASKS_INIT,
       payload: {
         severity,
@@ -107,29 +119,28 @@ const useTasks = () => {
         tasks: allTasks || {},
       },
     });
-  }
+  }, [dispatch]);
 
-  useEffect(
-    () => {
-      loadAllFromStorage();
+  useEffect(() => {
+    if (!tasks.wasDataFetchAttempt) {
+      loadAllTasksFromStorage();
+    }
+  }, [loadAllTasksFromStorage, tasks.wasDataFetchAttempt]);
+
+  return {
+    severity: tasks.severity,
+    message: tasks.message,
+    loading: tasks.loading,
+    data: tasks.data,
+    wasDataFetchAttempt: tasks.wasDataFetchAttempt,
+    methods: {
+      createTask,
+      deleteTask,
+      updateTask,
+      getTask,
+      loadAllTasksFromStorage,
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
-
-  return useMemo(
-    () => ({
-      ...tasks,
-      methods: {
-        createTask,
-        deleteTask,
-        updateTask,
-        getTask,
-      },
-    }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [tasks, _dispatch],
-  );
+  };
 };
 
 export default useTasks;

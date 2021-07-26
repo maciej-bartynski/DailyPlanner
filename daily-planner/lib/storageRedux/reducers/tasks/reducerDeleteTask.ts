@@ -6,15 +6,15 @@ import {tasksInitialState} from './initialState';
 type tReducerDeleteTask = Reducer<iTasksState, tActionTaskDelete>;
 
 const reducerDeleteTask: tReducerDeleteTask = (
-  taskState = tasksInitialState,
+  tasksState = tasksInitialState,
   action,
 ): iTasksState => {
   const {message, severity, id} = action.payload;
-  const {data} = taskState;
+  const {data} = tasksState;
   const {tasks} = data;
 
   if (!tasks) {
-    return {...taskState, loading: false};
+    return {...tasksState, loading: false};
   }
 
   const newTasks = {...tasks};
@@ -22,6 +22,7 @@ const reducerDeleteTask: tReducerDeleteTask = (
   const newTasksAmount = Object.keys(newTasks).length;
 
   return {
+    ...tasksState,
     message,
     severity,
     loading: false,
@@ -29,6 +30,7 @@ const reducerDeleteTask: tReducerDeleteTask = (
       total: newTasksAmount,
       tasks: newTasksAmount ? newTasks : null,
     },
+    wasDataFetchAttempt: true,
   };
 };
 

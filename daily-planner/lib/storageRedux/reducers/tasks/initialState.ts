@@ -10,4 +10,5 @@ export const tasksInitialState: iTasksState = {
   message: '' as eTasksIssueMessage,
   severity: '' as eApiIssueSeverity,
   loading: false,
+  wasDataFetchAttempt: false,
 };

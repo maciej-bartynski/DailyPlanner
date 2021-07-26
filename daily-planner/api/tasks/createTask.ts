@@ -16,7 +16,7 @@ const createTask: tCreateTask = async (fields: Omit<iTask, 'id'>) => {
   const [errorMessage, key] = await tasksStorage.setItem(fields);
 
   const issueType =
-    errorMessage && key
+    errorMessage || !key
       ? eTasksIssueCode.InternalStorageError
       : eTasksIssueCode.StatusOk;
 

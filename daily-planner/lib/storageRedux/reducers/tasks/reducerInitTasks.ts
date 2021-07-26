@@ -1,13 +1,19 @@
 import {iTasksState} from './types';
 import {Reducer} from 'redux';
 import {tActionTaskInit} from 'lib/storageRedux/actions/tasks/types';
+import {tasksInitialState} from './initialState';
 
 type tReducerInitTasks = Reducer<iTasksState, tActionTaskInit>;
 
-const reducerInitTasks: tReducerInitTasks = (_, action): iTasksState => {
+const reducerInitTasks: tReducerInitTasks = (
+  tasksState = tasksInitialState,
+  action,
+): iTasksState => {
   const tasksAmount = Object.keys(action.payload.tasks).length;
   return {
+    ...tasksState,
     loading: false,
+    wasDataFetchAttempt: true,
     message: action.payload.message,
     severity: action.payload.severity,
     data: {

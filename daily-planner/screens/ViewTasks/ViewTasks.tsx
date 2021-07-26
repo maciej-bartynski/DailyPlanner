@@ -20,7 +20,7 @@ type ViewProp = {
 };
 
 const ViewTasks: React.FC<ViewProp> = () => {
-  const {loading, message: error, data} = useTasks();
+  const {loading, message: error, data, wasDataFetchAttempt} = useTasks();
   const {total, tasks} = data;
 
   const openModalCreateTask = useCallback(
@@ -28,10 +28,12 @@ const ViewTasks: React.FC<ViewProp> = () => {
     [],
   );
 
+  const isLoading = !wasDataFetchAttempt && loading;
+
   return (
     <CreationPageTemplate
       title={cScreenTitles[eViews.Tasks]}
-      loading={loading ? eTasksViewBackgroundCommunicates.Loading : ''}
+      loading={isLoading ? eTasksViewBackgroundCommunicates.Loading : ''}
       error={error ? eTasksViewBackgroundCommunicates.Error : ''}
       data={!total ? eTasksViewBackgroundCommunicates.Data : ''}
       onCreatePressHandler={openModalCreateTask}>

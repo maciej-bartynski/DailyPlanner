@@ -6,11 +6,11 @@ import {tasksInitialState} from './initialState';
 type tReducerCreateTask = Reducer<iTasksState, tActionTaskCreate>;
 
 const reducerCreateTask: tReducerCreateTask = (
-  taskState = tasksInitialState,
+  tasksState = tasksInitialState,
   action,
 ): iTasksState => {
   const {payload} = action;
-  const {data} = taskState;
+  const {data} = tasksState;
 
   const newTasks = {
     ...data.tasks,
@@ -20,6 +20,7 @@ const reducerCreateTask: tReducerCreateTask = (
   const newTasksAmoung = Object.keys(newTasks).length;
 
   return {
+    ...tasksState,
     loading: false,
     severity: payload.severity,
     message: payload.message,
@@ -27,6 +28,7 @@ const reducerCreateTask: tReducerCreateTask = (
       total: newTasksAmoung,
       tasks: newTasks,
     },
+    wasDataFetchAttempt: true,
   };
 };
 
