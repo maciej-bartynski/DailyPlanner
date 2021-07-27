@@ -7,10 +7,7 @@ import {eButtonTitles} from 'lib/enums/strings';
 import Positioner from './atoms/Positioner';
 import ScrollViewStyled from './atoms/ScrollView';
 import {eTaskFormFieldTexts} from 'lib/enums/task-form-strings';
-import {
-  eTaskFormFieldNames,
-  taskFormWarningManager,
-} from 'components/TaskForm/config';
+import {eTaskFormFieldNames} from 'components/TaskForm/config';
 import FormField from 'atomic/molecules/FormField';
 import {eFieldType} from 'lib/enums/forms';
 import {InputTextProps} from 'atomic/atoms/InputText/InputText';
@@ -20,6 +17,7 @@ import formFieldStyles from './stylesOverride/FormField.styles';
 import FieldLabel from 'atomic/atoms/FieldLabel';
 import valueSliderStyles from './stylesOverride/ValueSlider.styles';
 import FormFieldIssuesManager from 'atomic/atoms/FormFieldIssuesManager';
+import FormFieldIssueBorder from 'atomic/atoms/FormFieldIssueBorder';
 
 type Props = {
   taskId?: string;
@@ -57,41 +55,39 @@ const TaskFormBody: React.FC<Props> = ({taskId}) => {
         type={eFieldType.TextInput}
         label={eTaskFormFieldTexts.NameLabel}
         placeholder={eTaskFormFieldTexts.NamePlaceholder}
-        formWarningManager={taskFormWarningManager}
       />
       <FormField<iTaskFormCreate, InputAreaProps>
         name={eTaskFormFieldNames.Description}
         type={eFieldType.TextArea}
         label={eTaskFormFieldTexts.DescriptionLabel}
         placeholder={eTaskFormFieldTexts.DescriptionPlaceholder}
-        formWarningManager={taskFormWarningManager}
       />
       <FieldLabel label="Task duration">
-        <FormField<iTaskFormCreate, InputRangeProps>
-          name={eTaskFormFieldNames.Hours}
-          type={eFieldType.ValueSlider}
-          label={eTaskFormFieldTexts.HoursLabel}
-          formWarningManager={taskFormWarningManager}
-          min={HOURS_MIN_VALUE}
-          max={HOURS_MAX_VALUE}
-          formFieldStyles={formFieldStyles}
-          styles={valueSliderStyles}
-          unit="hour(s)"
-        />
-        <FormField<iTaskFormCreate, InputRangeProps>
-          name={eTaskFormFieldNames.Duration}
-          type={eFieldType.ValueSlider}
-          label={eTaskFormFieldTexts.DurationLabel}
-          formWarningManager={taskFormWarningManager}
-          min={MINUTES_MIN_VALUE}
-          max={MINUTES_MAX_VALUE}
-          formFieldStyles={formFieldStyles}
-          styles={valueSliderStyles}
-          unit="minute(s)"
-        />
+        <FormFieldIssueBorder<iTaskFormCreate>
+          name={eTaskFormFieldNames.Duration}>
+          <FormField<iTaskFormCreate, InputRangeProps>
+            name={eTaskFormFieldNames.Hours}
+            type={eFieldType.ValueSlider}
+            label={eTaskFormFieldTexts.HoursLabel}
+            min={HOURS_MIN_VALUE}
+            max={HOURS_MAX_VALUE}
+            formFieldStyles={formFieldStyles}
+            styles={valueSliderStyles}
+            unit="hour(s)"
+          />
+          <FormField<iTaskFormCreate, InputRangeProps>
+            name={eTaskFormFieldNames.Duration}
+            type={eFieldType.ValueSlider}
+            label={eTaskFormFieldTexts.DurationLabel}
+            min={MINUTES_MIN_VALUE}
+            max={MINUTES_MAX_VALUE}
+            formFieldStyles={formFieldStyles}
+            styles={valueSliderStyles}
+            unit="minute(s)"
+          />
+        </FormFieldIssueBorder>
         <FormFieldIssuesManager<iTaskFormCreate>
           name={eTaskFormFieldNames.Duration}
-          formWarningManager={taskFormWarningManager}
         />
       </FieldLabel>
       <Positioner>

@@ -17,7 +17,7 @@ export enum eTaskFormFieldNames {
 const MIN_TASK_NAME_LEN = 4;
 const MAX_TASK_NAME_LEN = 30;
 const MIN_TASK_DURATION = 1;
-const MAX_TASK_DURATION = 60 * 24;
+const MAX_TASK_DURATION = 60 * 8;
 const MAX_TASK_DESCRIPTION_LEN = 1000;
 
 export const TaskFormInitialValues: iTaskFormCreate = {
@@ -88,7 +88,7 @@ export const valueCheckers = {
     minutesValue: number,
     hoursValue: number,
   ): null | eTaskFormIssueCode {
-    const totalDuration = minutesValue + hoursValue * 60;
+    const totalDuration = +minutesValue + +hoursValue * 60;
     switch (true) {
       case totalDuration < MIN_TASK_DURATION: {
         return eTaskFormIssueCode.DurationToLow;

@@ -1,27 +1,23 @@
 import React, {PropsWithChildren} from 'react';
 import defaultStyles, {tFormFieldStylesheetType} from './FormField.styles';
-import {useFormikContext} from 'formik';
-import useWarnings from './useWarning';
+import {FormikContextType} from 'formik';
 import {InputArea} from 'atomic/atoms';
 import InputText from 'atomic/atoms/InputText';
 import InputRange from 'atomic/atoms/InputValueSlider';
 import {InputTextProps} from 'atomic/atoms/InputText/InputText';
 import {InputRangeProps} from 'atomic/atoms/InputValueSlider/InputValueSlider';
-import {InputAreaProps} from 'atomic/atoms/InputArea/inputArea';
 import {eFieldType} from 'lib/enums/forms';
 import {eColors} from 'lib/styles/colors';
 import useResultStylesheet from 'lib/hooks/useResultStylesheet';
 import FieldLabel from 'atomic/atoms/FieldLabel';
 import FormFieldIssuesManager from 'atomic/atoms/FormFieldIssuesManager';
+import {useFormContext} from 'components/Form/config';
 
 type FormFieldRequiredProps<FormContextType> = {
-  name: keyof FormContextType;
+  name: keyof FormikContextType<FormContextType>['values'];
   label: string;
   type: eFieldType;
   formFieldStyles?: Partial<tFormFieldStylesheetType>;
-  formWarningManager: (
-    values: FormContextType,
-  ) => Promise<Partial<Record<keyof FormContextType, string>>>;
 };
 
 type InputProps<CurrentInputProps> = Omit<
@@ -29,25 +25,30 @@ type InputProps<CurrentInputProps> = Omit<
   'onValueChange' | 'onChangeText' | 'value'
 >;
 
+const DEFAULT_PROPS_INPUT_RANGE: InputProps<InputRangeProps> = {
+  min: 0,
+  max: 100,
+};
+
+const DEFAULT_PROPS_INPUT_TEXT: InputProps<InputTextProps> = {};
+
 const FormField = function <FormContextType, CustomInputProps>(
   props: PropsWithChildren<
     InputProps<CustomInputProps> & FormFieldRequiredProps<FormContextType>
   >,
 ) {
-  const {formFieldStyles, name, label, formWarningManager, type, ...rest} =
-    props;
+  const {formFieldStyles, name, label, type, ...rest} = props;
 
   const resultStyles = useResultStylesheet<tFormFieldStylesheetType>({
     defaultStyles,
     styles: formFieldStyles,
   });
 
-  const {handleChange, handleBlur, values, errors} =
-    useFormikContext<FormContextType>();
+  const {handleChange, handleBlur, values, errors, warnings} =
+    useFormContext<FormContextType>();
 
   const currentValue = values[name];
   const currentError = errors[name];
-  const warnings = useWarnings<FormContextType>(values, formWarningManager);
   const currentWarning = warnings ? warnings[name] : '';
   let currentInputElement = null;
   const onChangeHandler = handleChange(name);
@@ -61,7 +62,7 @@ const FormField = function <FormContextType, CustomInputProps>(
 
   switch (true) {
     case type === eFieldType.TextInput: {
-      const fieldProps = rest as unknown as InputTextProps;
+      const fieldProps = Object.assign({}, DEFAULT_PROPS_INPUT_TEXT, rest);
       currentInputElement = (
         <InputText
           {...fieldProps}
@@ -74,7 +75,7 @@ const FormField = function <FormContextType, CustomInputProps>(
       break;
     }
     case type === eFieldType.TextArea: {
-      const fieldProps = rest as unknown as InputAreaProps;
+      const fieldProps = Object.assign({}, DEFAULT_PROPS_INPUT_TEXT, rest);
       currentInputElement = (
         <InputArea
           {...fieldProps}
@@ -87,7 +88,7 @@ const FormField = function <FormContextType, CustomInputProps>(
       break;
     }
     case type === eFieldType.ValueSlider: {
-      const fieldProps = rest as unknown as InputRangeProps;
+      const fieldProps = Object.assign({}, DEFAULT_PROPS_INPUT_RANGE, rest);
       currentInputElement = (
         <InputRange
           {...fieldProps}
@@ -109,7 +110,6 @@ const FormField = function <FormContextType, CustomInputProps>(
         {currentInputElement}
         <FormFieldIssuesManager<FormContextType>
           name={name}
-          formWarningManager={formWarningManager}
           styles={formFieldStyles}
         />
       </FieldLabel>

@@ -1,9 +1,13 @@
 import React, {useCallback, useRef} from 'react';
-import {Formik} from 'formik';
 import {iTaskFormCreate} from 'lib/models/task';
 import useTasks from 'lib/hooks/useTasks';
 import TaskFormBody from 'atomic/organisms/TaskFormBody';
-import {TaskFormInitialValues, taskFormValidation} from './config';
+import {
+  TaskFormInitialValues,
+  taskFormValidation,
+  taskFormWarningManager,
+} from './config';
+import Form from 'components/Form/Form';
 
 type Props = {
   taskId?: string;
@@ -36,14 +40,13 @@ const TaskForm: React.FC<Props> = ({taskId}) => {
   );
 
   return (
-    <Formik
+    <Form
       initialValues={initialValues}
-      validate={taskFormValidation}
-      validateOnBlur={false}
-      validateOnChange={true}
-      onSubmit={onSubmit}>
+      onSubmit={onSubmit}
+      validation={taskFormValidation}
+      warning={taskFormWarningManager}>
       <TaskFormBody taskId={taskId} />
-    </Formik>
+    </Form>
   );
 };
 

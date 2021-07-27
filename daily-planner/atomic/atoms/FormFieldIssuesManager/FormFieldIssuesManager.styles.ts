@@ -5,6 +5,7 @@ import {eColors} from 'lib/styles/colors';
 export interface tFormFieldIssueManagerStylesheetType {
   fieldError: StyleProp<ViewStyle>;
   fieldWarning: StyleProp<ViewStyle>;
+  fieldIssues: StyleProp<ViewStyle>;
 }
 
 const defaultStyles: tFormFieldIssueManagerStylesheetType = StyleSheet.create({
@@ -19,6 +20,9 @@ const defaultStyles: tFormFieldIssueManagerStylesheetType = StyleSheet.create({
     marginBottom: 10,
     marginLeft: 10,
     color: eColors.Warning,
+  },
+  fieldIssues: {
+    height: 30,
   },
 });
 
