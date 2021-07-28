@@ -1,16 +1,15 @@
 import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {eColors} from 'lib/styles/colors';
 
-export interface tFormFieldIssueManagerStylesheetType {
+export interface iBorderStyleSheet {
   fieldBorder: StyleProp<ViewStyle>;
 }
 
-const defaultStyles: tFormFieldIssueManagerStylesheetType = StyleSheet.create({
+const defaultStyles: iBorderStyleSheet = StyleSheet.create({
   fieldBorder: {
     borderWidth: 1,
     borderColor: eColors.secondaryDark,
     borderRadius: 10,
-    padding: 10,
   },
 });
 

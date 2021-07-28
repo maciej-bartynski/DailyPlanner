@@ -1,26 +1,25 @@
 import React, {PropsWithChildren} from 'react';
 import {View} from 'react-native';
 import useResultStylesheet from 'lib/hooks/useResultStylesheet';
-import {tFormFieldIssueManagerStylesheetType} from './FormFieldIssuesBorder.styles';
-import defaultStyles from './FormFieldIssuesBorder.styles';
-import {useFormContext} from 'components/Form/config';
+import {iBorderStyleSheet} from './Border.styles';
+import defaultStyles from './Border.styles';
+import {useFormContext} from 'lib/uniform/Form/config';
 import {eColors} from 'lib/styles/colors';
 
 type Props<FormContextType> = PropsWithChildren<{
   name: keyof FormContextType;
-  styles?: Partial<tFormFieldIssueManagerStylesheetType>;
+  styles?: Partial<iBorderStyleSheet>;
 }>;
 
-const FormFieldIssuesBorder = function <FormContextType>({
+const Border = function <FormContextType>({
   name,
   styles,
   children,
 }: Props<FormContextType>) {
-  const resultStyles =
-    useResultStylesheet<tFormFieldIssueManagerStylesheetType>({
-      defaultStyles,
-      styles,
-    });
+  const resultStyles = useResultStylesheet<iBorderStyleSheet>({
+    defaultStyles,
+    styles,
+  });
 
   const {errors, warnings} = useFormContext<FormContextType>();
   const isCurrentError = !!errors[name];
@@ -37,4 +36,4 @@ const FormFieldIssuesBorder = function <FormContextType>({
   );
 };
 
-export default FormFieldIssuesBorder;
+export default Border;

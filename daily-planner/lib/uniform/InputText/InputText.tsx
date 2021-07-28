@@ -10,7 +10,6 @@ export type InputTextProps = {
   onBlur?: (e: any) => void;
   value: string;
   styles?: Partial<iInputTextStyleSheet>;
-  borderColor?: string;
 };
 
 const InputText: React.FC<InputTextProps> = ({
@@ -19,7 +18,6 @@ const InputText: React.FC<InputTextProps> = ({
   onBlur,
   value,
   styles,
-  borderColor,
 }) => {
   const resultStyles = useResultStylesheet<iInputTextStyleSheet>({
     defaultStyles,
@@ -28,7 +26,7 @@ const InputText: React.FC<InputTextProps> = ({
 
   return (
     <TextInput
-      style={[resultStyles.input, borderColor ? {borderColor} : null]}
+      style={resultStyles.input}
       placeholder={placeholder}
       onChangeText={onChangeText}
       onBlur={onBlur}

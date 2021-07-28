@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {iInputRangeStylesheet} from 'atomic/atoms/InputValueSlider/InputValueSlider.styles';
+import {iInputRangeStylesheet} from 'lib/uniform/InputValueSlider/InputValueSlider.styles';
 
 const valueSliderStyles: Partial<iInputRangeStylesheet> = StyleSheet.create({
   input: {

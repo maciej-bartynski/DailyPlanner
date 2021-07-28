@@ -2,13 +2,13 @@ import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {mixins} from 'lib/styles/fonts';
 import {eColors} from 'lib/styles/colors';
 
-export interface tFormFieldIssueManagerStylesheetType {
+export interface iMessageStyleSheet {
   fieldError: StyleProp<ViewStyle>;
   fieldWarning: StyleProp<ViewStyle>;
   fieldIssues: StyleProp<ViewStyle>;
 }
 
-const defaultStyles: tFormFieldIssueManagerStylesheetType = StyleSheet.create({
+const defaultStyles: iMessageStyleSheet = StyleSheet.create({
   fieldError: {
     ...mixins.input,
     marginBottom: 10,

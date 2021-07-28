@@ -8,16 +8,15 @@ import Positioner from './atoms/Positioner';
 import ScrollViewStyled from './atoms/ScrollView';
 import {eTaskFormFieldTexts} from 'lib/enums/task-form-strings';
 import {eTaskFormFieldNames} from 'components/TaskForm/config';
-import FormField from 'atomic/molecules/FormField';
+import FormField from 'lib/uniform/Field';
 import {eFieldType} from 'lib/enums/forms';
-import {InputTextProps} from 'atomic/atoms/InputText/InputText';
-import {InputRangeProps} from 'atomic/atoms/InputValueSlider/InputValueSlider';
-import {InputAreaProps} from 'atomic/atoms/InputArea/inputArea';
-import formFieldStyles from './stylesOverride/FormField.styles';
-import FieldLabel from 'atomic/atoms/FieldLabel';
+import {InputAreaProps} from 'lib/uniform/InputTextArea/InputTextArea';
+import FieldLabel from 'lib/uniform/Label';
 import valueSliderStyles from './stylesOverride/ValueSlider.styles';
-import FormFieldIssuesManager from 'atomic/atoms/FormFieldIssuesManager';
-import FormFieldIssueBorder from 'atomic/atoms/FormFieldIssueBorder';
+import FormFieldIssuesManager from 'lib/uniform/Message';
+import FormFieldIssueBorder from 'lib/uniform/Border';
+import {InputTextProps} from 'lib/uniform/InputText/InputText';
+import {InputRangeProps} from 'lib/uniform/InputValueSlider/InputValueSlider';
 
 type Props = {
   taskId?: string;
@@ -71,7 +70,6 @@ const TaskFormBody: React.FC<Props> = ({taskId}) => {
             label={eTaskFormFieldTexts.HoursLabel}
             min={HOURS_MIN_VALUE}
             max={HOURS_MAX_VALUE}
-            formFieldStyles={formFieldStyles}
             styles={valueSliderStyles}
             unit="hour(s)"
           />
@@ -81,7 +79,6 @@ const TaskFormBody: React.FC<Props> = ({taskId}) => {
             label={eTaskFormFieldTexts.DurationLabel}
             min={MINUTES_MIN_VALUE}
             max={MINUTES_MAX_VALUE}
-            formFieldStyles={formFieldStyles}
             styles={valueSliderStyles}
             unit="minute(s)"
           />

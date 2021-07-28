@@ -1,12 +1,12 @@
 import {StyleSheet, StyleProp, ViewStyle, TextStyle} from 'react-native';
 import {mixins} from 'lib/styles/fonts';
 
-export interface iFormFieldLabelStylesheet {
+export interface iLabelStylesheet {
   fieldWrapper: StyleProp<ViewStyle>;
   fieldLabel: StyleProp<TextStyle>;
 }
 
-const defaultStyles: iFormFieldLabelStylesheet = StyleSheet.create({
+const defaultStyles: iLabelStylesheet = StyleSheet.create({
   fieldWrapper: {
     width: '100%',
   },

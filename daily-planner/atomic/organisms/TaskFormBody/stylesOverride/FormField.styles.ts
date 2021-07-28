@@ -1,4 +1,4 @@
-import {tFormFieldStylesheetType} from 'atomic/molecules/FormField/FormField.styles';
+import {tFormFieldStylesheetType} from 'lib/uniform/Field/Field.styles';
 import {StyleSheet} from 'react-native';
 
 const formFieldStyles: Partial<tFormFieldStylesheetType> = StyleSheet.create({

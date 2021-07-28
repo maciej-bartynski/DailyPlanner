@@ -7,7 +7,7 @@ import {
   taskFormValidation,
   taskFormWarningManager,
 } from './config';
-import Form from 'components/Form/Form';
+import {Form} from 'lib/uniform';
 
 type Props = {
   taskId?: string;

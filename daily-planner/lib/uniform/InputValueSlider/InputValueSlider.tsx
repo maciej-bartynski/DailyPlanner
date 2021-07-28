@@ -11,8 +11,7 @@ export type InputRangeProps = {
   max: number;
   value: number;
   unit?: string;
-  onValueChange: (arg: string) => void;
-  borderColor?: string;
+  onValueChange: (arg: number) => void;
   styles?: Partial<iInputRangeStylesheet>;
 };
 
@@ -22,7 +21,6 @@ const InputValueSlider: React.FC<InputRangeProps> = ({
   max,
   value,
   onValueChange,
-  borderColor,
   styles,
 }) => {
   const resultStyles = useResultStylesheet<iInputRangeStylesheet>({
@@ -31,7 +29,7 @@ const InputValueSlider: React.FC<InputRangeProps> = ({
   });
 
   return (
-    <View style={[resultStyles.input, borderColor ? {borderColor} : null]}>
+    <View style={resultStyles.input}>
       <Text style={resultStyles.input__value}>
         {value} {unit}
       </Text>
@@ -46,9 +44,7 @@ const InputValueSlider: React.FC<InputRangeProps> = ({
         minimumTrackTintColor="#000000"
         maximumTrackTintColor={eColors.primaryDark}
         step={1}
-        onValueChange={(arg: number) => {
-          onValueChange('' + arg);
-        }}
+        onValueChange={onValueChange}
       />
       <Text numberOfLines={1} style={resultStyles.input__maxLabel}>
         {max}

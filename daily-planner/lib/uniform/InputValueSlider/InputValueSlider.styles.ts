@@ -1,10 +1,7 @@
 import {StyleSheet, StyleProp, ViewStyle, TextStyle} from 'react-native';
-import {eColors} from 'lib/styles/colors';
 import {mixins} from 'lib/styles/fonts';
 
 export interface iInputRangeStylesheet {
-  wrapper: StyleProp<ViewStyle>;
-  label: StyleProp<TextStyle>;
   input: StyleProp<ViewStyle>;
   input__value: StyleProp<TextStyle>;
   input__minLabel: StyleProp<TextStyle>;
@@ -13,14 +10,7 @@ export interface iInputRangeStylesheet {
 }
 
 const styles: iInputRangeStylesheet = StyleSheet.create({
-  wrapper: {},
-  label: {
-    ...mixins.label,
-  },
   input: {
-    borderWidth: 1,
-    borderColor: eColors.secondaryDark,
-    borderRadius: 10,
     padding: 10,
     flexDirection: 'row',
     alignItems: 'center',
