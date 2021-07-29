@@ -17,6 +17,7 @@ import FormFieldIssuesManager from 'lib/uniform/Message';
 import FormFieldIssueBorder from 'lib/uniform/Border';
 import {InputTextProps} from 'lib/uniform/InputText/InputText';
 import {InputRangeProps} from 'lib/uniform/InputValueSlider/InputValueSlider';
+import {eFieldVariant} from 'lib/uniform/Field/config';
 
 type Props = {
   taskId?: string;
@@ -72,6 +73,7 @@ const TaskFormBody: React.FC<Props> = ({taskId}) => {
             max={HOURS_MAX_VALUE}
             styles={valueSliderStyles}
             unit="hour(s)"
+            variant={eFieldVariant.Naked}
           />
           <FormField<iTaskFormCreate, InputRangeProps>
             name={eTaskFormFieldNames.Duration}
@@ -81,6 +83,7 @@ const TaskFormBody: React.FC<Props> = ({taskId}) => {
             max={MINUTES_MAX_VALUE}
             styles={valueSliderStyles}
             unit="minute(s)"
+            variant={eFieldVariant.Naked}
           />
         </FormFieldIssueBorder>
         <FormFieldIssuesManager<iTaskFormCreate>

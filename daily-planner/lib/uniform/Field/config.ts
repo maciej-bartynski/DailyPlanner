@@ -3,10 +3,15 @@ import {FormikContextType} from 'formik';
 import {InputRangeProps} from '../InputValueSlider/InputValueSlider';
 import {InputTextProps} from '../InputText/InputText';
 
+export enum eFieldVariant {
+  Naked = 'Naked',
+  Full = 'Full',
+}
 export type FormFieldRequiredProps<FormContextType> = {
   name: keyof FormikContextType<FormContextType>['values'];
   label: string;
   type: eFieldType;
+  variant?: eFieldVariant;
 };
 
 export type InputProps<CurrentInputProps> = Omit<
