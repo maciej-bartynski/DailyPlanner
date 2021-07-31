@@ -11,7 +11,6 @@ import {
   eTasksViewBackgroundCommunicates,
 } from 'lib/enums/strings';
 import ViewTasksScrollView from './atoms/ScrollView';
-import ViewTasksTaskWrapper from './atoms/TaskWrapper';
 import {eApiIssueSeverity} from 'api/types';
 
 type ViewsScreensProps = RouteProp<ViewsStackParamList, eViews.Tasks>;
@@ -43,21 +42,24 @@ const ViewTasks: React.FC<ViewProp> = () => {
         <ViewTasksScrollView>
           {Object.values(tasks).map(task => {
             return (
-              <ViewTasksTaskWrapper key={task.id}>
-                <TaskCard
-                  taskId={task.id}
-                  name={task.name}
-                  description={task.description}
-                  duration={+task.duration}
-                  hours={+task.hours}
-                />
-              </ViewTasksTaskWrapper>
+              <TaskCard
+                key={task.id}
+                taskId={task.id}
+                name={task.name}
+                description={task.description}
+                duration={+task.duration}
+                hours={+task.hours}
+              />
             );
           })}
         </ViewTasksScrollView>
       ) : null}
     </CreationPageTemplate>
   );
+};
+
+ViewTasks.whyDidYouRender = {
+  logOnDifferentValues: false,
 };
 
 export default ViewTasks;

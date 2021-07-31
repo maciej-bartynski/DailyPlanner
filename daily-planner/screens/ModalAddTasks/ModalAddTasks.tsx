@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {ModalsStackParamList} from 'lib/navigation/types';
 import {RouteProp} from '@react-navigation/native';
-import {ModalBasicTemplate} from 'atomic/templates/ModalBasicTemplate';
-import useBoards from 'lib/storageAccess/boards';
+import ModalBasicTemplate from 'atomic/templates/ModalBasicTemplate';
+import useBoards from 'lib/hooks/useBoards';
 import useTasks from 'lib/hooks/useTasks';
 import {Pressable, GestureResponderEvent} from 'react-native';
 import TimeRulerBoard from 'atomic/molecules/TimeRulerBoard';
@@ -70,8 +70,8 @@ const ModalAddTasks: React.FC<ViewProp> = ({route}) => {
             setPressedLocation(locationY);
           }}>
           {boardTasks.map(boardTask => {
-            const task = tasks[boardTask.taskId];
-
+            const task = tasks ? tasks[boardTask.taskId] : null;
+            if (!task) return null;
             return (
               <TaskBoardCard
                 key={task.id}
@@ -94,7 +94,7 @@ const ModalAddTasks: React.FC<ViewProp> = ({route}) => {
       {pressedLocation ? (
         <TasksPicker
           cancelCallback={() => setPressedLocation(undefined)}
-          tasks={Object.values(tasks)}
+          tasks={Object.values(tasks || {})}
           addTaskToBoard={addTaskToBoard}
           pressedTime={pressedTime}
         />

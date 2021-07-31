@@ -1,1 +1,0 @@
-export {BoardCard} from './BoardCard';

@@ -1,8 +1,14 @@
-import {iBoardsState} from 'lib/storageRedux/storageRedux.types';
+import {iBoardsState} from './types';
+import {eApiIssueSeverity} from 'api/types';
+import {eBoardsIssueMessage} from 'api/boards/boardsIssues';
 
 export const boardsInitialState: iBoardsState = {
-  boards: {},
-  current: null,
-  total: 0,
-  active: 0,
+  data: {
+    boards: null,
+    total: 0,
+  },
+  message: '' as eBoardsIssueMessage,
+  severity: '' as eApiIssueSeverity,
+  loading: false,
+  wasDataFetchAttempt: false,
 };

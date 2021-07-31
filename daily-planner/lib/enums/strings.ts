@@ -23,3 +23,9 @@ export enum eTasksViewBackgroundCommunicates {
   Error = "Sorry, I couldn't display your tasks :C",
   Data = "No tasks! Why don't you create some, lazy?",
 }
+
+export enum eBoardsViewBackgroundCommunicates {
+  Loading = 'Loading...',
+  Error = "Sorry, I couldn't display your boards :C",
+  Data = "No boards! Why don't you create some, lazy?",
+}

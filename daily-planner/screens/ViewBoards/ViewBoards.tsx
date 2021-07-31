@@ -1,60 +1,63 @@
-import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {useCallback} from 'react';
 import {ViewsStackParamList} from 'lib/navigation/types';
 import {RouteProp} from '@react-navigation/native';
 import {CreationPageTemplate} from 'atomic/templates/CreationPageTemplate';
-import {ScrollView} from 'react-native';
-import {BoardCard} from 'atomic/atoms/BoardCard';
-import useBoards from 'lib/storageAccess/boards';
-import {eViews} from 'lib/enums/screens';
+import useBoards from 'lib/hooks/useBoards';
+import BoardCard from 'atomic/molecules/BoardCard';
 import {modalNavigation} from 'lib/navigation/navigate';
+import {eViews} from 'lib/enums/screens';
+import {
+  cScreenTitles,
+  eBoardsViewBackgroundCommunicates,
+} from 'lib/enums/strings';
+import ViewBoardsScrollView from './atoms/ScrollView';
+import {eApiIssueSeverity} from 'api/types';
 
-type ViewsScreensProps = RouteProp<ViewsStackParamList, eViews.Boards>;
+type ViewsScreensProps = RouteProp<ViewsStackParamList, eViews.Tasks>;
 
 type ViewProp = {
   route: ViewsScreensProps;
 };
 
 const ViewBoards: React.FC<ViewProp> = () => {
-  const {loading, error, data} = useBoards();
-
+  const {loading, severity, data, wasDataFetchAttempt} = useBoards();
   const {total, boards} = data;
+
+  const openModalCreateBoard = useCallback(
+    () => modalNavigation.openModalCreateBoard(),
+    [],
+  );
+
+  const hasError = severity === eApiIssueSeverity.Error;
+  const isLoading = !wasDataFetchAttempt && loading;
 
   return (
     <CreationPageTemplate
-      title="Your boards"
-      loading={loading ? 'Loading...' : ''}
-      error={error ? "Sorry, I couldn't display your boards :C" : ''}
-      data={!total ? "No boards! Why don't you create some, lazy?" : ''}
-      onCreatePressHandler={() => modalNavigation.openModalCreateBoard()}>
-      {total ? (
-        <ScrollView style={styles.scrollView}>
+      title={cScreenTitles[eViews.Boards]}
+      loading={isLoading ? eBoardsViewBackgroundCommunicates.Loading : ''}
+      error={hasError ? eBoardsViewBackgroundCommunicates.Error : ''}
+      data={!total ? eBoardsViewBackgroundCommunicates.Data : ''}
+      onCreatePressHandler={openModalCreateBoard}>
+      {boards ? (
+        <ViewBoardsScrollView>
           {Object.values(boards).map(board => {
             return (
-              <View key={board.id} style={styles.taskWrapper}>
-                <BoardCard
-                  boardId={board.id}
-                  title={board.title}
-                  description={board.description}
-                  tasksAmount={'' + board.tasks.length}
-                />
-              </View>
+              <BoardCard
+                key={board.id}
+                boardId={board.id}
+                title={board.title}
+                description={board.description}
+              />
             );
           })}
-        </ScrollView>
+        </ViewBoardsScrollView>
       ) : null}
     </CreationPageTemplate>
   );
 };
 
-const styles = StyleSheet.create({
-  taskWrapper: {
-    paddingBottom: 5,
-  },
-  scrollView: {
-    width: '100%',
-    padding: 10,
-  },
-});
+ViewBoards.whyDidYouRender = {
+  logOnDifferentValues: false,
+};
 
 export default ViewBoards;

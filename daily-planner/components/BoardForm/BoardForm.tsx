@@ -5,7 +5,7 @@ import {iBoardFormCreate} from 'lib/models/board';
 import {InputArea, InputText, Positioner} from 'atomic';
 import navigationRef from 'lib/navigation/reference';
 import {ScrollView} from 'react-native-gesture-handler';
-import useBoards from 'lib/storageAccess/boards';
+import useBoards from 'lib/hooks/useBoards';
 
 const creationInitialValues: iBoardFormCreate = {
   title: '',

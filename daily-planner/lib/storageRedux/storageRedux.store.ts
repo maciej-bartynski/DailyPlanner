@@ -1,6 +1,6 @@
 import {createStore, combineReducers} from 'redux';
 import {reducerTasks} from './reducers/tasks/reducer';
-import {reducerBoards} from './storageRedux.reducers';
+import {reducerBoards} from './reducers/boards/reducer';
 import {TypedUseSelectorHook, useSelector, useDispatch} from 'react-redux';
 import reactotron from './../../reactotron';
 
@@ -12,6 +12,7 @@ const ReactotronEnhancer =
 const store = createStore(
   combineReducers({
     tasks: reducerTasks,
+    // boards: reducerBoards,
     boards: reducerBoards,
   }),
   ReactotronEnhancer,

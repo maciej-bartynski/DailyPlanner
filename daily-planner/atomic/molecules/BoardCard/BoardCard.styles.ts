@@ -1,9 +1,9 @@
 import {StyleSheet} from 'react-native';
 
-const styles = StyleSheet.create({
+const defaultStyles = StyleSheet.create({
   wrapper: {
     paddingBottom: 10,
   },
 });
 
-export default styles;
+export default defaultStyles;

@@ -1,3 +1,5 @@
+import './wdyr';
+
 export {default} from './app';
 
 if (__DEV__) {

@@ -1,10 +1,10 @@
-import React, {useCallback} from 'react';
-import {View, Text} from 'react-native';
+import React, {useCallback, useMemo} from 'react';
 import useTasks from 'lib/hooks/useTasks';
 import {modalNavigation} from 'lib/navigation';
-import Button from '../../atoms/Button';
 import {eButtonTitles} from 'lib/enums/strings';
 import {eButtonVariant} from 'lib/enums/buttons';
+import Card from '../Card';
+import {View} from 'react-native';
 import styles from './TaskCard.styles';
 
 type Props = {
@@ -19,7 +19,7 @@ const TaskCard: React.FC<Props> = props => {
   const {name, description, duration, taskId, hours} = props;
   const {methods} = useTasks();
 
-  const deteleTask = useCallback(() => {
+  const deleteTask = useCallback(() => {
     methods.deleteTask(taskId);
   }, [taskId, methods]);
 
@@ -28,25 +28,31 @@ const TaskCard: React.FC<Props> = props => {
   }, [taskId]);
 
   const durationString = `${hours ? `${hours} h. ` : ''}${duration} min.`;
+
+  const actions = useMemo(
+    () => [
+      {
+        variant: eButtonVariant.Primary,
+        label: eButtonTitles.Edit,
+        onPress: openModalCreateTask,
+      },
+      {
+        variant: eButtonVariant.Tertiary,
+        label: eButtonTitles.Delete,
+        onPress: deleteTask,
+      },
+    ],
+    [openModalCreateTask, deleteTask],
+  );
+
   return (
     <View style={styles.wrapper}>
-      <Text style={styles.name}>{name}</Text>
-      <Text style={styles.duration}>{durationString}</Text>
-      {description ? (
-        <Text style={styles.description}>{description}</Text>
-      ) : null}
-      <View style={styles.actions}>
-        <Button
-          variant={eButtonVariant.Primary}
-          title={eButtonTitles.Edit}
-          onPress={openModalCreateTask}
-        />
-        <Button
-          variant={eButtonVariant.Tertiary}
-          title={eButtonTitles.Delete}
-          onPress={deteleTask}
-        />
-      </View>
+      <Card
+        title={name}
+        extraInfo={[durationString]}
+        description={description}
+        actions={actions}
+      />
     </View>
   );
 };
