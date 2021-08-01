@@ -71,7 +71,9 @@ const ModalAddTasks: React.FC<ViewProp> = ({route}) => {
           }}>
           {boardTasks.map(boardTask => {
             const task = tasks ? tasks[boardTask.taskId] : null;
-            if (!task) return null;
+            if (!task) {
+              return null;
+            }
             return (
               <TaskBoardCard
                 key={task.id}

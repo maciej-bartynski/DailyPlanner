@@ -1,6 +1,6 @@
-import {iTaskFormCreate} from 'lib/models/task';
 import {FormikErrors} from 'formik';
-import getTasks from '../../api/tasks/getTasks';
+import {iBoardFormCreate, iBoard} from 'lib/models/board';
+import getBoards from 'api/boards/getBoards';
 
 export enum eFormIssueSeverity {
   Warning = 'warning',
@@ -10,104 +10,87 @@ export enum eFormIssueSeverity {
 export enum eBoardFormFieldNames {
   Title = 'title',
   Description = 'description',
+  Tasks = 'tasks',
 }
 
-const MIN_TASK_NAME_LEN = 4;
-const MAX_TASK_NAME_LEN = 30;
-const MIN_TASK_DURATION = 1;
-const MAX_TASK_DURATION = 60 * 8;
-const MAX_TASK_DESCRIPTION_LEN = 1000;
+const MIN_BOARD_NAME_LEN = 4;
+const MAX_BOARD_NAME_LEN = 30;
+const MAX_BOARD_DESCRIPTION_LEN = 1000;
 
-export const TaskFormInitialValues: iTaskFormCreate = {
-  [eTaskFormFieldNames.Name]: '',
-  [eTaskFormFieldNames.Description]: '',
-  [eTaskFormFieldNames.Duration]: 20,
-  [eTaskFormFieldNames.Hours]: 0,
+type tBoardAssignedTask = iBoard['tasks'][0];
+
+export const BoardFormInitialValues: iBoardFormCreate = {
+  [eBoardFormFieldNames.Title]: '',
+  [eBoardFormFieldNames.Description]: '',
+  [eBoardFormFieldNames.Tasks]: [] as tBoardAssignedTask[],
 };
 
-export enum eTaskFormIssueCode {
+export enum eBoardFormIssueCode {
   NameToShort = 'NameToShort',
   NameToLong = 'NameToLong',
   NameExists = 'NameExists',
   DescriptionToLong = 'DescriptionToLong',
-  DurationToLow = 'DurationToLow',
-  DurationToHight = 'DurationToHight',
-  DurationInvalidFormat = 'DurationInvalidFormat',
-  DurationBadToHandle = 'DurationBadToHandle',
+  NoTasksStillADraft = 'NoTasksStillADraft',
 }
 
-export const cTaskFormIssueMessage = {
-  [eTaskFormIssueCode.NameToShort]: `Name should be at least ${MIN_TASK_NAME_LEN} char. long.`,
-  [eTaskFormIssueCode.NameToLong]: `Name should be at most ${MAX_TASK_NAME_LEN} char. long.`,
-  [eTaskFormIssueCode.NameExists]: 'This task name already exists.',
-  [eTaskFormIssueCode.DescriptionToLong]: `Task description should be at most ${MAX_TASK_DESCRIPTION_LEN} char. long.`,
-  [eTaskFormIssueCode.DurationToLow]: `Min. task duration is ${MIN_TASK_DURATION} minute(s).`,
-  [eTaskFormIssueCode.DurationToHight]: `Max. task duration is ${MAX_TASK_DURATION} minutes.`,
-  [eTaskFormIssueCode.DurationInvalidFormat]: 'Only whole numbers are allowed.',
-  [eTaskFormIssueCode.DurationBadToHandle]:
-    'During task execution with such a short duration, managing timer in application can possibly extend time. Consider usage at least 5 min tasks, and leave shortening to app itself.',
+export const cBoardFormIssueMessage = {
+  [eBoardFormIssueCode.NameToShort]: `Name should be at least ${MIN_BOARD_NAME_LEN} char. long.`,
+  [eBoardFormIssueCode.NameToLong]: `Name should be at most ${MAX_BOARD_NAME_LEN} char. long.`,
+  [eBoardFormIssueCode.NameExists]: 'This board title already exists.',
+  [eBoardFormIssueCode.DescriptionToLong]: `Board description should be at most ${MAX_BOARD_DESCRIPTION_LEN} char. long.`,
+  [eBoardFormIssueCode.NoTasksStillADraft]:
+    "As long as board has no tasks assigned, it's a draft.",
 };
 
-export const cTaskFormIssuesSeverity = {
-  [eTaskFormIssueCode.NameToShort]: eFormIssueSeverity.Error,
-  [eTaskFormIssueCode.NameToLong]: eFormIssueSeverity.Error,
-  [eTaskFormIssueCode.NameExists]: eFormIssueSeverity.Warning,
-  [eTaskFormIssueCode.DescriptionToLong]: eFormIssueSeverity.Error,
-  [eTaskFormIssueCode.DurationToLow]: eFormIssueSeverity.Error,
-  [eTaskFormIssueCode.DurationToHight]: eFormIssueSeverity.Error,
-  [eTaskFormIssueCode.DurationInvalidFormat]: eFormIssueSeverity.Error,
-  [eTaskFormIssueCode.DurationBadToHandle]: eFormIssueSeverity.Warning,
+export const cBoardFormIssuesSeverity = {
+  [eBoardFormIssueCode.NameToShort]: eFormIssueSeverity.Error,
+  [eBoardFormIssueCode.NameToLong]: eFormIssueSeverity.Error,
+  [eBoardFormIssueCode.NameExists]: eFormIssueSeverity.Warning,
+  [eBoardFormIssueCode.DescriptionToLong]: eFormIssueSeverity.Error,
+  [eBoardFormIssueCode.NoTasksStillADraft]: eFormIssueSeverity.Warning,
 };
 
 export const valueCheckers = {
-  [eTaskFormFieldNames.Name]: async function (
+  [eBoardFormFieldNames.Title]: async function (
     value: string,
-  ): Promise<null | eTaskFormIssueCode> {
-    const response = await getTasks();
-    const taskExists = Object.values(response.data || {}).find(
-      task => task.name === value,
+  ): Promise<null | eBoardFormIssueCode> {
+    const response = await getBoards();
+    const boardExists = Object.values(response.data || {}).find(
+      board => board.title === value,
     );
     switch (true) {
-      case value.length < MIN_TASK_NAME_LEN: {
-        return eTaskFormIssueCode.NameToShort;
+      case value.length < MIN_BOARD_NAME_LEN: {
+        return eBoardFormIssueCode.NameToShort;
       }
-      case value.length > MAX_TASK_NAME_LEN: {
-        return eTaskFormIssueCode.NameToLong;
+      case value.length > MAX_BOARD_NAME_LEN: {
+        return eBoardFormIssueCode.NameToLong;
       }
-      case !!taskExists: {
-        return eTaskFormIssueCode.NameExists;
+      case !!boardExists: {
+        return eBoardFormIssueCode.NameExists;
       }
       default: {
         return null;
       }
     }
   },
-  [eTaskFormFieldNames.Duration]: function (
-    minutesValue: number,
-    hoursValue: number,
-  ): null | eTaskFormIssueCode {
-    const totalDuration = +minutesValue + +hoursValue * 60;
+  [eBoardFormFieldNames.Tasks]: function (
+    value?: tBoardAssignedTask[],
+  ): null | eBoardFormIssueCode {
     switch (true) {
-      case totalDuration < MIN_TASK_DURATION: {
-        return eTaskFormIssueCode.DurationToLow;
-      }
-      case totalDuration > MAX_TASK_DURATION: {
-        return eTaskFormIssueCode.DurationToHight;
-      }
-      case totalDuration < 5: {
-        return eTaskFormIssueCode.DurationBadToHandle;
+      case (!!value && value?.length) < 1 || !value: {
+        return eBoardFormIssueCode.NoTasksStillADraft;
       }
       default: {
         return null;
       }
     }
   },
-  [eTaskFormFieldNames.Description]: function (
+  [eBoardFormFieldNames.Description]: function (
     value?: string,
-  ): null | eTaskFormIssueCode {
+  ): null | eBoardFormIssueCode {
     switch (true) {
-      case !!value && value.length > MAX_TASK_DESCRIPTION_LEN: {
-        return eTaskFormIssueCode.DescriptionToLong;
+      case !!value && value.length > MAX_BOARD_DESCRIPTION_LEN: {
+        return eBoardFormIssueCode.DescriptionToLong;
       }
       default: {
         return null;
@@ -116,70 +99,66 @@ export const valueCheckers = {
   },
 };
 
-export const taskFormValidation = async (values: iTaskFormCreate) => {
-  const errors: FormikErrors<Record<eTaskFormFieldNames, string>> = {};
+export const boardFormValidation = async (values: iBoardFormCreate) => {
+  const errors: FormikErrors<Record<eBoardFormFieldNames, string>> = {};
 
-  const nameValue = values[eTaskFormFieldNames.Name];
-  const durationValue = values[eTaskFormFieldNames.Duration];
-  const hoursValue = values[eTaskFormFieldNames.Hours];
-  const descriptionValue = values[eTaskFormFieldNames.Description];
+  const titleValue = values[eBoardFormFieldNames.Title];
+  const descriptionValue = values[eBoardFormFieldNames.Description];
+  const tasksValue = values[eBoardFormFieldNames.Tasks];
 
-  const nameIssueCode = await valueCheckers[eTaskFormFieldNames.Name](
-    nameValue,
+  const titleIssueCode = await valueCheckers[eBoardFormFieldNames.Title](
+    titleValue,
   );
   const descriptionIssueCode = await valueCheckers[
-    eTaskFormFieldNames.Description
+    eBoardFormFieldNames.Description
   ](descriptionValue);
-  const durationIssueCode = await valueCheckers[eTaskFormFieldNames.Duration](
-    durationValue,
-    hoursValue,
+  const tasksIssueCode = await valueCheckers[eBoardFormFieldNames.Tasks](
+    tasksValue,
   );
 
-  const issueCodes = [nameIssueCode, descriptionIssueCode, durationIssueCode];
+  const issueCodes = [titleIssueCode, descriptionIssueCode, tasksIssueCode];
   const issueCodeFields = [
-    eTaskFormFieldNames.Name,
-    eTaskFormFieldNames.Description,
-    eTaskFormFieldNames.Duration,
+    eBoardFormFieldNames.Title,
+    eBoardFormFieldNames.Description,
+    eBoardFormFieldNames.Tasks,
   ];
 
   issueCodes.forEach((code, id) => {
-    if (code && cTaskFormIssuesSeverity[code] === eFormIssueSeverity.Error) {
-      errors[issueCodeFields[id]] = cTaskFormIssueMessage[code];
+    if (code && cBoardFormIssuesSeverity[code] === eFormIssueSeverity.Error) {
+      errors[issueCodeFields[id]] = cBoardFormIssueMessage[code];
     }
   });
 
   return errors;
 };
 
-export const taskFormWarningManager = async (values: iTaskFormCreate) => {
-  const errors: Partial<Record<keyof iTaskFormCreate, string>> = {};
+export const boardFormWarningManager = async (values: iBoardFormCreate) => {
+  const errors: Partial<Record<keyof iBoardFormCreate, string>> = {};
 
-  const nameValue = values[eTaskFormFieldNames.Name];
-  const minutesValue = values[eTaskFormFieldNames.Duration];
-  const hoursValue = values[eTaskFormFieldNames.Hours];
-  const descriptionValue = values[eTaskFormFieldNames.Description];
+  const titleValue = values[eBoardFormFieldNames.Title];
+  const descriptionValue = values[eBoardFormFieldNames.Description];
+  const tasksValue = values[eBoardFormFieldNames.Tasks];
 
-  const nameIssueCode = await valueCheckers[eTaskFormFieldNames.Name](
-    nameValue,
+  const titleIssueCode = await valueCheckers[eBoardFormFieldNames.Title](
+    titleValue,
   );
   const descriptionIssueCode = await valueCheckers[
-    eTaskFormFieldNames.Description
+    eBoardFormFieldNames.Description
   ](descriptionValue);
-  const durationIssueCode = await valueCheckers[eTaskFormFieldNames.Duration](
-    minutesValue,
-    hoursValue,
+  const durationIssueCode = await valueCheckers[eBoardFormFieldNames.Tasks](
+    tasksValue,
   );
 
-  const issueCodes = [nameIssueCode, descriptionIssueCode, durationIssueCode];
+  const issueCodes = [titleIssueCode, descriptionIssueCode, durationIssueCode];
   const issueCodeFields = [
-    eTaskFormFieldNames.Name,
-    eTaskFormFieldNames.Description,
-    eTaskFormFieldNames.Duration,
+    eBoardFormFieldNames.Title,
+    eBoardFormFieldNames.Description,
+    eBoardFormFieldNames.Tasks,
   ];
 
   issueCodes.forEach((code, id) => {
-    if (code && cTaskFormIssuesSeverity[code] === eFormIssueSeverity.Warning) {
-      errors[issueCodeFields[id]] = cTaskFormIssueMessage[code];
+    if (code && cBoardFormIssuesSeverity[code] === eFormIssueSeverity.Warning) {
+      errors[issueCodeFields[id]] = cBoardFormIssueMessage[code];
     }
   });
 
