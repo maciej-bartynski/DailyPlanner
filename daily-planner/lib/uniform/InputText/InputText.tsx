@@ -1,7 +1,7 @@
-import React, { RefObject, useEffect } from 'react';
-import { TextInput } from 'react-native';
+import React, {RefObject, useEffect} from 'react';
+import {TextInput} from 'react-native';
 import useResultStylesheet from 'lib/hooks/useResultStylesheet';
-import { iInputTextStyleSheet } from './InputText.styles';
+import {iInputTextStyleSheet} from './InputText.styles';
 import defaultStyles from './InputText.styles';
 
 export type InputTextProps = {
@@ -14,15 +14,10 @@ export type InputTextProps = {
 };
 
 const InputText = React.forwardRef<TextInput, InputTextProps>(
-  ({
-    placeholder,
-    onChangeText,
-    onBlur,
-    onFocus,
-    value,
-    styles,
-  }, inputReference) => {
-
+  (
+    {placeholder, onChangeText, onBlur, onFocus, value, styles},
+    inputReference,
+  ) => {
     const resultStyles = useResultStylesheet<iInputTextStyleSheet>({
       defaultStyles,
       styles,
@@ -39,6 +34,7 @@ const InputText = React.forwardRef<TextInput, InputTextProps>(
         value={value}
       />
     );
-  });
+  },
+);
 
 export default InputText;

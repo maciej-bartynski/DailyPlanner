@@ -2,6 +2,7 @@ import {eFieldType} from 'lib/enums/forms';
 import {FormikContextType} from 'formik';
 import {InputRangeProps} from '../InputValueSlider/InputValueSlider';
 import {InputTextProps} from '../InputText/InputText';
+import {InputMultiselectProps} from '../InputMultiselect/InputMultiselect';
 
 export enum eFieldVariant {
   Naked = 'Naked',
@@ -16,7 +17,13 @@ export type FormFieldRequiredProps<FormContextType> = {
 
 export type InputProps<CurrentInputProps> = Omit<
   CurrentInputProps,
-  'onValueChange' | 'onChangeText' | 'value'
+  | 'onValueChange'
+  | 'onChangeText'
+  | 'value'
+  | 'selectedOptions'
+  | 'onBlur'
+  | 'onFocus'
+  | 'focused'
 >;
 
 export const DEFAULT_PROPS_INPUT_RANGE: InputProps<InputRangeProps> = {
@@ -25,3 +32,7 @@ export const DEFAULT_PROPS_INPUT_RANGE: InputProps<InputRangeProps> = {
 };
 
 export const DEFAULT_PROPS_INPUT_TEXT: InputProps<InputTextProps> = {};
+
+export const DEFAULT_PROPS_MULTISELECT: InputProps<InputMultiselectProps> = {
+  options: [],
+};

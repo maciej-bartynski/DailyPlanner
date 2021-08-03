@@ -1,1 +1,1 @@
-export { default } from './FocusModal';
+export {default} from './FocusModal';
