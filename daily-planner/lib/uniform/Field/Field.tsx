@@ -34,7 +34,7 @@ const FormFieldModal: React.FC<{
       <FocusModal>{children}</FocusModal>
     </Modal>
   ) : (
-    <Fragment>{children}</Fragment>;
+    <Fragment>{children}</Fragment>
   );
 
 const FormField = function <FormContextType, CustomInputProps>(
@@ -61,7 +61,9 @@ const FormField = function <FormContextType, CustomInputProps>(
     e => {
       setFocused(false);
       const onFormikBlur = handleBlur(name) as (e: any) => void;
-      if (typeof onFormikBlur === 'function' && e) {onFormikBlur(e);}
+      if (typeof onFormikBlur === 'function' && e) {
+        onFormikBlur(e);
+      }
     },
     [handleBlur, name, setFocused],
   );
@@ -91,7 +93,9 @@ const FormField = function <FormContextType, CustomInputProps>(
   );
 
   const onModalShow = useCallback(() => {
-    if (inputReference.current) {inputReference.current.focus();}
+    if (inputReference.current) {
+      inputReference.current.focus();
+    }
   }, [inputReference.current]);
 
   if (variant === eFieldVariant.Naked && currentInputElement) {
@@ -99,10 +103,7 @@ const FormField = function <FormContextType, CustomInputProps>(
   }
 
   return (
-    <FormFieldModal
-      focused={focused}
-      onModalShow={onModalShow}
-    >
+    <FormFieldModal focused={focused} onModalShow={onModalShow}>
       <Label label={label || ''}>
         <Border name={name}>{currentInputElement}</Border>
         <Message<FormContextType> name={name} />
