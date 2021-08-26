@@ -1,11 +1,15 @@
 import {StyleSheet} from 'react-native';
-import {mixins} from 'lib/styles/fonts';
+import {titleListRecord} from 'lib/styles/fonts';
+import { eColors } from 'lib/styles/colors';
 
 const CardTitleStyles = StyleSheet.create({
+  card__titleWrapper: {
+    width: '100%',
+    flexDirection: 'row',
+  },
   card__title: {
-    ...mixins.subtitle,
-    marginBottom: 10,
-    color: 'white',
+    ...titleListRecord,
+    color: eColors.Gray,
   },
 });
 

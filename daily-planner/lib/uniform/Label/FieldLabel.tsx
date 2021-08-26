@@ -20,10 +20,7 @@ const FieldLabel: React.FC<Props> = ({label, styles, children}) => {
   });
 
   return (
-    <View style={resultStyles.fieldWrapper}>
       <Text style={resultStyles.fieldLabel}>{label}</Text>
-      {children}
-    </View>
   );
 };
 

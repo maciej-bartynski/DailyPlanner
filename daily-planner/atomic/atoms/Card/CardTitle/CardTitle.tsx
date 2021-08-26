@@ -1,23 +1,25 @@
-import React, {useMemo} from 'react';
-import {Text} from 'react-native';
+import React, { useMemo } from 'react';
+import { Text, View } from 'react-native';
 import CardTitleStyles from './CardTitle.styles';
-import {eColors} from 'lib/styles/colors';
+import { eColors } from 'lib/styles/colors';
 
 interface Props {
   title: string;
-  typoColorVariant?: eColors;
 }
 
 const CardTitle: React.FC<Props> = ({
-  title,
-  typoColorVariant = eColors.White,
+  title
 }) => {
-  const stylesArray = useMemo(
-    () => [CardTitleStyles.card__title, {color: typoColorVariant}],
-    [typoColorVariant],
+  return (
+    <View style={CardTitleStyles.card__titleWrapper}>
+      <Text 
+        numberOfLines={1}
+        style={CardTitleStyles.card__title}
+      >
+        {title}
+      </Text>
+    </View>
   );
-
-  return <Text style={stylesArray}>{title}</Text>;
 };
 
 export default CardTitle;

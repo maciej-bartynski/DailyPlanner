@@ -5,6 +5,7 @@ import ModalCreateTask from 'screens/ModalCreateTask';
 import ModalCreateBoard from 'screens/ModalCreateBoard';
 import ModalAddTasks from 'screens/ModalAddTasks';
 import {eModals} from 'lib/enums/screens';
+import ModalTaskDetail from 'screens/ModalTaskDetail';
 
 const ModalStack = createStackNavigator<ModalsStackParamList>();
 
@@ -28,6 +29,11 @@ const ScreensConfiguration = {
     component: ModalAddTasks,
     options: modalDefaultOptions,
   },
+  [eModals.ModalTaskDetail]:{
+    name: eModals.ModalTaskDetail,
+    component: ModalTaskDetail,
+    options: modalDefaultOptions,
+  }
 };
 
 const Modals = () => (
@@ -35,6 +41,7 @@ const Modals = () => (
     <ModalStack.Screen {...ScreensConfiguration[eModals.ModalCreateTask]} />
     <ModalStack.Screen {...ScreensConfiguration[eModals.ModalCreateBoard]} />
     <ModalStack.Screen {...ScreensConfiguration[eModals.ModalAddTasks]} />
+    <ModalStack.Screen {...ScreensConfiguration[eModals.ModalTaskDetail]} />
   </ModalStack.Navigator>
 );
 

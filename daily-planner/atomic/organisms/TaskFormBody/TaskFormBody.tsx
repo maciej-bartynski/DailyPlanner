@@ -1,23 +1,24 @@
 import React from 'react';
 import navigationRef from 'lib/navigation/reference';
 import Button from 'atomic/atoms/Button';
-import {iTaskFormCreate} from 'lib/models/task';
-import {useFormikContext} from 'formik';
-import {eButtonTitles} from 'lib/enums/strings';
+import { iTaskFormCreate } from 'lib/models/task';
+import { useFormikContext } from 'formik';
+import { eButtonTitles } from 'lib/enums/strings';
 import Positioner from './atoms/Positioner';
 import ScrollViewStyled from './atoms/ScrollView';
-import {eTaskFormFieldTexts} from 'lib/enums/task-form-strings';
-import {eTaskFormFieldNames} from 'components/TaskForm/config';
+import { eTaskFormFieldTexts } from 'lib/enums/task-form-strings';
+import { eTaskFormFieldNames } from 'components/TaskForm/config';
 import FormField from 'lib/uniform/Field';
-import {eFieldType} from 'lib/enums/forms';
-import {InputAreaProps} from 'lib/uniform/InputTextArea/InputTextArea';
+import { eFieldType } from 'lib/enums/forms';
+import { InputAreaProps } from 'lib/uniform/InputTextArea/InputTextArea';
 import FieldLabel from 'lib/uniform/Label';
 import valueSliderStyles from './stylesOverride/ValueSlider.styles';
 import FormFieldIssuesManager from 'lib/uniform/Message';
 import FormFieldIssueBorder from 'lib/uniform/Border';
-import {InputTextProps} from 'lib/uniform/InputText/InputText';
-import {InputRangeProps} from 'lib/uniform/InputValueSlider/InputValueSlider';
-import {eFieldVariant} from 'lib/uniform/Field/config';
+import { InputTextProps } from 'lib/uniform/InputText/InputText';
+import { InputRangeProps } from 'lib/uniform/InputValueSlider/InputValueSlider';
+import { eFieldVariant } from 'lib/uniform/Field/config';
+import { View } from 'react-native';
 
 type Props = {
   taskId?: string;
@@ -39,8 +40,8 @@ const MINUTES_MAX_VALUE = 60;
 const MINUTES_MIN_VALUE = 0;
 const HOURS_MIN_VALUE = 0;
 
-const TaskFormBody: React.FC<Props> = ({taskId}) => {
-  const {isValid, dirty, handleSubmit} = useFormikContext<iTaskFormCreate>();
+const TaskFormBody: React.FC<Props> = ({ taskId }) => {
+  const { isValid, dirty, handleSubmit } = useFormikContext<iTaskFormCreate>();
 
   const submitButtonTitle = taskId
     ? eButtonTitles.ApplyChanges
@@ -62,7 +63,8 @@ const TaskFormBody: React.FC<Props> = ({taskId}) => {
         label={eTaskFormFieldTexts.DescriptionLabel}
         placeholder={eTaskFormFieldTexts.DescriptionPlaceholder}
       />
-      <FieldLabel label="Task duration">
+      <View>
+        <FieldLabel label="Task duration" />
         <FormFieldIssueBorder<iTaskFormCreate>
           name={eTaskFormFieldNames.Duration}>
           <FormField<iTaskFormCreate, InputRangeProps>
@@ -89,7 +91,7 @@ const TaskFormBody: React.FC<Props> = ({taskId}) => {
         <FormFieldIssuesManager<iTaskFormCreate>
           name={eTaskFormFieldNames.Duration}
         />
-      </FieldLabel>
+      </View>
       <Positioner>
         <Button
           disabled={!(isValid && dirty)}

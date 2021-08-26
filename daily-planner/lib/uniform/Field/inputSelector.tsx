@@ -16,10 +16,7 @@ type tParams<FormContextType, CustomInputProps, PropsType> = {
   currentValue: FormContextType[keyof FormContextType];
   onChangeHandler: (e: string | React.ChangeEvent<any>) => void;
   onBlurHandler: (e: any) => void;
-  onFocusHandler: (e: any) => void;
   rest: PropsType;
-  inputReference: RefObject<TextInput>;
-  focused: boolean;
 };
 
 function inputSelector<FormContextType, CustomInputProps, PropsType>({
@@ -27,10 +24,7 @@ function inputSelector<FormContextType, CustomInputProps, PropsType>({
   currentValue,
   onChangeHandler,
   onBlurHandler,
-  onFocusHandler,
   rest,
-  inputReference,
-  focused,
 }: tParams<FormContextType, CustomInputProps, PropsType>) {
   let currentInputElement = null;
 
@@ -52,8 +46,6 @@ function inputSelector<FormContextType, CustomInputProps, PropsType>({
             value={currentValue}
             onChangeText={onChangeHandler}
             onBlur={onBlurHandler}
-            onFocus={onFocusHandler}
-            ref={inputReference}
           />
         ) : null;
       break;
@@ -68,8 +60,6 @@ function inputSelector<FormContextType, CustomInputProps, PropsType>({
             value={currentValue}
             onChangeText={onChangeHandler}
             onBlur={onBlurHandler}
-            onFocus={onFocusHandler}
-            ref={inputReference}
           />
         ) : null;
       break;
@@ -101,10 +91,8 @@ function inputSelector<FormContextType, CustomInputProps, PropsType>({
       currentInputElement = (
         <InputMultiselect
           {...fieldProps}
-          focused={focused}
           selectedOptions={fieldValueCastedToArray}
           onValueChange={arrayOnChangeHandler}
-          onFocus={onFocusHandler}
           onBlur={onBlurHandler}
         />
       );

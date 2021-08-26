@@ -1,4 +1,4 @@
-import {eViews, eModals, eScreens} from 'lib/enums/screens';
+import { eViews, eModals, eScreens } from 'lib/enums/screens';
 
 export type MainStackParamList = {
   [eScreens.Modals]: undefined;
@@ -6,9 +6,10 @@ export type MainStackParamList = {
 };
 
 export type ModalsStackParamList = {
-  [eModals.ModalCreateTask]: {taskId?: string};
-  [eModals.ModalCreateBoard]: {boardId?: string};
-  [eModals.ModalAddTasks]: {boardId?: string};
+  [eModals.ModalCreateTask]: { taskId?: string };
+  [eModals.ModalCreateBoard]: { boardId?: string };
+  [eModals.ModalAddTasks]: { boardId?: string };
+  [eModals.ModalTaskDetail]: { taskId: string };
 };
 
 export type ViewsStackParamList = {
@@ -21,6 +22,7 @@ export interface iViewsNavigation {
 }
 
 export interface iModalNavigation {
+  openModalTaskDetail: (taskId: string) => void;
   openModalCreateTask: (taskId?: string) => void;
   openModalCreateBoard: (boardId?: string) => void;
   openModalAddTasks: (boardId: string) => void;

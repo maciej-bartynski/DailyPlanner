@@ -1,11 +1,13 @@
-import {StyleSheet} from 'react-native';
-import {mixins} from 'lib/styles/fonts';
+import { StyleSheet } from 'react-native';
+import { eColors } from 'lib/styles/colors';
+import { extraInfoListRecord } from 'lib/styles/fonts';
 
 const CardInfoStyles = StyleSheet.create({
   card__info: {
-    ...mixins.paragraph,
-    fontWeight: 'bold',
-    paddingBottom: 10,
+    ...extraInfoListRecord,
+    width: '100%',
+    paddingTop: 5,
+    color: eColors.Gray
   },
 });
 

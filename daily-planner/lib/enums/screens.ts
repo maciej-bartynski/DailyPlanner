@@ -12,4 +12,5 @@ export enum eModals {
   ModalCreateTask = 'ModalCreateTask',
   ModalCreateBoard = 'ModalCreateBoard',
   ModalAddTasks = 'ModalAddTasks',
+  ModalTaskDetail = 'ModalTaskDetail'
 }

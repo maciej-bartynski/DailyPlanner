@@ -5,14 +5,24 @@ import {eFontWeight} from 'lib/styles/fonts';
 
 const navigationTabBarStyles = StyleSheet.create({
   navigationTabBar: {
-    height: 70,
-    backgroundColor: eColors.Primary,
-    width: '100%',
+    height: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 5,
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    width: '100%'
+  },
+  navigationTabBar__inner:{
     ...shadowMain,
+    backgroundColor: eColors.White,
+    borderRadius: 20,
     flexDirection: 'row',
+    paddingHorizontal: 10,
   },
   navigationTabBar__item: {
-    flex: 1,
+    flex: 0,
     margin: 5,
   },
   navigationTabBar__itemButton: {
@@ -20,8 +30,8 @@ const navigationTabBarStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderColor: eColors.White,
-    backgroundColor: eColors.Primary,
     borderRadius: 20,
+    paddingHorizontal: 10
   },
   navigationTabBar__itemButton_active: {
     height: '100%',
@@ -29,14 +39,16 @@ const navigationTabBarStyles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 1,
     borderColor: eColors.White,
-    backgroundColor: eColors.White,
     borderRadius: 20,
+    backgroundColor: eColors.Primary,
+    paddingHorizontal: 10
   },
   navigationTabBar__itemLabel: {
-    color: eColors.White,
+    color: eColors.Primary,
+    fontWeight: eFontWeight.black,
   },
   navigationTabBar__itemLabel_active: {
-    color: eColors.Blue,
+    color: eColors.White,
     fontWeight: eFontWeight.black,
   },
 });

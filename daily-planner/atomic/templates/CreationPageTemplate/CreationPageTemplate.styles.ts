@@ -22,15 +22,14 @@ const styles = StyleSheet.create({
   title: {
     flex: 1,
     ...mixins.title,
-    backgroundColor: eColors.secondaryDark,
-    color: 'white',
+    color: eColors.Gray,
   },
   header: {
     flexDirection: 'row',
-    height: 70,
+    height: 50,
     alignItems: 'center',
     paddingLeft: 20,
-    backgroundColor: eColors.secondaryDark,
+    backgroundColor: eColors.White,
     ...shadowMain,
   },
 });

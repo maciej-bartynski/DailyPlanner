@@ -14,6 +14,7 @@ const useWarnings = function <FormType>({
   values,
   warning,
 }: tUseWarningParams<FormType>) {
+
   const [warnings, setWarnings] = useState<tFormErrors<FormType>>({});
 
   useEffect(() => {
@@ -66,7 +67,9 @@ const Form = function <FormType>(props: tFormProps<FormType>) {
       validate={validation}
       validateOnBlur={false}
       validateOnChange={true}
-      onSubmit={onSubmit}>
+      onSubmit={onSubmit}
+      validateOnMount={false}
+      >
       <FormWarningLayer<FormType> {...props}>{children}</FormWarningLayer>
     </Formik>
   );

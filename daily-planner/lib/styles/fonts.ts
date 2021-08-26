@@ -21,6 +21,55 @@ export enum eFontWeight {
   white = 'normal',
 }
 
+/**
+ * List with records fonts
+ */
+export const titleListRecord = {
+  fontSize: 15,
+  fontWeight: eFontWeight.stress,
+  lineHeight: 15
+}
+
+export const extraInfoListRecord = {
+  fontSize: 10,
+  fontWeight: eFontWeight.stress,
+  lineHeight: 10
+}
+
+export const descriptionListRecord = {
+  fontSize: 10,
+  fontWeight: eFontWeight.normal,
+  lineHeight: 13
+}
+
+export const topLabelListRecord = {
+  fontSize: 10,
+  fontWeight: eFontWeight.normal,
+  lineHeight: 10
+}
+
+/**
+ * Detail page fonts
+ */
+
+export const titleTypoMixin = {
+  fontSize: 15,
+  fontWeight: eFontWeight.stress,
+  lineHeight: 20
+}
+
+export const labelTypoMixin = {
+  fontSize: 12,
+  fontWeight: eFontWeight.stress,
+  lineHeight: 18
+}
+
+export const paragraphTypoMixin = {
+  fontSize: 12,
+  fontWeight: eFontWeight.normal,
+  lineHeight: 18
+}
+
 export const mixins = StyleSheet.create({
   title: {
     fontSize: eFontSize.title,

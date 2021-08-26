@@ -33,7 +33,9 @@ const App = () => {
   return (
     <Provider store={store}>
       <NavigationContainer ref={navigationRef}>
-        <MainStack.Navigator mode="modal">
+        <MainStack.Navigator 
+          mode="modal"
+        >
           <MainStack.Screen {...ScreensConfiguration[eScreens.Views]} />
           <MainStack.Screen {...ScreensConfiguration[eScreens.Modals]} />
         </MainStack.Navigator>

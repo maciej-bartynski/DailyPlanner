@@ -5,19 +5,12 @@ import {eColors} from 'lib/styles/colors';
 
 interface Props {
   info: string;
-  typoColorVariant?: eColors;
 }
 
 const CardInfo: React.FC<Props> = ({
   info,
-  typoColorVariant = eColors.White,
 }) => {
-  const stylesArray = useMemo(
-    () => [CardInfoStyles.card__info, {color: typoColorVariant}],
-    [typoColorVariant],
-  );
-
-  return <Text style={stylesArray}>{info}</Text>;
+  return <Text style={CardInfoStyles.card__info}>{info}</Text>;
 };
 
 export default CardInfo;

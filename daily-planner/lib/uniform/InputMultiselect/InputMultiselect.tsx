@@ -11,31 +11,25 @@ export type tOption = {
 };
 
 export interface InputMultiselectProps {
-  onFocus: (e?: any) => void;
   onBlur: (e?: any) => void;
   onValueChange: (values: tOption[]) => void;
   selectedOptions?: tOption[];
   options?: tOption[];
-  focused: boolean;
 }
 
 const InputMultiselect: React.FC<InputMultiselectProps> = ({
-  onFocus,
   onBlur,
   selectedOptions,
   options,
   onValueChange,
-  focused: initialFocused,
 }) => {
-  const [focused, setFocused] = useState(initialFocused);
+  const [focused, setFocused] = useState();
 
   const onPressHandler = () => {
     if (focused) {
-      setFocused(false);
       onBlur();
     } else {
-      setFocused(true);
-      onFocus();
+  
     }
   };
 

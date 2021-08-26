@@ -4,32 +4,36 @@ import useResultStylesheet from 'lib/hooks/useResultStylesheet';
 import {iMessageStyleSheet} from './Message.styles';
 import defaultStyles from './Message.styles';
 import {useFormContext} from 'lib/uniform/Form/config';
+import useFieldContext from '../Field/fieldContext';
 
 type Props<FormContextType> = PropsWithChildren<{
   name: keyof FormContextType;
   styles?: Partial<iMessageStyleSheet>;
+  error: string,
+  warning: string,
 }>;
 
 const Message = function <FormContextType>({
   name,
   styles,
+  error,
+  warning,
 }: Props<FormContextType>) {
+  
   const resultStyles = useResultStylesheet<iMessageStyleSheet>({
     defaultStyles,
     styles,
   });
 
-  const {errors, warnings} = useFormContext<FormContextType>();
-  const currentError = errors[name];
-  const currentWarning = warnings ? warnings[name] : '';
+  
 
   return (
     <View style={resultStyles.fieldIssues}>
-      {currentError ? (
-        <Text style={resultStyles.fieldError}>{currentError}</Text>
+      {error ? (
+        <Text style={resultStyles.fieldError}>{error}</Text>
       ) : null}
-      {!currentError && currentWarning ? (
-        <Text style={resultStyles.fieldWarning}>{currentWarning}</Text>
+      {!error && warning ? (
+        <Text style={resultStyles.fieldWarning}>{warning}</Text>
       ) : null}
     </View>
   );

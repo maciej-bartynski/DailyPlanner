@@ -1,10 +1,12 @@
 import {StyleSheet} from 'react-native';
-import {mixins} from 'lib/styles/fonts';
+import { descriptionListRecord} from 'lib/styles/fonts';
+import { eColors } from 'lib/styles/colors';
 
 const CardDescriptionStyles = StyleSheet.create({
   card__info: {
-    ...mixins.paragraph,
-    paddingBottom: 10,
+    ...descriptionListRecord,
+    color: eColors.Gray,
+    marginTop: 2,
   },
 });
 

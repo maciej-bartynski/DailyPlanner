@@ -4,7 +4,8 @@ import {eColors} from 'lib/styles/colors';
 
 const InputMultiselectStyles = StyleSheet.create({
   input__input: {
-    padding: 0,
+    borderColor: 'green',
+    borderWidth: 3,
   },
   input__optionsContainer: {
     ...shadowMain,

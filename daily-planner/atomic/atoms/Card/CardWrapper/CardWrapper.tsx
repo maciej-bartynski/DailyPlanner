@@ -8,21 +8,9 @@ interface Props {
 }
 
 const CardWrapper: React.FC<Props> = ({
-  colorVariant = eColors.Primary,
   children,
 }) => {
-  const stylesArray = useMemo(
-    () => [
-      CardWrapperStyles.card__wrapper,
-      {
-        backgroundColor: colorVariant,
-        borderColor: colorVariant,
-      },
-    ],
-    [colorVariant],
-  );
-
-  return <View style={stylesArray}>{children}</View>;
+  return <View style={CardWrapperStyles.card__wrapper}>{children}</View>;
 };
 
 export default CardWrapper;

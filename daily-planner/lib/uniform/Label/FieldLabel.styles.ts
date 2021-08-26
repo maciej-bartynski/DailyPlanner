@@ -9,12 +9,14 @@ export interface iLabelStylesheet {
 const defaultStyles: iLabelStylesheet = StyleSheet.create({
   fieldWrapper: {
     width: '100%',
+    flex: 1,
   },
   fieldLabel: {
     ...mixins.label,
     paddingLeft: 10,
     paddingBottom: 10,
     paddingTop: 15,
+    flex: 1,
   },
 });
 

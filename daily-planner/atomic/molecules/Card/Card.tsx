@@ -6,10 +6,14 @@ import {
   CardDescription,
 } from 'atomic/atoms/Card';
 import React from 'react';
-import {eButtonVariant} from 'lib/enums/buttons';
-import {eButtonTitles} from 'lib/enums/strings';
+import { eButtonVariant } from 'lib/enums/buttons';
+import { eButtonTitles } from 'lib/enums/strings';
 import Button from 'atomic/atoms/Button';
-import {eColors} from 'lib/styles/colors';
+import { eColors } from 'lib/styles/colors';
+import CardIcon from 'atomic/atoms/Card/CardIcon';
+import ContentWrapper from 'atomic/atoms/Card/ContentWrapper';
+import { View, Text, Pressable } from 'react-native';
+import CardTopLabel from 'atomic/atoms/Card/CardTopLabel';
 
 type Action = {
   variant: eButtonVariant;
@@ -22,47 +26,41 @@ interface Props {
   title: string;
   extraInfo?: string[];
   description?: string;
-  actions: Action[];
   colorVariant?: eColors;
   typoColorVariant?: eColors;
+  createdAt?: string,
+  onPress: () => void;
 }
 
 const Card: React.FC<Props> = ({
   title,
   extraInfo,
   description,
-  actions,
-  colorVariant = eColors.Primary,
-  typoColorVariant = eColors.White,
+  onPress
 }) => {
   return (
-    <CardWrapper colorVariant={colorVariant}>
-      <CardTitle title={title} typoColorVariant={typoColorVariant} />
+    <Pressable onPress={onPress}>
+      <CardWrapper>
+        <CardIcon source="" />
+        <ContentWrapper>
+          <CardTitle title={title} />
 
-      {!!extraInfo &&
-        extraInfo.map((info, id) => (
-          <CardInfo key={id} typoColorVariant={typoColorVariant} info={info} />
-        ))}
+          {!!extraInfo &&
+            extraInfo.map((info, id) => (
+              <CardInfo
+                key={id}
+                info={info}
+              />
+            ))}
 
-      {!!description && (
-        <CardDescription
-          typoColorVariant={typoColorVariant}
-          description={description}
-        />
-      )}
-
-      <CardActions>
-        {actions.map(action => (
-          <Button
-            key={action.label}
-            variant={action.variant}
-            title={action.label}
-            onPress={action.onPress}
-            onPressAsync={action.onPressAsync}
-          />
-        ))}
-      </CardActions>
-    </CardWrapper>
+          {!!description && (
+            <CardDescription
+              description={description}
+            />
+          )}
+        </ContentWrapper>
+      </CardWrapper>
+    </Pressable>
   );
 };
 

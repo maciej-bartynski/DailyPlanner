@@ -6,6 +6,7 @@ export const cScreenTitles = {
   [eModals.ModalCreateTask]: 'Create task',
   [eModals.ModalCreateBoard]: 'Create board',
   [eModals.ModalAddTasks]: 'Add tasks to board',
+  [eModals.ModalTaskDetail]: 'Task details'
 };
 
 export enum eButtonTitles {

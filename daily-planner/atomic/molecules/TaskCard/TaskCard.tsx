@@ -1,10 +1,10 @@
-import React, {useCallback, useMemo} from 'react';
+import React, { useCallback, useMemo } from 'react';
 import useTasks from 'lib/hooks/useTasks';
-import {modalNavigation} from 'lib/navigation';
-import {eButtonTitles} from 'lib/enums/strings';
-import {eButtonVariant} from 'lib/enums/buttons';
+import { modalNavigation } from 'lib/navigation';
+import { eButtonTitles } from 'lib/enums/strings';
+import { eButtonVariant } from 'lib/enums/buttons';
 import Card from '../Card';
-import {View} from 'react-native';
+import { View } from 'react-native';
 import styles from './TaskCard.styles';
 
 type Props = {
@@ -16,15 +16,15 @@ type Props = {
 };
 
 const TaskCard: React.FC<Props> = props => {
-  const {name, description, duration, taskId, hours} = props;
-  const {methods} = useTasks();
+  const { name, description, duration, taskId, hours } = props;
+  const { methods } = useTasks();
 
   const deleteTask = useCallback(() => {
     methods.deleteTask(taskId);
   }, [taskId, methods]);
 
-  const openModalCreateTask = useCallback(() => {
-    modalNavigation.openModalCreateTask(taskId);
+  const openModalTaskDetail = useCallback(() => {
+    modalNavigation.openModalTaskDetail(taskId);
   }, [taskId]);
 
   const durationString = `${hours ? `${hours} h. ` : ''}${duration} min.`;
@@ -34,7 +34,7 @@ const TaskCard: React.FC<Props> = props => {
       {
         variant: eButtonVariant.Primary,
         label: eButtonTitles.Edit,
-        onPress: openModalCreateTask,
+        onPress: openModalTaskDetail,
       },
       {
         variant: eButtonVariant.Tertiary,
@@ -42,18 +42,66 @@ const TaskCard: React.FC<Props> = props => {
         onPress: deleteTask,
       },
     ],
-    [openModalCreateTask, deleteTask],
+    [openModalTaskDetail, deleteTask],
   );
 
   return (
-    <View style={styles.wrapper}>
+    <>
+
       <Card
+        createdAt={'21.02.1990'}
         title={name}
-        extraInfo={[durationString]}
+        extraInfo={[`Duration: ${durationString}`, 'Created: 12.12.1919']}
         description={description}
-        actions={actions}
+        onPress={openModalTaskDetail}
       />
-    </View>
+
+
+      <Card
+        createdAt={'21.02.1990'}
+        title={'A very long task title to show and etc ofc! So what to name it?'}
+        extraInfo={[`Duration: ${durationString}`, 'Created: 12.12.1919']}
+        description={'Description is very long, mamamama asdfasdflk aslfh laskhf gklsdjfg hksdjh gksdjf g And this is the end i thing. OR maybe not? Who knows? WHO KNOWS?!?!?!'}
+        onPress={openModalTaskDetail}
+      />
+
+
+      <Card
+        createdAt={'21.02.1990'}
+        title={'A very long task title to show and etc ofc! So what to name it?'}
+        extraInfo={[`Duration: ${durationString}`, 'Created: 12.12.1919']}
+        description={'Descriptiows? WHO KNOWS?!?!?!'}
+        onPress={openModalTaskDetail}
+      />
+
+
+      <Card
+        createdAt={'21.02.1990'}
+        title={'A very long task title to show and etc ofc! So what to name it?'}
+        extraInfo={[`Duration: ${durationString}`, 'Created: 12.12.1919']}
+        description={'Description is very long, mamamama asdfasdflk aslfh laskhf gklsdjfg hksdjh gksdjf g And this is the end i thing. OR maybe not? Who knows? WHO KNOWS?!?!?!'}
+        onPress={openModalTaskDetail}
+      />
+
+
+      <Card
+        createdAt={'21.02.1990'}
+        title={'A very long task title to show and etc ofc! So what to name it?'}
+        extraInfo={[`Duration: ${durationString}`, 'Created: 12.12.1919']}
+        description={'Description is very loni thing. OR maybe not? Who knows? WHO KNOWS?!?!?!'}
+        onPress={openModalTaskDetail}
+      />
+
+
+      <Card
+        createdAt={'21.02.1990'}
+        title={'A very long task title to show and etc ofc! So what to name it?'}
+        extraInfo={[`Duration: ${durationString}`, 'Created: 12.12.1919']}
+        description={'Description is very long, mamamama asdfasdflk aslfh laskhf gklsdjfg hksdjh gksdjf g And this is the end i thing. OR maybe not? Who knows? WHO KNOWS?!?!?!'}
+        onPress={openModalTaskDetail}
+      />
+
+    </>
   );
 };
 

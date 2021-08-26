@@ -14,6 +14,7 @@ const NavigationTabBar: React.FC<Props> = props => {
   const {routeNames, index} = props.state;
   return (
     <View style={styles.navigationTabBar}>
+      <View style={styles.navigationTabBar__inner}>
       {routeNames.map((name, id) => (
         <TouchableOpacity
           key={name}
@@ -34,6 +35,7 @@ const NavigationTabBar: React.FC<Props> = props => {
           </Text>
         </TouchableOpacity>
       ))}
+      </View>
     </View>
   );
 };
