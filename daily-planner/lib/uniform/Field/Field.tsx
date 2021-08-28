@@ -9,11 +9,17 @@ import inputSelector from './inputSelector';
 import FieldWrapper from '../FieldWrapper/FieldWrapper';
 import FieldModal from '../FieldModal';
 import { FieldContext } from './fieldContext';
-import { FormikContextType } from 'formik';
+import { FormikContextType, FormikErrors } from 'formik';
 
 type Props<FormContextType> = PropsWithChildren<{
   name: keyof FormikContextType<FormContextType>['values'];
-  children: (arg: any) => JSX.Element
+  children: (arg: {
+    value: FormContextType[keyof FormContextType];
+    error: string;
+    warning: string;
+    onBlurHandler: keyof FormContextType extends string ? (e: any) => void : void;
+    onChangeHandler: (e: string) => void;
+  }) => JSX.Element
 }>;
 
 const FormField = function <FormContextType>(
@@ -49,8 +55,8 @@ const FormField = function <FormContextType>(
 
   const memoized = useMemo(() => ({
     value,
-    error,
-    warning,
+    error: error as string,
+    warning: warning as string,
     onBlurHandler,
     onChangeHandler,
   }), [

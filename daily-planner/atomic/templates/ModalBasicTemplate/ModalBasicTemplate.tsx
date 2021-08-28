@@ -4,7 +4,8 @@ import { StatusBar, View, Text } from 'react-native';
 import navigationRef from 'lib/navigation/reference';
 import modalBasicTemplateStyles from './ModalBasicTemplate.styles';
 import Button from 'atomic/atoms/Button';
-import { eButtonVariant } from 'lib/enums/buttons';
+import ButtonRounded from 'atomic/atoms/ButtonRounded';
+import { eButtonVariant } from 'atomic/atoms/ButtonRounded/ButtonRounded';
 
 type Props = {
   bgColor?: string;
@@ -30,11 +31,12 @@ const ModalBasicTemplate: React.FC<Props> = ({
               {title}
             </Text>}
           </View>
-          <Button
-            variant={eButtonVariant.Tertiary}
-            title="Close"
-            onPress={navigationRef.current?.goBack}
-          />
+          <View style={modalBasicTemplateStyles.buttonWrapper}>
+            <ButtonRounded
+              variant={eButtonVariant.Close}
+              onPressHandler={navigationRef.current?.goBack}
+            />
+          </View>
         </View>
         <View
           style={

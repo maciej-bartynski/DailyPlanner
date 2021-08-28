@@ -19,6 +19,9 @@ import { InputTextProps } from 'lib/uniform/InputText/InputText';
 import { InputRangeProps } from 'lib/uniform/InputValueSlider/InputValueSlider';
 import { eFieldVariant } from 'lib/uniform/Field/config';
 import { View } from 'react-native';
+import BasicInput from 'lib/uniform/BasicInput';
+import { eFormIssueSeverity } from 'components/TaskForm copy/config';
+import { Field } from 'lib/uniform';
 
 type Props = {
   taskId?: string;
@@ -51,7 +54,19 @@ const TaskFormBody: React.FC<Props> = ({ taskId }) => {
 
   return (
     <ScrollViewStyled>
-      <FormField<iTaskFormCreate, InputTextProps>
+      <Field name={'name'}>
+        {({ value, onChangeHandler, error, warning }) => (
+          <BasicInput
+            label="Task name"
+            placeholder={'Enter task name here'}
+            onChange={onChangeHandler}
+            value={value}
+            message={error || warning }
+            messageSeverity={eFormIssueSeverity.Error}
+          />
+        )}
+      </Field>
+      {/* <FormField<iTaskFormCreate, InputTextProps>
         name={eTaskFormFieldNames.Name}
         type={eFieldType.TextInput}
         label={eTaskFormFieldTexts.NameLabel}
@@ -91,7 +106,7 @@ const TaskFormBody: React.FC<Props> = ({ taskId }) => {
         <FormFieldIssuesManager<iTaskFormCreate>
           name={eTaskFormFieldNames.Duration}
         />
-      </View>
+      </View> */}
       <Positioner>
         <Button
           disabled={!(isValid && dirty)}

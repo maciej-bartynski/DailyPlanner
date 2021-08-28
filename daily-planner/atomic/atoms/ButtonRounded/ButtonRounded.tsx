@@ -1,20 +1,39 @@
 import React from 'react';
-import {Text, GestureResponderEvent} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import { Text, GestureResponderEvent } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import buttonRoundedStyles from './ButtonRounded.styles';
 
 const onPressDefaultHandler = () => null;
 
+export enum eButtonVariant {
+  Add = 'Add',
+  Close = 'Close'
+}
+
 type Props = {
   onPressHandler?: (event?: GestureResponderEvent) => unknown;
+  variant?: eButtonVariant
 };
 
 const ButtonRounded: React.FC<Props> = ({
   onPressHandler = onPressDefaultHandler,
-}) => (
-  <TouchableOpacity onPress={onPressHandler} style={buttonRoundedStyles.button}>
-    <Text style={buttonRoundedStyles.text}>+</Text>
-  </TouchableOpacity>
-);
+  variant = eButtonVariant.Add
+}) => {
+  const wrapperClassName = variant === eButtonVariant.Add
+  ? buttonRoundedStyles.button
+  : buttonRoundedStyles.buttonCross;
+
+  const className = variant === eButtonVariant.Add
+    ? buttonRoundedStyles.text
+    : buttonRoundedStyles.cross;
+  return (
+    <TouchableOpacity 
+      onPress={onPressHandler} 
+      style={wrapperClassName}
+    >
+      <Text style={className}>+</Text>
+    </TouchableOpacity>
+  );
+}
 
 export default ButtonRounded;

@@ -13,12 +13,12 @@ const TextWithBulletStyles = StyleSheet.create({
         width: 10,
         height: 10,
         borderRadius: 10,
-        backgroundColor: eColors.Secondary
+        backgroundColor: eColors.Primary
     },
     textWithBullet__label: {
         marginRight: 5,
         ...labelTypoMixin,
-        color: eColors.Secondary
+        color: eColors.Primary
     },
     textWithBullet__content:{
         ...paragraphTypoMixin,

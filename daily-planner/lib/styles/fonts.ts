@@ -51,7 +51,6 @@ export const topLabelListRecord = {
 /**
  * Detail page fonts
  */
-
 export const titleTypoMixin = {
   fontSize: 15,
   fontWeight: eFontWeight.stress,
@@ -68,6 +67,22 @@ export const paragraphTypoMixin = {
   fontSize: 12,
   fontWeight: eFontWeight.normal,
   lineHeight: 18
+}
+
+/**
+ * Form fonts
+ */
+
+export const fieldLabelTypoMixin = {
+  ...labelTypoMixin
+}
+
+export const fieldMessageTypoMixin = {
+  ...labelTypoMixin
+}
+
+export const inputTypoMixin = {
+  ...paragraphTypoMixin
 }
 
 export const mixins = StyleSheet.create({

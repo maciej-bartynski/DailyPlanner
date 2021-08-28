@@ -17,14 +17,20 @@ const modalBasicTemplateStyles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     backgroundColor: 'white',
-    height: 70,
-    alignItems: 'center',
+    minHeight: 70,
+    alignItems: 'flex-start',
     paddingLeft: 20,
     borderBottomColor: eColors.Primary,
     borderBottomWidth: 1,
+    paddingVertical: 20
   },
   titleWrapper: {
     flex: 1
+  },
+  buttonWrapper: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 50
   },
   title: {
     ...mixins.title,
