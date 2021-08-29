@@ -48,7 +48,6 @@ const ViewTasks: React.FC<ViewProp> = () => {
                 name={task.name}
                 description={task.description}
                 duration={+task.duration}
-                hours={+task.hours}
               />
             );
           })}

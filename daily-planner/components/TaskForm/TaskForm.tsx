@@ -1,5 +1,5 @@
-import React, {useCallback, useRef} from 'react';
-import {iTaskFormCreate} from 'lib/models/task';
+import React, { useCallback, useRef } from 'react';
+import { iTaskFormCreate } from 'lib/models/task';
 import useTasks from 'lib/hooks/useTasks';
 import TaskFormBody from 'atomic/organisms/TaskFormBody';
 import {
@@ -7,15 +7,15 @@ import {
   taskFormValidation,
   taskFormWarningManager,
 } from './config';
-import {Form} from 'lib/uniform';
+import { Form } from 'lib/uniform';
 
 type Props = {
   taskId?: string;
 };
 
-const TaskForm: React.FC<Props> = ({taskId}) => {
-  const {methods} = useTasks();
-  const {updateTask, getTask, createTask} = methods;
+const TaskForm: React.FC<Props> = ({ taskId }) => {
+  const { methods } = useTasks();
+  const { updateTask, getTask, createTask } = methods;
   const currentTask = taskId ? getTask(taskId) : null;
   const initialValues = useRef(
     Object.assign({}, TaskFormInitialValues),
@@ -25,7 +25,6 @@ const TaskForm: React.FC<Props> = ({taskId}) => {
     initialValues.name = currentTask.name;
     initialValues.description = currentTask.description;
     initialValues.duration = currentTask.duration;
-    initialValues.hours = currentTask.hours;
   }
 
   const onSubmit = useCallback(
@@ -40,11 +39,12 @@ const TaskForm: React.FC<Props> = ({taskId}) => {
   );
 
   return (
-    <Form
+    <Form<iTaskFormCreate>
       initialValues={initialValues}
       onSubmit={onSubmit}
       validation={taskFormValidation}
-      warning={taskFormWarningManager}>
+      warning={taskFormWarningManager}
+    >
       <TaskFormBody taskId={taskId} />
     </Form>
   );

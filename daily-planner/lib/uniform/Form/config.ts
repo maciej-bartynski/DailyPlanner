@@ -1,31 +1,25 @@
-import {PropsWithChildren, createContext, useContext} from 'react';
-import {FormikContextType, FormikErrors} from 'formik';
+import { PropsWithChildren, createContext, useContext } from 'react';
+import { FormikContextType } from 'formik';
 
-export type tFormErrors<FormType> = FormikErrors<FormType>;
+export type tMessagesManager<FormType> = (values: FormType) =>
+  ((Partial<Record<keyof FormType, string>>) | (Promise<Partial<Record<keyof FormType, string>>>));
 
-export type tFormProps<FormType extends {}> = PropsWithChildren<{
+export type tFormProps<FormType> = PropsWithChildren<{
   initialValues: FormType;
-  validation?: (
-    values: FormikContextType<FormType>['values'],
-  ) => tFormErrors<FormType> | Promise<tFormErrors<FormType>>;
-  warning?: (
-    values: FormikContextType<FormType>['values'],
-  ) => tFormErrors<FormType> | Promise<tFormErrors<FormType>>;
+  validation?: tMessagesManager<FormType>;
+  warning?: tMessagesManager<FormType>;
   onSubmit: (
-    values: FormikContextType<FormType>['values'],
+    values: FormType,
   ) => void | Promise<void>;
 }>;
 
-export type tUseWarningParams<FormType> = {
-  values: FormikContextType<FormType>['values'];
-  warning: (
-    values: FormikContextType<FormType>['values'],
-  ) => tFormErrors<FormType> | Promise<tFormErrors<FormType>>;
-};
-
 export type iFormContext<FormType> = {
-  warnings: tFormErrors<FormType>;
-} & FormikContextType<FormType>;
+  warnings: Partial<Record<keyof FormType, string>>;
+  errors:Partial<Record<keyof FormType, string>>;
+  values: FormType;
+  handleBlur: (e:string) => (e: any) => void;
+  handleChange: (e:string) => (e: string) => void;
+}
 
 export const FormContext = createContext<unknown>({});
 

@@ -3,7 +3,6 @@ export interface iTask {
   name: string;
   description: string;
   duration: number;
-  hours: number;
 }
 
 export interface iTaskFormCreate extends Omit<iTask, 'id'> {}

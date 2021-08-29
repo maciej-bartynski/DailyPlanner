@@ -78,7 +78,9 @@ export const fieldLabelTypoMixin = {
 }
 
 export const fieldMessageTypoMixin = {
-  ...labelTypoMixin
+  lineHeight: 12,
+  fontSize: 10,
+  fontWeight: eFontWeight.normal,
 }
 
 export const inputTypoMixin = {

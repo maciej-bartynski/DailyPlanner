@@ -1,20 +1,29 @@
 import { StyleSheet } from "react-native";
 import { eColors } from "lib/styles/colors";
-import { labelTypoMixin, fieldLabelTypoMixin, fieldMessageTypoMixin, inputTypoMixin } from "lib/styles/fonts";
+import { fieldLabelTypoMixin, fieldMessageTypoMixin, inputTypoMixin } from "lib/styles/fonts";
 
+const flexStart: 'flex-start' = 'flex-start';
+const center: 'center' = 'center';
+const row: 'row' = 'row';
 const inputCommonStyles = {
     borderWidth: 1,
     minHeight: 50,
     borderRadius: 10,
     padding: 10,
     paddingLeft: 0,
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center",
+    flexDirection: row,
+    justifyContent: flexStart,
+    alignItems: center,
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
     borderLeftWidth: 0,
     borderColor: eColors.Gray,
+}
+
+const textAreaCommonStyles = {
+    ...inputCommonStyles,
+    height: 100,
+    alignItems: flexStart
 }
 
 const toolbarMessageCommonStyles = {
@@ -31,6 +40,9 @@ const BasicInputStyles = StyleSheet.create({
     },
     basicInput__pressable: {
         ...inputCommonStyles,
+    },
+    basicInput__pressableTextArea: {
+        ...textAreaCommonStyles,
     },
     basicInput__pressableText: {
         color: eColors.Primary,
@@ -55,7 +67,8 @@ const BasicInputStyles = StyleSheet.create({
     },
     basicInput__textInput: {
         color: eColors.Primary,
-        ...inputTypoMixin
+        ...inputTypoMixin,
+        textAlignVertical: 'top',
     },
     basicInput__buttonAccept: {
         padding: 10,
@@ -70,7 +83,7 @@ const BasicInputStyles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: 20,
-        borderTopWidth:1,
+        borderTopWidth: 1,
         borderTopColor: eColors.Secondary
     }
 })

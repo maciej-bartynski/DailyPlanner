@@ -1,17 +1,12 @@
 import {iTaskFormCreate} from 'lib/models/task';
 import {FormikErrors} from 'formik';
 import getTasks from '../../api/tasks/getTasks';
-
-export enum eFormIssueSeverity {
-  Warning = 'warning',
-  Error = 'error',
-}
+import { eFormIssueSeverity } from 'lib/uniform/types';
 
 export enum eTaskFormFieldNames {
   Name = 'name',
   Description = 'description',
   Duration = 'duration',
-  Hours = 'hours',
 }
 
 const MIN_TASK_NAME_LEN = 4;
@@ -24,7 +19,6 @@ export const TaskFormInitialValues: iTaskFormCreate = {
   [eTaskFormFieldNames.Name]: '',
   [eTaskFormFieldNames.Description]: '',
   [eTaskFormFieldNames.Duration]: 20,
-  [eTaskFormFieldNames.Hours]: 0,
 };
 
 export enum eTaskFormIssueCode {
@@ -86,9 +80,8 @@ export const valueCheckers = {
   },
   [eTaskFormFieldNames.Duration]: function (
     minutesValue: number,
-    hoursValue: number,
   ): null | eTaskFormIssueCode {
-    const totalDuration = +minutesValue + +hoursValue * 60;
+    const totalDuration = +minutesValue;
     switch (true) {
       case totalDuration < MIN_TASK_DURATION: {
         return eTaskFormIssueCode.DurationToLow;
@@ -119,11 +112,10 @@ export const valueCheckers = {
 };
 
 export const taskFormValidation = async (values: iTaskFormCreate) => {
-  const errors: FormikErrors<Record<eTaskFormFieldNames, string>> = {};
+  const errors: Partial<Record<Partial<eTaskFormFieldNames>, string>> = {};
 
   const nameValue = values[eTaskFormFieldNames.Name];
   const durationValue = values[eTaskFormFieldNames.Duration];
-  const hoursValue = values[eTaskFormFieldNames.Hours];
   const descriptionValue = values[eTaskFormFieldNames.Description];
 
   const nameIssueCode = await valueCheckers[eTaskFormFieldNames.Name](
@@ -134,7 +126,6 @@ export const taskFormValidation = async (values: iTaskFormCreate) => {
   ](descriptionValue);
   const durationIssueCode = await valueCheckers[eTaskFormFieldNames.Duration](
     durationValue,
-    hoursValue,
   );
 
   const issueCodes = [nameIssueCode, descriptionIssueCode, durationIssueCode];
@@ -158,7 +149,6 @@ export const taskFormWarningManager = async (values: iTaskFormCreate) => {
 
   const nameValue = values[eTaskFormFieldNames.Name];
   const minutesValue = values[eTaskFormFieldNames.Duration];
-  const hoursValue = values[eTaskFormFieldNames.Hours];
   const descriptionValue = values[eTaskFormFieldNames.Description];
 
   const nameIssueCode = await valueCheckers[eTaskFormFieldNames.Name](
@@ -169,7 +159,6 @@ export const taskFormWarningManager = async (values: iTaskFormCreate) => {
   ](descriptionValue);
   const durationIssueCode = await valueCheckers[eTaskFormFieldNames.Duration](
     minutesValue,
-    hoursValue,
   );
 
   const issueCodes = [nameIssueCode, descriptionIssueCode, durationIssueCode];

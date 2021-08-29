@@ -6,22 +6,11 @@ import { useFormikContext } from 'formik';
 import { eButtonTitles } from 'lib/enums/strings';
 import Positioner from './atoms/Positioner';
 import ScrollViewStyled from './atoms/ScrollView';
-import { eTaskFormFieldTexts } from 'lib/enums/task-form-strings';
 import { eTaskFormFieldNames } from 'components/TaskForm/config';
-import FormField from 'lib/uniform/Field';
-import { eFieldType } from 'lib/enums/forms';
-import { InputAreaProps } from 'lib/uniform/InputTextArea/InputTextArea';
-import FieldLabel from 'lib/uniform/Label';
-import valueSliderStyles from './stylesOverride/ValueSlider.styles';
-import FormFieldIssuesManager from 'lib/uniform/Message';
-import FormFieldIssueBorder from 'lib/uniform/Border';
-import { InputTextProps } from 'lib/uniform/InputText/InputText';
-import { InputRangeProps } from 'lib/uniform/InputValueSlider/InputValueSlider';
-import { eFieldVariant } from 'lib/uniform/Field/config';
-import { View } from 'react-native';
 import BasicInput from 'lib/uniform/BasicInput';
-import { eFormIssueSeverity } from 'components/TaskForm copy/config';
 import { Field } from 'lib/uniform';
+import { eTaskFormFieldTexts } from 'lib/enums/task-form-strings';
+import InputValueSlider from 'lib/uniform/InputValueSlider';
 
 type Props = {
   taskId?: string;
@@ -54,59 +43,69 @@ const TaskFormBody: React.FC<Props> = ({ taskId }) => {
 
   return (
     <ScrollViewStyled>
-      <Field name={'name'}>
-        {({ value, onChangeHandler, error, warning }) => (
-          <BasicInput
-            label="Task name"
-            placeholder={'Enter task name here'}
-            onChange={onChangeHandler}
-            value={value}
-            message={error || warning }
-            messageSeverity={eFormIssueSeverity.Error}
-          />
-        )}
-      </Field>
-      {/* <FormField<iTaskFormCreate, InputTextProps>
+      <Field<iTaskFormCreate, eTaskFormFieldNames.Name>
         name={eTaskFormFieldNames.Name}
-        type={eFieldType.TextInput}
-        label={eTaskFormFieldTexts.NameLabel}
-        placeholder={eTaskFormFieldTexts.NamePlaceholder}
-      />
-      <FormField<iTaskFormCreate, InputAreaProps>
+      >
+        {({
+          value,
+          onChange,
+          message,
+          severity
+        }) => (
+            <BasicInput
+              label={eTaskFormFieldTexts.NameLabel}
+              placeholder={eTaskFormFieldTexts.NamePlaceholder}
+              onChange={onChange}
+              value={value}
+              message={message}
+              messageSeverity={severity}
+            />
+          )}
+      </Field>
+
+      <Field<iTaskFormCreate, eTaskFormFieldNames.Description>
         name={eTaskFormFieldNames.Description}
-        type={eFieldType.TextArea}
-        label={eTaskFormFieldTexts.DescriptionLabel}
-        placeholder={eTaskFormFieldTexts.DescriptionPlaceholder}
-      />
-      <View>
-        <FieldLabel label="Task duration" />
-        <FormFieldIssueBorder<iTaskFormCreate>
-          name={eTaskFormFieldNames.Duration}>
-          <FormField<iTaskFormCreate, InputRangeProps>
-            name={eTaskFormFieldNames.Hours}
-            type={eFieldType.ValueSlider}
-            label={eTaskFormFieldTexts.HoursLabel}
-            min={HOURS_MIN_VALUE}
-            max={HOURS_MAX_VALUE}
-            styles={valueSliderStyles}
-            unit="hour(s)"
-            variant={eFieldVariant.Naked}
-          />
-          <FormField<iTaskFormCreate, InputRangeProps>
-            name={eTaskFormFieldNames.Duration}
-            type={eFieldType.ValueSlider}
-            label={eTaskFormFieldTexts.DurationLabel}
-            min={MINUTES_MIN_VALUE}
-            max={MINUTES_MAX_VALUE}
-            styles={valueSliderStyles}
-            unit="minute(s)"
-            variant={eFieldVariant.Naked}
-          />
-        </FormFieldIssueBorder>
-        <FormFieldIssuesManager<iTaskFormCreate>
-          name={eTaskFormFieldNames.Duration}
-        />
-      </View> */}
+      >
+        {({
+          value,
+          onChange,
+          message,
+          severity
+        }) => (
+            <BasicInput
+              label={eTaskFormFieldTexts.DescriptionLabel}
+              placeholder={eTaskFormFieldTexts.DescriptionPlaceholder}
+              onChange={onChange}
+              value={value}
+              message={message}
+              messageSeverity={severity}
+              numberOfLines={100}
+            />
+          )}
+      </Field>
+
+      <Field<iTaskFormCreate, eTaskFormFieldNames.Duration>
+        name={eTaskFormFieldNames.Duration}
+      >
+        {({
+          numericValue,
+          onNumericChangeHandler,
+          message,
+          severity
+        }) => (
+            <InputValueSlider
+              label={eTaskFormFieldTexts.DurationLabel}
+              onChange={onNumericChangeHandler}
+              value={numericValue}
+              unit={'min'}
+              message={message}
+              messageSeverity={severity}
+              min={1}
+              max={60}
+            />
+          )}
+      </Field>
+
       <Positioner>
         <Button
           disabled={!(isValid && dirty)}

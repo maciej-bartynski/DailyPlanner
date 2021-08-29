@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Pressable, Modal, TextInput, Text, NativeSyntheticEvent, TextInputFocusEventData } from 'react-native';
+import { View, Pressable, Modal, TextInput, Text, NativeSyntheticEvent, TextInputFocusEventData, ScrollView } from 'react-native';
 import BasicInputStyles from './BasicInput.styles';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { eFormIssueSeverity } from 'components/TaskForm copy/config';
+import { eFormIssueSeverity } from '../types';
 
 interface Props {
     placeholder?: string;
@@ -10,7 +9,8 @@ interface Props {
     onChange: (e: string) => void;
     label?: string,
     message?: string,
-    messageSeverity?: eFormIssueSeverity
+    messageSeverity?: eFormIssueSeverity,
+    numberOfLines?: number
 }
 
 const BasicInput: React.FC<Props> = ({
@@ -19,13 +19,14 @@ const BasicInput: React.FC<Props> = ({
     message = "",
     label = "",
     messageSeverity = eFormIssueSeverity.Error,
-    onChange
+    onChange,
+    numberOfLines = 1
 }) => {
     const [focused, setFocused] = useState(false);
     const textInputRef = useRef<TextInput>(null);
 
     const onChangeHandler = (e: string) => {
-       onChange(e)
+        onChange(e)
     }
 
     const onFocusHandler = () => {
@@ -35,6 +36,10 @@ const BasicInput: React.FC<Props> = ({
     const onBlurHandler = () => {
         setFocused(false)
     }
+
+    const pressableClass = numberOfLines > 1
+        ? BasicInputStyles.basicInput__pressableTextArea
+        : BasicInputStyles.basicInput__pressable;
 
     const visibleText = value
         ? value
@@ -70,6 +75,7 @@ const BasicInput: React.FC<Props> = ({
                         value={value}
                         placeholder={placeholder}
                         multiline={true}
+                        numberOfLines={numberOfLines}
                     />
                 </View>
                 <View style={BasicInputStyles.basicInput__toolbarWrapper}>
@@ -98,7 +104,7 @@ const BasicInput: React.FC<Props> = ({
             </Text>
             <Pressable
                 onPress={() => setFocused(true)}
-                style={BasicInputStyles.basicInput__pressable}
+                style={pressableClass}
             >
                 <Text style={BasicInputStyles.basicInput__pressableText}>{visibleText}</Text>
             </Pressable>

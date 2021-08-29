@@ -3,27 +3,29 @@ import React, {
   useMemo,
   useCallback,
 } from 'react';
-import { useFormContext } from 'lib/uniform/Form/config';
-import { InputProps, FormFieldRequiredProps, eFieldVariant } from './config';
-import inputSelector from './inputSelector';
-import FieldWrapper from '../FieldWrapper/FieldWrapper';
-import FieldModal from '../FieldModal';
-import { FieldContext } from './fieldContext';
-import { FormikContextType, FormikErrors } from 'formik';
+import { useFormContext, FormContext } from 'lib/uniform/Form/config';
+import { eFormIssueSeverity } from '../types';
 
-type Props<FormContextType> = PropsWithChildren<{
-  name: keyof FormikContextType<FormContextType>['values'];
+type Props<FormContextType extends Record<string, unknown>, ValueType extends keyof FormContextType> = PropsWithChildren<{
+  name: keyof FormContextType;
   children: (arg: {
-    value: FormContextType[keyof FormContextType];
+    value: FormContextType[ValueType];
     error: string;
     warning: string;
-    onBlurHandler: keyof FormContextType extends string ? (e: any) => void : void;
-    onChangeHandler: (e: string) => void;
+    onBlur: (e: any) => void;
+    onChange: (e: FormContextType[ValueType]) => void;
+    message: string,
+    severity: eFormIssueSeverity,
+    onNumericChangeHandler: (e: number) => void;
+    numericValue: number
   }) => JSX.Element
 }>;
 
-const FormField = function <FormContextType>(
-  props: Props<FormContextType>,
+const FormField = function <
+  FormContextType extends Record<keyof FormContextType, unknown>, 
+  ValueType extends keyof FormContextType
+>(
+  props: Props<FormContextType, ValueType>,
 ) {
 
   const {
@@ -40,31 +42,51 @@ const FormField = function <FormContextType>(
   } = useFormContext<FormContextType>();
 
   const value = values[name];
-  const error = errors[name];
-  const warning = warnings ? warnings[name] : '';
+  const error = errors[name] as string;
+  const warning = warnings ? warnings[name] as string : '';
+  const message = error || warning || '';
+  const severity: eFormIssueSeverity = error
+    ? eFormIssueSeverity.Error
+    : warning
+      ? eFormIssueSeverity.Warning
+      : eFormIssueSeverity.None;
 
   const onChangeHandler = useMemo(
-    () => handleChange(name),
+    () => handleChange(name as string),
     [name, handleChange],
   );
 
+  const onNumericChangeHandler = useCallback(
+    (e:number) => onChangeHandler(`${e}`),
+    [onChangeHandler],
+  );
+
   const onBlurHandler = useMemo(
-    () => handleBlur(name),
+    () => handleBlur
+      ? handleBlur(name as string)
+      : (() => { }),
     [handleBlur, name],
   );
 
   const memoized = useMemo(() => ({
-    value,
+    value: value as FormContextType[ValueType],
+    numericValue: +value,
     error: error as string,
     warning: warning as string,
-    onBlurHandler,
-    onChangeHandler,
+    message,
+    severity,
+    onBlur: onBlurHandler as (e: any) => void,
+    onChange: onChangeHandler as unknown as (e: FormContextType[ValueType]) => void,
+    onNumericChangeHandler
   }), [
     value,
     error,
     warning,
     onBlurHandler,
     onChangeHandler,
+    onNumericChangeHandler,
+    message,
+    severity
   ]);
 
   return <>{children(memoized)}</>

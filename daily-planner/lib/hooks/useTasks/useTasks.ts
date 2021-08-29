@@ -103,6 +103,7 @@ const useTasks = () => {
       const entry = Object.entries(tasks.data.tasks || {}).find(
         taskEntry => taskEntry[0] === id,
       );
+      console.log(entry)
       return entry ? entry[1] : null;
     },
     [tasks.data.tasks],

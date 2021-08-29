@@ -16,7 +16,7 @@ type Props = {
 };
 
 const TaskCard: React.FC<Props> = props => {
-  const { name, description, duration, taskId, hours } = props;
+  const { name, description, duration, taskId } = props;
   const { methods } = useTasks();
 
   const deleteTask = useCallback(() => {
@@ -27,7 +27,7 @@ const TaskCard: React.FC<Props> = props => {
     modalNavigation.openModalTaskDetail(taskId);
   }, [taskId]);
 
-  const durationString = `${hours ? `${hours} h. ` : ''}${duration} min.`;
+  const durationString = `${duration} min.`;
 
   const actions = useMemo(
     () => [
@@ -53,51 +53,6 @@ const TaskCard: React.FC<Props> = props => {
         title={name}
         extraInfo={[`Duration: ${durationString}`, 'Created: 12.12.1919']}
         description={description}
-        onPress={openModalTaskDetail}
-      />
-
-
-      <Card
-        createdAt={'21.02.1990'}
-        title={'A very long task title to show and etc ofc! So what to name it?'}
-        extraInfo={[`Duration: ${durationString}`, 'Created: 12.12.1919']}
-        description={'Description is very long, mamamama asdfasdflk aslfh laskhf gklsdjfg hksdjh gksdjf g And this is the end i thing. OR maybe not? Who knows? WHO KNOWS?!?!?!'}
-        onPress={openModalTaskDetail}
-      />
-
-
-      <Card
-        createdAt={'21.02.1990'}
-        title={'A very long task title to show and etc ofc! So what to name it?'}
-        extraInfo={[`Duration: ${durationString}`, 'Created: 12.12.1919']}
-        description={'Descriptiows? WHO KNOWS?!?!?!'}
-        onPress={openModalTaskDetail}
-      />
-
-
-      <Card
-        createdAt={'21.02.1990'}
-        title={'A very long task title to show and etc ofc! So what to name it?'}
-        extraInfo={[`Duration: ${durationString}`, 'Created: 12.12.1919']}
-        description={'Description is very long, mamamama asdfasdflk aslfh laskhf gklsdjfg hksdjh gksdjf g And this is the end i thing. OR maybe not? Who knows? WHO KNOWS?!?!?!'}
-        onPress={openModalTaskDetail}
-      />
-
-
-      <Card
-        createdAt={'21.02.1990'}
-        title={'A very long task title to show and etc ofc! So what to name it?'}
-        extraInfo={[`Duration: ${durationString}`, 'Created: 12.12.1919']}
-        description={'Description is very loni thing. OR maybe not? Who knows? WHO KNOWS?!?!?!'}
-        onPress={openModalTaskDetail}
-      />
-
-
-      <Card
-        createdAt={'21.02.1990'}
-        title={'A very long task title to show and etc ofc! So what to name it?'}
-        extraInfo={[`Duration: ${durationString}`, 'Created: 12.12.1919']}
-        description={'Description is very long, mamamama asdfasdflk aslfh laskhf gklsdjfg hksdjh gksdjf g And this is the end i thing. OR maybe not? Who knows? WHO KNOWS?!?!?!'}
         onPress={openModalTaskDetail}
       />
 
