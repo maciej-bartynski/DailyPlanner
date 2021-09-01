@@ -29,6 +29,12 @@ const buttonRoundedStyles = StyleSheet.create({
     transform: [
       { rotate: '45deg' }
     ]
+  },
+  touchableWrapper: {
+    width: 70,
+    height: 70,
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 });
 

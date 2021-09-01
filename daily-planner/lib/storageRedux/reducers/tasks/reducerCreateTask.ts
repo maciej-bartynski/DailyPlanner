@@ -14,7 +14,7 @@ const reducerCreateTask: tReducerCreateTask = (
 
   const newTasks = {
     ...data.tasks,
-    [payload.task.id]: payload.task,
+    [payload.task._id]: payload.task,
   };
 
   const newTasksAmoung = Object.keys(newTasks).length;
@@ -27,8 +27,7 @@ const reducerCreateTask: tReducerCreateTask = (
     data: {
       total: newTasksAmoung,
       tasks: newTasks,
-    },
-    wasDataFetchAttempt: true,
+    }
   };
 };
 

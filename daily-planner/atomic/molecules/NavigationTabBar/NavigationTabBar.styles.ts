@@ -5,10 +5,9 @@ import {eFontWeight} from 'lib/styles/fonts';
 
 const navigationTabBarStyles = StyleSheet.create({
   navigationTabBar: {
-    height: 60,
+    height: 80,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 5,
     position: 'absolute',
     bottom: 0,
     left: 0,
@@ -17,9 +16,8 @@ const navigationTabBarStyles = StyleSheet.create({
   navigationTabBar__inner:{
     ...shadowMain,
     backgroundColor: eColors.White,
-    borderRadius: 20,
+    borderRadius: 40,
     flexDirection: 'row',
-    paddingHorizontal: 10,
   },
   navigationTabBar__item: {
     flex: 0,

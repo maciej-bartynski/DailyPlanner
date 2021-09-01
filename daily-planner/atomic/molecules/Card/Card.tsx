@@ -28,7 +28,6 @@ interface Props {
   description?: string;
   colorVariant?: eColors;
   typoColorVariant?: eColors;
-  createdAt?: string,
   onPress: () => void;
 }
 

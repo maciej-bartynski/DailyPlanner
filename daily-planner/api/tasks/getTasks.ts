@@ -7,13 +7,14 @@ import {
   eTasksIssueMessage,
 } from './tasksIssues';
 import {iEndpointReturnType} from 'api/types';
+import { iStorageItem } from 'lib/storageLocal/_types';
 
 type tGetTasks = () => Promise<
-  iEndpointReturnType<eTasksIssueMessage, Record<string, iTask>>
+  iEndpointReturnType<eTasksIssueMessage, Record<string, iStorageItem<iTask>>>
 >;
 
 const getTasks: tGetTasks = async () => {
-  const [errorMessage, tasks] = await tasksStorage.getAll<iTask>();
+  const [errorMessage, tasks] = await tasksStorage.getAll();
 
   const issueType = errorMessage
     ? eTasksIssueCode.InternalStorageError

@@ -1,4 +1,4 @@
-import {iTable} from './_types';
+import { iTable, iStorageItem } from './_types';
 
 export const CHARACTERS = 'qwertyuiopasdfghjklzxcvbnm1234567890!@#$%^&*()';
 export const getRandomToken = () => {
@@ -14,7 +14,7 @@ export const getRandomToken = () => {
   return token;
 };
 
-export const keyToStorageKey = (self: iTable, key: string) => {
+export function keyToStorageKey<ItemType> (self: iTable<ItemType>, key: string) {
   return `${self.prefix}_${key}`;
 };
 
@@ -25,7 +25,7 @@ export const itemToStorageItem = (
 ) => {
   const storageItem = JSON.stringify({
     _createdAt: createdAt ? createdAt : Date.now(),
-    _updatedAt: createdAt ? Date.now() : undefined,
+    _updatedAt: Date.now(),
     _id: id,
     item,
   });
@@ -33,7 +33,7 @@ export const itemToStorageItem = (
   return storageItem;
 };
 
-export const storageItemToItem = (storageItem: string) => {
+export function storageItemToItem<ItemType> (storageItem: string): iStorageItem<ItemType> {
   const parsedItem = JSON.parse(storageItem);
   return parsedItem;
 };

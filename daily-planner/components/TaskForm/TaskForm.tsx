@@ -1,5 +1,5 @@
 import React, { useCallback, useRef } from 'react';
-import { iTaskFormCreate } from 'lib/models/task';
+import { iTask } from 'lib/models/task';
 import useTasks from 'lib/hooks/useTasks';
 import TaskFormBody from 'atomic/organisms/TaskFormBody';
 import {
@@ -22,13 +22,13 @@ const TaskForm: React.FC<Props> = ({ taskId }) => {
   ).current;
 
   if (currentTask) {
-    initialValues.name = currentTask.name;
-    initialValues.description = currentTask.description;
-    initialValues.duration = currentTask.duration;
+    initialValues.name = currentTask.item.name;
+    initialValues.description = currentTask.item.description;
+    initialValues.duration = currentTask.item.duration;
   }
 
   const onSubmit = useCallback(
-    (values: iTaskFormCreate) => {
+    (values: iTask) => {
       if (currentTask && taskId) {
         updateTask(taskId, values);
       } else {
@@ -39,7 +39,7 @@ const TaskForm: React.FC<Props> = ({ taskId }) => {
   );
 
   return (
-    <Form<iTaskFormCreate>
+    <Form<iTask>
       initialValues={initialValues}
       onSubmit={onSubmit}
       validation={taskFormValidation}

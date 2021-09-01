@@ -29,8 +29,7 @@ const reducerDeleteTask: tReducerDeleteTask = (
     data: {
       total: newTasksAmount,
       tasks: newTasksAmount ? newTasks : null,
-    },
-    wasDataFetchAttempt: true,
+    }
   };
 };
 

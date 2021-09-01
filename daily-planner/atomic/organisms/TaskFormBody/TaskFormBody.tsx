@@ -11,6 +11,8 @@ import BasicInput from 'lib/uniform/BasicInput';
 import { Field } from 'lib/uniform';
 import { eTaskFormFieldTexts } from 'lib/enums/task-form-strings';
 import InputValueSlider from 'lib/uniform/InputValueSlider';
+import ButtonActionRoundedSmall from 'atomic/atoms/ButtonActionRoundedSmall';
+import ButtonActionRoundedBig from 'atomic/atoms/ButtonActionRoundedBig';
 
 type Props = {
   taskId?: string;
@@ -107,11 +109,10 @@ const TaskFormBody: React.FC<Props> = ({ taskId }) => {
       </Field>
 
       <Positioner>
-        <Button
-          disabled={!(isValid && dirty)}
+        {(isValid && dirty) && <ButtonActionRoundedBig
           onPress={submitButtonAction}
-          title={submitButtonTitle}
-        />
+          label={submitButtonTitle}
+        />}
       </Positioner>
     </ScrollViewStyled>
   );

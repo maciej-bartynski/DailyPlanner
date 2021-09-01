@@ -12,7 +12,6 @@ const modalBasicTemplateStyles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
   },
   header: {
     flexDirection: 'row',
@@ -22,15 +21,10 @@ const modalBasicTemplateStyles = StyleSheet.create({
     paddingLeft: 20,
     borderBottomColor: eColors.Primary,
     borderBottomWidth: 1,
-    paddingVertical: 20
   },
   titleWrapper: {
-    flex: 1
-  },
-  buttonWrapper: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 50
+    flex: 1,
+    paddingVertical: 20,
   },
   title: {
     ...mixins.title,

@@ -13,10 +13,11 @@ type Props = {
   duration?: number;
   taskId: string;
   hours?: number;
+  createdAt: number
 };
 
 const TaskCard: React.FC<Props> = props => {
-  const { name, description, duration, taskId } = props;
+  const { name, description, duration, taskId, createdAt } = props;
   const { methods } = useTasks();
 
   const deleteTask = useCallback(() => {
@@ -29,34 +30,13 @@ const TaskCard: React.FC<Props> = props => {
 
   const durationString = `${duration} min.`;
 
-  const actions = useMemo(
-    () => [
-      {
-        variant: eButtonVariant.Primary,
-        label: eButtonTitles.Edit,
-        onPress: openModalTaskDetail,
-      },
-      {
-        variant: eButtonVariant.Tertiary,
-        label: eButtonTitles.Delete,
-        onPress: deleteTask,
-      },
-    ],
-    [openModalTaskDetail, deleteTask],
-  );
-
   return (
-    <>
-
       <Card
-        createdAt={'21.02.1990'}
         title={name}
-        extraInfo={[`Duration: ${durationString}`, 'Created: 12.12.1919']}
+        extraInfo={[`Duration: ${durationString}`, `Created: ${new Date(createdAt)}`]}
         description={description}
         onPress={openModalTaskDetail}
       />
-
-    </>
   );
 };
 

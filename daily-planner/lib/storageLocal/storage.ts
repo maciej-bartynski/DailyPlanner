@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {iTable} from './_types';
+import { iTable, iStorageItem } from './_types';
 import {
   storageItemToItem,
   keyToStorageKey,
@@ -7,10 +7,10 @@ import {
   itemToStorageItem,
 } from './table.helpers';
 
-class Storage implements iTable {
-  constructor(public prefix: string) {}
+class Storage<ItemType> implements iTable<ItemType> {
+  constructor(public prefix: string) { }
 
-  async getAll<RecordType>() {
+  async getAll() {
     try {
       const keys = await AsyncStorage.getAllKeys();
       const thisStorageKeys = keys.filter(
@@ -18,24 +18,23 @@ class Storage implements iTable {
       );
       const allStorageStrings = await AsyncStorage.multiGet(thisStorageKeys);
 
-      const arrValuesOnly = allStorageStrings.reduce<
-        Record<string, RecordType>
-      >((result, entry) => {
-        const [, storageString] = entry;
-        if (storageString) {
-          const {item, _id} = storageItemToItem(storageString);
-          return {
-            ...result,
-            [_id]: {id: _id, ...item},
-          };
-        } else {
-          return result;
-        }
-      }, {});
+      const allStorageItemsAsObject = allStorageStrings.reduce<Record<string, iStorageItem<ItemType>>>
+        ((result, entry) => {
+          const [, storageString] = entry;
+          if (storageString) {
+            const item = storageItemToItem<ItemType>(storageString);
+            return {
+              ...result,
+              [item._id]: item,
+            };
+          } else {
+            return result;
+          }
+        }, {});
 
-      const toReturn: [string, Record<string, RecordType>] = [
+      const toReturn: [string, Record<string, iStorageItem<ItemType>>] = [
         '',
-        arrValuesOnly,
+        allStorageItemsAsObject,
       ];
       return toReturn;
     } catch (e) {
@@ -44,36 +43,37 @@ class Storage implements iTable {
     }
   }
 
-  async getItem<ItemType = unknown>(
+  async getItem(
     id: string,
-  ): Promise<[string, ItemType | null, number?, string?]> {
-    const storageKey = keyToStorageKey(this, id);
+  ): Promise<[string, iStorageItem<ItemType> | null]> {
+    const storageKey = keyToStorageKey<ItemType>(this, id);
     try {
       const storageString = (await AsyncStorage.getItem(storageKey)) || '';
       if (!storageString) {
         return ['Nothing found', null];
       }
-      const {item, _createdAt, _id} = storageItemToItem(storageString);
-      return ['', {id: id, ...item}, _createdAt, _id];
+      const item = storageItemToItem<ItemType>(storageString);
+      return ['', item];
     } catch (e) {
       return [`${e}`, null];
     }
   }
 
-  async setItem(itemToSet: unknown) {
+  async setItem(itemToSet: ItemType): Promise<[string, iStorageItem<ItemType> | null]> {
     const randomId = getRandomToken();
-    const storageKey = keyToStorageKey(this, randomId);
+    const storageKey = keyToStorageKey<ItemType>(this, randomId);
     const storageItem = itemToStorageItem(itemToSet, randomId);
+    const item = storageItemToItem<ItemType>(storageItem);
     try {
       await AsyncStorage.setItem(storageKey, storageItem);
-      return ['', randomId];
+      return ['', item];
     } catch (e) {
       return [`${e}`, null];
     }
   }
 
   async delItem(key: string) {
-    const storageKey = keyToStorageKey(this, key);
+    const storageKey = keyToStorageKey<ItemType>(this, key);
     try {
       await AsyncStorage.removeItem(storageKey);
       return ['', null];
@@ -82,24 +82,25 @@ class Storage implements iTable {
     }
   }
 
-  async patchItem<FieldsType>(key: string, fields: Record<string, unknown>) {
-    const [err, item, createdAt] = await this.getItem<FieldsType>(key);
+  async patchItem(key: string, fields: Partial<ItemType>): Promise<[string, iStorageItem<ItemType> | null]> {
+    const [err, item] = await this.getItem(key);
 
     if (!item) {
       return [`Item not found - ${err}`, null];
     }
 
-    const newItem = {
-      ...item,
-      ...fields,
+    const newFields = {
+      ...item.item,
+      ...fields
     };
 
-    const storageItem = itemToStorageItem(newItem, key, createdAt);
-    const storageKey = keyToStorageKey(this, key);
+    const storageItem = itemToStorageItem(newFields, key, item._createdAt);
+    const storageKey = keyToStorageKey<ItemType>(this, key);
+    const itemToReturn = storageItemToItem<ItemType>(storageItem)
 
     try {
       await AsyncStorage.setItem(storageKey, storageItem);
-      return ['', null];
+      return ['', itemToReturn];
     } catch (e) {
       return [`${e}`, null];
     }

@@ -1,5 +1,4 @@
-import {iTaskFormCreate} from 'lib/models/task';
-import {FormikErrors} from 'formik';
+import {iTask} from 'lib/models/task';
 import getTasks from '../../api/tasks/getTasks';
 import { eFormIssueSeverity } from 'lib/uniform/types';
 
@@ -15,7 +14,7 @@ const MIN_TASK_DURATION = 1;
 const MAX_TASK_DURATION = 60 * 8;
 const MAX_TASK_DESCRIPTION_LEN = 1000;
 
-export const TaskFormInitialValues: iTaskFormCreate = {
+export const TaskFormInitialValues: iTask = {
   [eTaskFormFieldNames.Name]: '',
   [eTaskFormFieldNames.Description]: '',
   [eTaskFormFieldNames.Duration]: 20,
@@ -61,7 +60,7 @@ export const valueCheckers = {
   ): Promise<null | eTaskFormIssueCode> {
     const response = await getTasks();
     const taskExists = Object.values(response.data || {}).find(
-      task => task.name === value,
+      task => task.item.name === value,
     );
     switch (true) {
       case value.length < MIN_TASK_NAME_LEN: {
@@ -111,7 +110,7 @@ export const valueCheckers = {
   },
 };
 
-export const taskFormValidation = async (values: iTaskFormCreate) => {
+export const taskFormValidation = async (values: iTask) => {
   const errors: Partial<Record<Partial<eTaskFormFieldNames>, string>> = {};
 
   const nameValue = values[eTaskFormFieldNames.Name];
@@ -144,8 +143,8 @@ export const taskFormValidation = async (values: iTaskFormCreate) => {
   return errors;
 };
 
-export const taskFormWarningManager = async (values: iTaskFormCreate) => {
-  const errors: Partial<Record<keyof iTaskFormCreate, string>> = {};
+export const taskFormWarningManager = async (values: iTask) => {
+  const errors: Partial<Record<keyof iTask, string>> = {};
 
   const nameValue = values[eTaskFormFieldNames.Name];
   const minutesValue = values[eTaskFormFieldNames.Duration];

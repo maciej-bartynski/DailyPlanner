@@ -18,4 +18,5 @@ export enum eColors {
   Secondary = '#cccab5',
   Warning = 'orange',
   Error = 'red',
+  Black = 'black'
 }

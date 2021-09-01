@@ -13,7 +13,6 @@ const reducerInitTasks: tReducerInitTasks = (
   return {
     ...tasksState,
     loading: false,
-    wasDataFetchAttempt: true,
     message: action.payload.message,
     severity: action.payload.severity,
     data: {

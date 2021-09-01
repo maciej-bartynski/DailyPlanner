@@ -20,7 +20,7 @@ type ViewProp = {
 };
 
 const ViewTasks: React.FC<ViewProp> = () => {
-  const {loading, severity, data, wasDataFetchAttempt} = useTasks();
+  const {loading, severity, data } = useTasks();
   const {total, tasks} = data;
 
   const openModalCreateTask = useCallback(
@@ -29,7 +29,7 @@ const ViewTasks: React.FC<ViewProp> = () => {
   );
 
   const hasError = severity === eApiIssueSeverity.Error;
-  const isLoading = !wasDataFetchAttempt && loading;
+  const isLoading = !total && loading;
 
   return (
     <CreationPageTemplate
@@ -43,11 +43,12 @@ const ViewTasks: React.FC<ViewProp> = () => {
           {Object.values(tasks).map(task => {
             return (
               <TaskCard
-                key={task.id}
-                taskId={task.id}
-                name={task.name}
-                description={task.description}
-                duration={+task.duration}
+                key={task._id}
+                taskId={task._id}
+                name={task.item.name}
+                description={task.item.description}
+                duration={+task.item.duration}
+                createdAt={task._createdAt}
               />
             );
           })}

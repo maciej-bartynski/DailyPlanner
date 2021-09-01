@@ -7,14 +7,15 @@ import {
   eTasksIssueMessage,
 } from './tasksIssues';
 import {iEndpointReturnType} from 'api/types';
+import { iStorageItem } from 'lib/storageLocal/_types';
 
 type tUpdateTask = (
   id: string,
-  fields: Omit<iTask, 'id'>,
-) => Promise<iEndpointReturnType<eTasksIssueMessage, null>>;
+  fields: iTask,
+) => Promise<iEndpointReturnType<eTasksIssueMessage, iStorageItem<iTask>>>;
 
 const updateTask: tUpdateTask = async (id, fields) => {
-  const [errorMessage] = await tasksStorage.patchItem(id, fields);
+  const [errorMessage, item] = await tasksStorage.patchItem(id, fields);
 
   const issueType = errorMessage
     ? eTasksIssueCode.InternalStorageError
@@ -24,7 +25,7 @@ const updateTask: tUpdateTask = async (id, fields) => {
   const severity = issueType && cTasksIssueSeverity[issueType];
 
   return {
-    data: null,
+    data: item,
     message,
     severity,
   };

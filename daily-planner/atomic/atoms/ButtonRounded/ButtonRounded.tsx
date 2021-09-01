@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, GestureResponderEvent } from 'react-native';
+import { Text, GestureResponderEvent, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import buttonRoundedStyles from './ButtonRounded.styles';
 
@@ -20,18 +20,20 @@ const ButtonRounded: React.FC<Props> = ({
   variant = eButtonVariant.Add
 }) => {
   const wrapperClassName = variant === eButtonVariant.Add
-  ? buttonRoundedStyles.button
-  : buttonRoundedStyles.buttonCross;
+    ? buttonRoundedStyles.button
+    : buttonRoundedStyles.buttonCross;
 
   const className = variant === eButtonVariant.Add
     ? buttonRoundedStyles.text
     : buttonRoundedStyles.cross;
   return (
-    <TouchableOpacity 
-      onPress={onPressHandler} 
-      style={wrapperClassName}
+    <TouchableOpacity
+      onPress={onPressHandler}
+      style={buttonRoundedStyles.touchableWrapper}
     >
-      <Text style={className}>+</Text>
+      <View style={wrapperClassName}>
+        <Text style={className}>+</Text>
+      </View>
     </TouchableOpacity>
   );
 }

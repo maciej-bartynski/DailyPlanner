@@ -1,6 +1,7 @@
-import {iTask} from 'lib/models/task';
-import {eApiIssueSeverity} from 'api/types';
-import {eTasksIssueMessage} from 'api/tasks/tasksIssues';
+import { iTask } from 'lib/models/task';
+import { eApiIssueSeverity } from 'api/types';
+import { eTasksIssueMessage } from 'api/tasks/tasksIssues';
+import { iStorageItem } from 'lib/storageLocal/_types';
 
 export enum eTasksActions {
   TASK_CREATE = 'TASK_CREATE',
@@ -11,20 +12,20 @@ export enum eTasksActions {
   TASKS_ISSUE = 'TASKS_ISSUE',
 }
 
-type tTaskIdAlias = iTask['id'];
-type tPartialExistingTask = Partial<Omit<iTask, 'id'>>;
+type tTaskIdAlias = iStorageItem<iTask>['_id'];
+type tPartialExistingTask = Partial<Omit<iStorageItem<iTask>, '_id'>>;
 
 /**
  * TASK_INIT types
  */
 export type tActionCreatorTaskInit = (params: {
-  tasks: Record<tTaskIdAlias, iTask>;
+  tasks: Record<tTaskIdAlias, iStorageItem<iTask>>;
   message: eTasksIssueMessage;
   severity: eApiIssueSeverity;
 }) => {
   type: eTasksActions.TASKS_INIT;
   payload: {
-    tasks: Record<tTaskIdAlias, iTask>;
+    tasks: Record<tTaskIdAlias, iStorageItem<iTask>>;
     message: eTasksIssueMessage;
     severity: eApiIssueSeverity;
   };
@@ -37,13 +38,13 @@ export type tActionTaskInit = ReturnType<tActionCreatorTaskInit>;
  */
 
 export type tActionCreatorTaskCreate = (params: {
-  task: iTask;
+  task: iStorageItem<iTask>;
   message: eTasksIssueMessage;
   severity: eApiIssueSeverity;
 }) => {
   type: eTasksActions.TASK_CREATE;
   payload: {
-    task: iTask;
+    task: iStorageItem<iTask>;
     message: string;
     severity: eApiIssueSeverity;
   };
@@ -57,7 +58,7 @@ export type tActionTaskCreate = ReturnType<tActionCreatorTaskCreate>;
  */
 
 export type tActionCreatorTaskUpdate = (params: {
-  fields: tPartialExistingTask;
+  fields: iStorageItem<iTask>;
   message: eTasksIssueMessage;
   severity: eApiIssueSeverity;
   id: tTaskIdAlias;
@@ -65,7 +66,7 @@ export type tActionCreatorTaskUpdate = (params: {
   type: eTasksActions.TASK_UPDATE;
   payload: {
     id: tTaskIdAlias;
-    fields: tPartialExistingTask;
+    fields: iStorageItem<iTask>;
     message: eTasksIssueMessage;
     severity: eApiIssueSeverity;
   };
@@ -96,7 +97,7 @@ export type tActionTaskDelete = ReturnType<tActionCreatorTaskDelete>;
 /**
  * TASKS_LOADING types
  */
-export type tActionCreatorTasksLoading = (params: {loading: boolean}) => {
+export type tActionCreatorTasksLoading = (params: { loading: boolean }) => {
   type: eTasksActions.TASKS_LOADING;
   payload: {
     loading: boolean;

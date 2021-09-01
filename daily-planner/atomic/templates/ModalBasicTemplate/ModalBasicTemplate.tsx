@@ -31,12 +31,10 @@ const ModalBasicTemplate: React.FC<Props> = ({
               {title}
             </Text>}
           </View>
-          <View style={modalBasicTemplateStyles.buttonWrapper}>
-            <ButtonRounded
-              variant={eButtonVariant.Close}
-              onPressHandler={navigationRef.current?.goBack}
-            />
-          </View>
+          <ButtonRounded
+            variant={eButtonVariant.Close}
+            onPressHandler={navigationRef.current?.goBack}
+          />
         </View>
         <View
           style={

@@ -13,8 +13,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button: {
-    width: 50,
-    height: 50,
     position: 'absolute',
     bottom: 70,
     right: 10,

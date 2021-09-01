@@ -7,16 +7,17 @@ import {
 } from './tasksIssues';
 import {iEndpointReturnType} from 'api/types';
 import {iTask} from 'lib/models/task';
+import { iStorageItem } from 'lib/storageLocal/_types';
 
 type tCreateTask = (
-  fields: Omit<iTask, 'id'>,
-) => Promise<iEndpointReturnType<eTasksIssueMessage, string | null>>;
+  fields: iTask,
+) => Promise<iEndpointReturnType<eTasksIssueMessage, iStorageItem<iTask>>>;
 
-const createTask: tCreateTask = async (fields: Omit<iTask, 'id'>) => {
-  const [errorMessage, key] = await tasksStorage.setItem(fields);
+const createTask: tCreateTask = async (fields: iTask) => {
+  const [errorMessage, item] = await tasksStorage.setItem(fields);
 
   const issueType =
-    errorMessage || !key
+    errorMessage || !item
       ? eTasksIssueCode.InternalStorageError
       : eTasksIssueCode.StatusOk;
 
@@ -24,7 +25,7 @@ const createTask: tCreateTask = async (fields: Omit<iTask, 'id'>) => {
   const severity = issueType && cTasksIssueSeverity[issueType];
 
   return {
-    data: key,
+    data: item,
     message,
     severity,
   };

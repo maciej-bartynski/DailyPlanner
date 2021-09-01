@@ -24,10 +24,7 @@ const reducerUpdateTask: tReducerUpdateTask = (
     data: {
       tasks: {
         ...oldTasks,
-        [id]: {
-          ...oldTasks[id],
-          ...fields,
-        },
+        [id]: fields,
       },
       total,
     },

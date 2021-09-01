@@ -9,7 +9,10 @@ export type ModalsStackParamList = {
   [eModals.ModalCreateTask]: { taskId?: string };
   [eModals.ModalCreateBoard]: { boardId?: string };
   [eModals.ModalAddTasks]: { boardId?: string };
-  [eModals.ModalTaskDetail]: { taskId: string };
+  [eModals.ModalTaskDetail]: { 
+    taskId: string,
+    deleteTask: (taskId: string) => void;
+  };
 };
 
 export type ViewsStackParamList = {
